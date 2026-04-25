@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PaneTrans — Local-AI Chrome translator with live region monitoring</title>
+  <meta name="description" content="Drag a region on any web page and PaneTrans pins a glass popup with live translation that updates whenever the text changes. Powered by local AI — no cloud, no API keys, nothing leaves your browser.">
+  <link rel="icon" href="assets/icon.png">
+  <meta property="og:title" content="PaneTrans — A pane of clarity on every frame">
+  <meta property="og:description" content="Local-AI Chrome translator with continuous region monitoring.">
+  <meta property="og:image" content="assets/live-popup.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hdr">
+  <a class="logo" href="/">
+    <img src="assets/icon.png" alt="" width="32" height="32">
+    <span>PaneTrans</span>
+  </a>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="https://github.com/Pelican0126/panetrans" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>A pane of clarity on every frame.</h1>
+    <p class="lede">
+      Drag a rectangle on any web page. PaneTrans pins a glass popup with
+      <strong>live translation</strong> that updates the moment the text changes —
+      live chat, video subtitles, ticker text, anywhere.
+    </p>
+    <p class="lede-small">
+      All translation runs locally on your machine. No cloud. No API keys.
+      Nothing leaves your browser.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="pricing.html">See pricing</a>
+      <a class="btn btn-ghost" href="#features">How it works</a>
+    </div>
+  </div>
+  <div class="hero-shot">
+    <img src="assets/live-popup-2.png" alt="PaneTrans live translation popup">
+  </div>
+</section>
+
+<section class="features" id="features">
+  <h2>What PaneTrans actually does</h2>
+  <div class="feat-grid">
+    <article class="feat">
+      <h3>Drag, then watch.</h3>
+      <p>
+        Right-click anywhere → <em>Translate Region</em> → drag a rectangle.
+        A draggable popup shows the original and the translation side-by-side.
+      </p>
+      <img src="assets/selection.png" alt="Drag-select overlay">
+    </article>
+    <article class="feat">
+      <h3>It keeps watching.</h3>
+      <p>
+        A <code>MutationObserver</code> tracks the rectangle. Live chat lines,
+        subtitle changes, ticker updates — the popup retranslates automatically.
+        Like sticking a real-time subtitle strip onto any slice of the page.
+      </p>
+      <img src="assets/live-popup.png" alt="Live region popup">
+    </article>
+    <article class="feat">
+      <h3>Local AI, picked per task.</h3>
+      <p>
+        Free tier: <strong>OPUS-MT</strong> (~160 MB / pair, real-time on WebGPU)
+        and <strong>NLLB-200</strong> / <strong>M2M-100</strong> for higher quality.
+        Pro tier: LLM-grade <strong>gpt-oss</strong> and <strong>Gemma 3</strong>
+        for the most fluent output.
+      </p>
+      <img src="assets/popup.png" alt="Translation model picker">
+    </article>
+  </div>
+</section>
+
+<section class="trust">
+  <h2>Why a Chinese student / engineer / anyone working with English content uses this</h2>
+  <ul class="trust-list">
+    <li><strong>Zero data leaks.</strong> Translation models live in your browser cache. No request to a third-party server. Works offline once the model is downloaded.</li>
+    <li><strong>Persistent, not single-shot.</strong> Most translators give you one translation and stop. PaneTrans pins a popup that follows the region until you close it.</li>
+    <li><strong>Bilingual YouTube subtitles</strong> as a separate, opt-in feature for video learners.</li>
+    <li><strong>Open architecture.</strong> Built on <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> + <a href="https://huggingface.co/Xenova" target="_blank" rel="noopener">Xenova ONNX models</a>. You can audit the model list in <code>src/utils/languages.js</code>.</li>
+  </ul>
+</section>
+
+<section class="cta-band">
+  <h2>Ready to try it?</h2>
+  <p>The Free tier handles real-time translation for 10+ languages. Pro unlocks LLM-grade models for nuanced text.</p>
+  <a class="btn btn-primary" href="pricing.html">Pricing</a>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <strong>PaneTrans</strong>
+      <p>A pane of clarity on every frame.</p>
+    </div>
+    <div>
+      <strong>Product</strong>
+      <a href="#features">Features</a>
+      <a href="pricing.html">Pricing</a>
+    </div>
+    <div>
+      <strong>Legal</strong>
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="refund.html">Refund Policy</a>
+    </div>
+    <div>
+      <strong>Contact</strong>
+      <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>
+      <a href="https://github.com/Pelican0126/panetrans" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+  <p class="foot-fine">© 2026 PaneTrans · Local AI translator for Chrome</p>
+</footer>
+
+</body>
+</html>
