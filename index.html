@@ -26,6 +26,7 @@
 </header>
 
 <section class="hero">
+  <canvas id="particles" aria-hidden="true"></canvas>
   <div class="hero-text">
     <h1>A pane of clarity on every frame.</h1>
     <p class="lede">
@@ -48,9 +49,9 @@
 </section>
 
 <section class="features" id="features">
-  <h2>What PaneTrans actually does</h2>
+  <h2 data-reveal>What PaneTrans actually does</h2>
   <div class="feat-grid">
-    <article class="feat">
+    <article class="feat" data-reveal data-reveal-delay="0">
       <h3>Drag, then watch.</h3>
       <p>
         Right-click anywhere → <em>Translate Region</em> → drag a rectangle.
@@ -58,7 +59,7 @@
       </p>
       <img src="assets/selection.png" alt="Drag-select overlay">
     </article>
-    <article class="feat">
+    <article class="feat" data-reveal data-reveal-delay="120">
       <h3>It keeps watching.</h3>
       <p>
         A <code>MutationObserver</code> tracks the rectangle. Live chat lines,
@@ -67,7 +68,7 @@
       </p>
       <img src="assets/live-popup.png" alt="Live region popup">
     </article>
-    <article class="feat">
+    <article class="feat" data-reveal data-reveal-delay="240">
       <h3>Local AI, picked per task.</h3>
       <p>
         Free tier: <strong>OPUS-MT</strong> (~160 MB / pair, real-time on WebGPU)
@@ -81,16 +82,16 @@
 </section>
 
 <section class="trust">
-  <h2>Why people who read across languages reach for this</h2>
+  <h2 data-reveal>Why people who read across languages reach for this</h2>
   <ul class="trust-list">
-    <li><strong>Zero data leaks.</strong> Translation models live in your browser cache. No request to a third-party server. Works offline once the model is downloaded.</li>
-    <li><strong>Persistent, not single-shot.</strong> Most translators give you one translation and stop. PaneTrans pins a popup that follows the region until you close it.</li>
-    <li><strong>Bilingual YouTube subtitles</strong> as a separate, opt-in feature for video learners.</li>
-    <li><strong>Open architecture.</strong> Built on <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> + <a href="https://huggingface.co/Xenova" target="_blank" rel="noopener">Xenova ONNX models</a>. You can audit the model list in <code>src/utils/languages.js</code>.</li>
+    <li data-reveal data-reveal-delay="0"><strong>Zero data leaks.</strong> Translation models live in your browser cache. No request to a third-party server. Works offline once the model is downloaded.</li>
+    <li data-reveal data-reveal-delay="80"><strong>Persistent, not single-shot.</strong> Most translators give you one translation and stop. PaneTrans pins a popup that follows the region until you close it.</li>
+    <li data-reveal data-reveal-delay="160"><strong>Bilingual YouTube subtitles</strong> as a separate, opt-in feature for video learners.</li>
+    <li data-reveal data-reveal-delay="240"><strong>Open architecture.</strong> Built on <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> + <a href="https://huggingface.co/Xenova" target="_blank" rel="noopener">Xenova ONNX models</a>. You can audit the model list in <code>src/utils/languages.js</code>.</li>
   </ul>
 </section>
 
-<section class="cta-band">
+<section class="cta-band" data-reveal>
   <h2>Ready to try it?</h2>
   <p>The Free tier handles real-time translation for 10+ languages. Pro unlocks LLM-grade models for nuanced text.</p>
   <a class="btn btn-primary" href="pricing.html">Pricing</a>
@@ -121,6 +122,8 @@
   </div>
   <p class="foot-fine">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
+
+<script src="js/effects.js" defer></script>
 
 </body>
 </html>

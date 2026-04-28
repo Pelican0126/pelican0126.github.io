@@ -442,6 +442,248 @@ footer {
   margin: 0 auto;
 }
 
+/* ---------------------------------------------------------------- */
+/*  Animations — added in the v0.4 polish pass                      */
+/* ---------------------------------------------------------------- */
+
+/* Scroll-reveal: any element with [data-reveal] starts hidden, the
+   IntersectionObserver in js/effects.js flips .is-revealed once it scrolls
+   into view. Plays nice with prefers-reduced-motion (the JS short-circuits
+   and adds .is-revealed immediately). */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero — particle canvas + animated gradient blob behind the headline.
+   The hero already has flex/grid layout; we just need a positioned
+   parent for absolutely-positioned decoration layers. */
+.hero {
+  position: relative;
+  isolation: isolate;       /* keep mix-blend / filter inside */
+  overflow: hidden;
+}
+.hero::before {
+  /* Soft rotating mesh gradient, sits behind everything */
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  background:
+    radial-gradient(60% 50% at 20% 20%, rgba(78, 205, 196, 0.32) 0%, transparent 60%),
+    radial-gradient(50% 40% at 80% 30%, rgba(68, 176, 158, 0.22) 0%, transparent 65%),
+    radial-gradient(60% 60% at 60% 90%, rgba(78, 205, 196, 0.16) 0%, transparent 70%);
+  filter: blur(20px);
+  z-index: -2;
+  animation: heroBlob 22s ease-in-out infinite alternate;
+}
+@keyframes heroBlob {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(-2%, 1%, 0) rotate(8deg); }
+  100% { transform: translate3d(2%, -1%, 0) rotate(-6deg); }
+}
+.hero #particles {
+  /* Canvas mounts behind hero text, on top of the gradient.
+     pointer-events:none so the canvas never intercepts clicks or text
+     selection — the JS attaches mousemove to the .hero parent and
+     translates coordinates. */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+.hero-text, .hero-shot {
+  position: relative;       /* keep text above the canvas in z-order */
+  z-index: 1;
+}
+
+/* Hero copy — fade-and-rise on first paint (no JS, just CSS animation
+   so it runs immediately, before the IO-based reveal would fire) */
+.hero h1 {
+  animation: heroRise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero .lede {
+  animation: heroRise 0.9s 0.12s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero .lede-small {
+  animation: heroRise 0.9s 0.22s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero .cta {
+  animation: heroRise 0.9s 0.32s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero shot — gentle float */
+.hero-shot img {
+  animation: heroFloat 7s ease-in-out infinite;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 0.4s ease;
+}
+.hero-shot img:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 32px 80px rgba(78, 205, 196, 0.28);
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* Primary button — subtle pulsing glow that brightens on hover */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  /* Sweep highlight on hover */
+  content: "";
+  position: absolute;
+  top: 0; left: -120%;
+  width: 60%; height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 100%);
+  transform: skewX(-22deg);
+  transition: left 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn-primary:hover::after { left: 130%; }
+.btn-primary {
+  animation: btnPulse 3.6s ease-in-out infinite;
+}
+@keyframes btnPulse {
+  0%, 100% { box-shadow: 0 6px 18px rgba(78, 205, 196, 0.35); }
+  50%      { box-shadow: 0 10px 26px rgba(78, 205, 196, 0.55); }
+}
+
+/* Feature cards — tilt + lift on hover */
+.feat {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 0.4s ease,
+              border-color 0.4s ease;
+  transform-style: preserve-3d;
+}
+.feat:hover {
+  transform: translateY(-6px) rotateX(2deg);
+  box-shadow: 0 20px 44px rgba(78, 205, 196, 0.18);
+  border-color: var(--teal);
+}
+.feat img {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.feat:hover img { transform: scale(1.02); }
+
+/* Trust list — slide-right shimmer on hover */
+.trust-list li {
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+.trust-list li:hover {
+  transform: translateX(4px);
+  border-color: var(--teal);
+  box-shadow: 0 8px 22px rgba(78, 205, 196, 0.12);
+}
+
+/* Pricing cards — Pro card gets a slow rotating accent ring */
+.price-card {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 0.4s ease;
+}
+.price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 50px rgba(78, 205, 196, 0.20);
+}
+.price-card-pro::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  padding: 2px;
+  background: conic-gradient(from 0deg,
+    rgba(78, 205, 196, 0.0) 0deg,
+    rgba(78, 205, 196, 0.85) 90deg,
+    rgba(68, 176, 158, 0.85) 180deg,
+    rgba(78, 205, 196, 0.0) 360deg);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: ringSpin 6s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.price-card-pro > * { position: relative; z-index: 1; }
+@keyframes ringSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Logo wiggle on hover */
+.logo img {
+  transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+.logo:hover img {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+/* Nav links — animated underline */
+.hdr nav a {
+  position: relative;
+}
+.hdr nav a:not([target="_blank"])::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.hdr nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.hdr nav a:hover { text-decoration: none; }
+
+/* CTA band — animated gradient shift */
+.cta-band {
+  background: linear-gradient(120deg, #4ECDC4 0%, #44B09E 50%, #4ECDC4 100%);
+  background-size: 200% 200%;
+  animation: ctaShift 12s ease-in-out infinite;
+}
+@keyframes ctaShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Reduced-motion: kill purely decorative loops */
+@media (prefers-reduced-motion: reduce) {
+  .hero::before,
+  .btn-primary,
+  .price-card-pro::before,
+  .cta-band,
+  .hero-shot img {
+    animation: none !important;
+  }
+  .hero h1, .hero .lede, .hero .lede-small, .hero .cta {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* ---- Mobile ---- */
 @media (max-width: 760px) {
   .hero {

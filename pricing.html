@@ -30,7 +30,7 @@
   </p>
 
   <div class="price-grid">
-    <article class="price-card">
+    <article class="price-card" data-reveal data-reveal-delay="0">
       <header>
         <h2>Free</h2>
         <p class="price">$0</p>
@@ -48,7 +48,7 @@
       <a class="btn btn-ghost" href="https://chromewebstore.google.com/" target="_blank" rel="noopener">Install free</a>
     </article>
 
-    <article class="price-card price-card-pro">
+    <article class="price-card price-card-pro" data-reveal data-reveal-delay="120">
       <header>
         <span class="badge">Best value</span>
         <h2>Lifetime</h2>
@@ -67,7 +67,7 @@
       <p class="price-note">2-day refund, no questions asked.</p>
     </article>
 
-    <article class="price-card">
+    <article class="price-card" data-reveal data-reveal-delay="240">
       <header>
         <h2>Monthly</h2>
         <p class="price">$2.99<span class="price-suffix">/mo</span></p>
@@ -85,24 +85,24 @@
     </article>
   </div>
 
-  <h2 class="faq-title">FAQ</h2>
-  <details class="faq">
+  <h2 class="faq-title" data-reveal>FAQ</h2>
+  <details class="faq" data-reveal>
     <summary>Where does my payment go? Is my card data safe?</summary>
-    <p>Payments are processed by Paddle.com, a Merchant of Record handling tax and compliance in 200+ countries. PaneTrans never sees your card details — your data stays in Paddle's PCI-compliant infrastructure.</p>
+    <p>Payments are processed by a regulated Merchant of Record (Dodo Payments or Paddle), handling tax and compliance in 200+ countries. PaneTrans never sees your card details — your data stays in their PCI-compliant infrastructure.</p>
   </details>
-  <details class="faq">
+  <details class="faq" data-reveal data-reveal-delay="60">
     <summary>What's the difference between Lifetime and Monthly?</summary>
     <p>Lifetime is a single $14.99 payment for permanent access — including all future model updates. Monthly is $2.99/mo, cancellable any time. Lifetime breaks even after 5 months.</p>
   </details>
-  <details class="faq">
+  <details class="faq" data-reveal data-reveal-delay="120">
     <summary>Can I use Pro on multiple computers?</summary>
     <p>Yes. After purchase you'll receive a license key by email. Activate it on as many of your personal browsers as you need.</p>
   </details>
-  <details class="faq">
+  <details class="faq" data-reveal data-reveal-delay="180">
     <summary>How do refunds work?</summary>
     <p>2-day no-questions-asked refund window. Email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> with your purchase email and we'll process it. See the <a href="refund.html">full refund policy</a> for details.</p>
   </details>
-  <details class="faq">
+  <details class="faq" data-reveal data-reveal-delay="240">
     <summary>Does PaneTrans send any data to your servers?</summary>
     <p>No translation data leaves your browser. The only network requests are: (1) downloading model files from Hugging Face the first time, (2) license validation against our license server. Both are documented in the <a href="privacy.html">privacy policy</a>.</p>
   </details>
@@ -133,6 +133,8 @@
   </div>
   <p class="foot-fine">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
+
+<script src="js/effects.js" defer></script>
 
 </body>
 </html>
