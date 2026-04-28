@@ -158,8 +158,21 @@
   }
 
   // -------------------------------------------------------------------------
-  // 2. Hero demo — drag-to-translate state machine
+  // 2. Hero demo — draw rect ONCE, then cycle content inside it
   // -------------------------------------------------------------------------
+  // Behaviour mirrors the real product: user drags a rectangle on the page,
+  // and from that point on the popup re-translates whatever text appears
+  // inside that rectangle. The rectangle itself doesn't move.
+  //
+  // Cycle:
+  //   1. Cursor glides to top-left of the targeted region.
+  //   2. Cursor drags to bottom-right; rectangle grows from 0 to full size.
+  //   3. Cursor fades out (drag ended).
+  //   4. Popup fades in with the first scene's translation.
+  //   5. Forever loop: every ~2.8 s, fade the current target line + popup
+  //      contents out, swap to the next scene's text, fade them back in.
+  //   6. Every full pass through SCENES, reset and replay from step 1 so
+  //      visitors who scroll back up see the gesture again.
   const demo = document.querySelector('.hero-demo');
   if (!demo) return;
 
@@ -168,92 +181,40 @@
   const popup    = demo.querySelector('.demo-popup');
   const popupSrc = demo.querySelector('.demo-popup-orig');
   const popupTgt = demo.querySelector('.demo-popup-trans');
-  const lines    = demo.querySelectorAll('.demo-line');
-  if (!cursor || !rect || !popup || !lines.length) return;
+  const target   = demo.querySelector('.demo-target');
+  const targetLines = demo.querySelectorAll('.demo-target-line');
+  if (!cursor || !rect || !popup || !target || !targetLines.length) return;
 
-  // Each scene = which line to highlight + the translation to show. The
-  // `pad` shrinks the selection rectangle inside the line's bbox so it
-  // looks like a deliberate drag, not a click that happens to cover the
-  // whole line.
   const SCENES = [
-    {
-      lineIndex: 0,
-      pad: { x: 4, y: 6 },
-      orig: 'Künstliche Intelligenz',
-      trans: 'Artificial intelligence',
-    },
-    {
-      lineIndex: 1,
-      pad: { x: 4, y: 6 },
-      orig: '人工知能がブラウザ翻訳を変える',
-      trans: 'AI is changing in-browser translation',
-    },
-    {
-      lineIndex: 2,
-      pad: { x: 4, y: 6 },
-      orig: 'Traducción local sin nube',
-      trans: 'Local translation, no cloud',
-    },
+    { orig: 'Künstliche Intelligenz revolutioniert die Übersetzung.', trans: 'AI is revolutionizing translation.' },
+    { orig: '人工知能がブラウザ翻訳を変える時代が来た。',                   trans: 'AI is changing in-browser translation.' },
+    { orig: 'Traducción local sin nube, en tu navegador.',           trans: 'Local translation, no cloud, in your browser.' },
+    { orig: '번역이 로컬에서 실시간으로 작동합니다.',                          trans: 'Translation works locally, in real time.' },
   ];
 
-  // Reduced motion: paint scene 0 statically and bail out.
+  // Reduced motion: paint a static frame and bail.
   if (reduceMotion) {
-    drawStatic(SCENES[0]);
+    drawStatic();
     return;
   }
 
-  // Time budget for one scene (ms). Sums to 5 200 + 800 inter-scene gap.
-  const T = {
-    cursorTo: 700,
-    drag:     900,
-    popupIn:  300,
-    hold:     2400,
-    fadeOut:  500,
-    gap:      400,
-  };
-
-  let sceneIdx = 0;
   let isVisible = true;
-
-  // Auto-pause when off screen so the loop doesn't burn CPU on scrolled-out hero.
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => {
       isVisible = entries[0]?.isIntersecting ?? true;
     }, { threshold: 0 }).observe(demo);
   }
 
-  function lineRectFor(scene) {
-    const line = lines[scene.lineIndex];
+  function targetBox() {
     const dr = demo.getBoundingClientRect();
-    const lr = line.getBoundingClientRect();
+    const tr = target.getBoundingClientRect();
+    const PAD = 8;
     return {
-      left: lr.left - dr.left + scene.pad.x,
-      top:  lr.top  - dr.top  + scene.pad.y,
-      width:  Math.max(40, lr.width  - 2 * scene.pad.x),
-      height: Math.max(14, lr.height - 2 * scene.pad.y),
+      left: tr.left - dr.left - PAD,
+      top:  tr.top  - dr.top  - PAD,
+      width:  tr.width  + 2 * PAD,
+      height: tr.height + 2 * PAD,
     };
-  }
-
-  function drawStatic(scene) {
-    const r = lineRectFor(scene);
-    rect.style.transition = 'none';
-    rect.style.opacity = '1';
-    rect.style.left   = r.left + 'px';
-    rect.style.top    = r.top + 'px';
-    rect.style.width  = r.width + 'px';
-    rect.style.height = r.height + 'px';
-    rect.classList.add('is-shown');
-    popup.style.transition = 'none';
-    popup.style.opacity = '1';
-    popupSrc.textContent = scene.orig;
-    popupTgt.textContent = scene.trans;
-    popup.style.left = (r.left + r.width + 14) + 'px';
-    popup.style.top  = Math.max(8, r.top - 6) + 'px';
-    popup.classList.add('is-shown');
-    cursor.style.transition = 'none';
-    cursor.style.transform = `translate(${r.left + r.width - 4}px, ${r.top + r.height - 4}px)`;
-    cursor.classList.add('is-shown');
-    lines[scene.lineIndex].classList.add('is-targeted');
   }
 
   function setCursor(x, y, dur) {
@@ -277,10 +238,38 @@
     if (props.left != null) popup.style.left = props.left + 'px';
     if (props.top  != null) popup.style.top  = props.top + 'px';
     if (props.opacity != null) popup.style.opacity = props.opacity;
-    if (props.scale   != null) popup.style.transform = `scale(${props.scale})`;
+    if (props.scale != null) popup.style.transform = `scale(${props.scale})`;
   }
 
-  // Promise that resolves after `ms`, but yields if the demo is offscreen.
+  function showLine(idx) {
+    targetLines.forEach((el, i) => {
+      el.classList.toggle('is-active', i === idx);
+    });
+  }
+
+  function setPopupText(scene) {
+    popupSrc.textContent = scene.orig;
+    popupTgt.textContent = scene.trans;
+  }
+
+  function drawStatic() {
+    const b = targetBox();
+    rect.style.transition = 'none';
+    rect.style.left = b.left + 'px';
+    rect.style.top = b.top + 'px';
+    rect.style.width = b.width + 'px';
+    rect.style.height = b.height + 'px';
+    rect.style.opacity = '1';
+    rect.classList.add('is-shown');
+    setPopupText(SCENES[0]);
+    showLine(0);
+    popup.style.transition = 'none';
+    popup.style.opacity = '1';
+    popup.style.left = b.left + 'px';
+    popup.style.top = (b.top + b.height + 14) + 'px';
+    popup.classList.add('is-shown');
+  }
+
   function sleep(ms) {
     return new Promise((resolve) => {
       const start = performance.now();
@@ -294,77 +283,85 @@
     });
   }
 
-  async function playScene(scene) {
-    const r = lineRectFor(scene);
-    const startX = r.left;
-    const startY = r.top;
-    const endX   = r.left + r.width;
-    const endY   = r.top  + r.height;
+  // Phase 1: cursor enters, drags rect, leaves. Popup pops in with scene 0.
+  async function drawRectAndOpenPopup() {
+    const b = targetBox();
+    showLine(0);
 
-    // 1. Cursor enters at top-left of selection.
-    setCursor(startX - 4, startY - 4, T.cursorTo);
+    // Cursor approach
+    setCursor(b.left - 4, b.top - 4, 750);
     cursor.classList.add('is-shown');
-    lines[scene.lineIndex].classList.add('is-targeted');
-    await sleep(T.cursorTo);
+    await sleep(750);
 
-    // 2. Rect appears at start point with zero size, then drag.
-    setRect({ left: startX, top: startY, width: 0, height: 0, opacity: 1 }, 0);
+    // Drag
+    setRect({ left: b.left, top: b.top, width: 0, height: 0, opacity: 1 }, 0);
     rect.classList.add('is-shown');
-    // Force a frame so the 0×0 rect commits before we transition.
     await sleep(20);
-    setRect({ width: r.width, height: r.height }, T.drag);
-    setCursor(endX - 4, endY - 4, T.drag);
-    await sleep(T.drag);
+    setRect({ width: b.width, height: b.height }, 950);
+    setCursor(b.left + b.width - 4, b.top + b.height - 4, 950);
+    await sleep(950);
 
-    // 3. Popup emerges to the right of the rect (or below, if there's
-    //    not enough horizontal room).
-    const popupLeft = (r.left + r.width + 14 + 240 < demo.clientWidth)
-      ? r.left + r.width + 14
-      : Math.max(8, r.left);
-    const popupTop = (r.left + r.width + 14 + 240 < demo.clientWidth)
-      ? Math.max(8, r.top - 6)
-      : r.top + r.height + 12;
-    popupSrc.textContent = scene.orig;
-    popupTgt.textContent = scene.trans;
+    // Cursor leaves (drag released)
+    cursor.classList.remove('is-shown');
+    await sleep(220);
+
+    // Popup pops in with the first scene
+    const popupLeft = b.left;
+    const popupTop  = b.top + b.height + 14;
+    setPopupText(SCENES[0]);
     setPopup({ left: popupLeft, top: popupTop, opacity: 0, scale: 0.92 }, 0);
     popup.classList.add('is-shown');
     await sleep(20);
-    setPopup({ opacity: 1, scale: 1 }, T.popupIn);
-    await sleep(T.popupIn);
+    setPopup({ opacity: 1, scale: 1 }, 320);
+    await sleep(320);
+  }
 
-    // 4. Hold while the user "reads" it.
-    await sleep(T.hold);
+  // Phase 2: cycle text inside the locked rectangle. Rect doesn't move; the
+  // line under it changes. Popup re-translates with each swap.
+  async function cycleScenes() {
+    let idx = 0;
+    // We've already shown scene 0; iterate from scene 1 forward.
+    for (let i = 1; i < SCENES.length; i++) {
+      await sleep(2400);
+      idx = i;
 
-    // 5. Fade everything out together.
-    setPopup({ opacity: 0, scale: 0.96 }, T.fadeOut);
-    setRect({ opacity: 0 }, T.fadeOut);
-    await sleep(T.fadeOut);
+      // Old line + popup contents fade
+      target.classList.add('is-translating');
+      popup.classList.add('is-translating');
+      await sleep(260);
+
+      // Swap content
+      setPopupText(SCENES[idx]);
+      showLine(idx);
+
+      // Fade back in
+      target.classList.remove('is-translating');
+      popup.classList.remove('is-translating');
+      await sleep(280);
+    }
+    await sleep(2400);
+  }
+
+  // Phase 3: tear down for the next loop.
+  async function teardown() {
+    setPopup({ opacity: 0, scale: 0.94 }, 360);
+    setRect({ opacity: 0 }, 360);
+    await sleep(360);
     rect.classList.remove('is-shown');
     popup.classList.remove('is-shown');
-    lines[scene.lineIndex].classList.remove('is-targeted');
-
-    // 6. Brief gap between scenes — cursor stays put.
-    await sleep(T.gap);
+    targetLines.forEach((el) => el.classList.remove('is-active'));
+    await sleep(500);
   }
 
   async function loop() {
-    // Initial cursor position: bottom-right of the demo, ready to glide in.
     cursor.style.transform = `translate(${demo.clientWidth - 28}px, ${demo.clientHeight - 28}px)`;
-    cursor.classList.add('is-shown');
     while (true) {
-      await playScene(SCENES[sceneIdx]);
-      sceneIdx = (sceneIdx + 1) % SCENES.length;
+      await drawRectAndOpenPopup();
+      await cycleScenes();
+      await teardown();
     }
   }
 
-  // Wait one frame for layout to settle (so getBoundingClientRect is correct).
+  // Wait two frames for layout to settle (so getBoundingClientRect is correct).
   requestAnimationFrame(() => requestAnimationFrame(loop));
-
-  // Recompute on resize — the in-flight scene will use stale coords for
-  // the rest of its frame, but the next scene picks the new layout up.
-  let resizeT = 0;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeT);
-    resizeT = setTimeout(() => { /* loop reads sizes per-scene */ }, 200);
-  }, { passive: true });
 })();

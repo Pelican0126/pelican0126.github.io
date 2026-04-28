@@ -43,10 +43,11 @@
     </div>
   </div>
 
-  <!-- Interactive demo: the JS in effects.js animates a ghost cursor that
-       drags a selection rectangle across the multilingual sample text and
-       pops a translation card next to it, looping through several scenes.
-       Pure DOM + CSS, no canvas. -->
+  <!-- Interactive demo: the JS in effects.js draws the selection rectangle
+       ONCE (cursor glides in, drags, leaves), then cycles different text
+       content through the same rectangle area. The popup re-translates
+       each new content — that's the actual "MutationObserver tracks the
+       rectangle" feature, not just decoration. -->
   <div class="hero-demo" aria-hidden="true">
     <div class="demo-frame">
       <div class="demo-toolbar">
@@ -56,15 +57,20 @@
         <span class="demo-url">example.com</span>
       </div>
       <div class="demo-page">
-        <p class="demo-line">Künstliche Intelligenz revolutioniert die Übersetzung im Browser.</p>
-        <p class="demo-line">人工知能がブラウザ翻訳を変える時代が来た。</p>
-        <p class="demo-line">Traducción local sin nube, en tu propio navegador.</p>
+        <p class="demo-line demo-line-static">Live chat · auto-scrolling</p>
+        <div class="demo-target">
+          <p class="demo-target-line is-active">Künstliche Intelligenz revolutioniert die Übersetzung.</p>
+          <p class="demo-target-line">人工知能がブラウザ翻訳を変える時代が来た。</p>
+          <p class="demo-target-line">Traducción local sin nube, en tu navegador.</p>
+          <p class="demo-target-line">번역이 로컬에서 실시간으로 작동합니다.</p>
+        </div>
+        <p class="demo-line demo-line-static">scroll · subtitle · ticker · chat</p>
       </div>
       <div class="demo-rect"></div>
       <div class="demo-popup">
-        <span class="demo-popup-label">PaneTrans</span>
+        <span class="demo-popup-label">PaneTrans · live</span>
         <div class="demo-popup-orig"></div>
-        <div class="demo-popup-arrow">→</div>
+        <div class="demo-popup-arrow">↓</div>
         <div class="demo-popup-trans"></div>
       </div>
       <svg class="demo-cursor" viewBox="0 0 24 24" width="22" height="22">

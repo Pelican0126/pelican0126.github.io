@@ -652,17 +652,49 @@ footer {
     linear-gradient(180deg, transparent 0%, rgba(127, 228, 215, 0.03) 100%),
     #0a2530;
 }
-.demo-line {
-  margin: 0 0 22px;
-  font-size: 17px;
-  line-height: 1.6;
-  color: #d4e8e5;
-  transition: color 0.4s ease, opacity 0.4s ease;
-  opacity: 0.78;
+/* Static lines above/below the targeted region — pure scenery, dimmed */
+.demo-line-static {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #4d6e72;
+  opacity: 0.55;
 }
-.demo-line.is-targeted {
+.demo-line-static:last-child {
+  margin: 16px 0 0;
+}
+
+/* The stable-area: the rectangle wraps this exact box. Lines stack
+   absolutely on top of each other; only the .is-active one is visible. */
+.demo-target {
+  position: relative;
+  margin: 18px 0;
+  height: 60px;            /* one line of text + breathing room */
+  overflow: hidden;
+}
+.demo-target.is-translating {
+  /* Brief shimmer between scene swaps so the user sees "something happened" */
+  animation: targetShimmer 0.4s ease;
+}
+@keyframes targetShimmer {
+  0%, 100% { background: transparent; }
+  50%      { background: rgba(127, 228, 215, 0.06); }
+}
+.demo-target-line {
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  transform: translateY(-50%) translateY(8px);
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.4;
   color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.34s ease, transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.demo-target-line.is-active {
   opacity: 1;
+  transform: translateY(-50%);
 }
 
 /* Selection rectangle drawn over the targeted line */
@@ -703,6 +735,16 @@ footer {
   z-index: 3;
 }
 .demo-popup.is-shown { opacity: 1; transform: scale(1); }
+.demo-popup.is-translating .demo-popup-orig,
+.demo-popup.is-translating .demo-popup-trans {
+  /* Quick fade between scenes — implies the popup re-translated */
+  opacity: 0.25;
+  transition: opacity 0.26s ease;
+}
+.demo-popup-orig,
+.demo-popup-trans {
+  transition: opacity 0.32s ease;
+}
 .demo-popup-label {
   display: inline-block;
   font-size: 9px;
@@ -783,6 +825,17 @@ footer {
               0 4px 12px rgba(10, 31, 37, 0.10);
 }
 
+/* Row 03 (model picker) — the popup screenshot is portrait-ish and
+   visually heavier than the other two; constrain it so the row
+   stays balanced with its text column. */
+.feat:nth-child(3) .feat-img {
+  display: flex;
+  justify-content: center;
+}
+.feat:nth-child(3) .feat-img img {
+  max-width: 72%;
+}
+
 /* Trust list — slide-right shimmer on hover */
 .trust-list li {
   transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
@@ -795,7 +848,11 @@ footer {
   box-shadow: 0 8px 22px rgba(78, 205, 196, 0.12);
 }
 
-/* Pricing cards — Pro card gets a slow rotating accent ring */
+/* Pricing cards — Pro card gets a steady glow + subtle pulse. The earlier
+   conic-gradient ring trick (mask-composite: exclude) didn't render
+   reliably across Chrome versions and leaked the unmasked rectangle as
+   a rotating diamond on some devices. Replaced with a simpler pulsing
+   glow that's always honest about what it's drawing. */
 .price-card {
   transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
               box-shadow 0.4s ease;
@@ -804,29 +861,20 @@ footer {
   transform: translateY(-6px);
   box-shadow: 0 22px 50px rgba(78, 205, 196, 0.20);
 }
-.price-card-pro::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 14px;
-  padding: 2px;
-  background: conic-gradient(from 0deg,
-    rgba(78, 205, 196, 0.0) 0deg,
-    rgba(78, 205, 196, 0.85) 90deg,
-    rgba(68, 176, 158, 0.85) 180deg,
-    rgba(78, 205, 196, 0.0) 360deg);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  animation: ringSpin 6s linear infinite;
-  pointer-events: none;
-  z-index: 0;
+.price-card-pro {
+  animation: proGlow 4.5s ease-in-out infinite;
 }
-.price-card-pro > * { position: relative; z-index: 1; }
-@keyframes ringSpin {
-  to { transform: rotate(360deg); }
+@keyframes proGlow {
+  0%, 100% {
+    box-shadow:
+      0 12px 32px rgba(78, 205, 196, 0.18),
+      0 0 0 0 rgba(78, 205, 196, 0.0);
+  }
+  50% {
+    box-shadow:
+      0 18px 44px rgba(78, 205, 196, 0.28),
+      0 0 0 4px rgba(78, 205, 196, 0.12);
+  }
 }
 
 /* Logo wiggle on hover */
