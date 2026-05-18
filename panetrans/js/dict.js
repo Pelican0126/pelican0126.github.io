@@ -230,6 +230,8 @@ window.PANETRANS_I18N = {
     'refund.h1': 'Refund Policy',
     'refund.effective': 'Effective date: 2026-04-25 · Last updated: 2026-04-25',
     'refund.tldr': '<strong>14 days, no questions asked.</strong> If PaneTrans isn\'t right for you within 14 days of purchase, email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> from the address you used to pay and we\'ll refund you in full.',
+    'refund.requestBtn': 'Request a refund',
+    'refund.requestNote': 'Opens your mail app with the request pre-filled — you just paste your Dodo order ID.',
     'refund.h2.1': '1. Who is eligible',
     'refund.p.1': 'Anyone who purchased a paid PaneTrans plan (Lifetime or Monthly) within the last 14 days, regardless of how much you used the Pro features.',
     'refund.h2.2': '2. How to request',
@@ -474,6 +476,8 @@ window.PANETRANS_I18N = {
     'refund.h1': '退款政策',
     'refund.effective': '生效日期：2026-04-25 · 最后更新：2026-04-25',
     'refund.tldr': '<strong>14 天，无理由。</strong>购买后 14 天内若觉得 PaneTrans 不合适，用付款邮箱发邮件到 <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>，我们全额退款。',
+    'refund.requestBtn': '申请退款',
+    'refund.requestNote': '点了直接打开你的邮件 app，邮件主题正文已经写好 —— 你只需粘贴 Dodo 订单号。',
     'refund.h2.1': '1. 谁有资格',
     'refund.p.1': '任何在过去 14 天内购买 PaneTrans 付费档（终身或月付）的用户均可，不论你已使用 Pro 功能多少。',
     'refund.h2.2': '2. 怎么申请',
@@ -718,6 +722,8 @@ window.PANETRANS_I18N = {
     'refund.h1': '返金ポリシー',
     'refund.effective': '発効日：2026-04-25 · 最終更新：2026-04-25',
     'refund.tldr': '<strong>14 日間、理由不要。</strong>購入から 14 日以内に PaneTrans が合わないと感じた場合、決済時のアドレスから <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> へご連絡いただければ全額返金します。',
+    'refund.requestBtn': '返金をリクエスト',
+    'refund.requestNote': 'クリックするとメーラーが開き、件名と本文は記入済み —— あとは Dodo 注文 ID を貼り付けるだけ。',
     'refund.h2.1': '1. 対象者',
     'refund.p.1': 'PaneTrans の有料プラン（永続版または月額）を過去 14 日以内に購入した方は、Pro 機能をどれだけ使ったかに関わらず対象です。',
     'refund.h2.2': '2. 申請方法',
@@ -872,6 +878,8 @@ window.PANETRANS_I18N = {
 
     'demo.h2': '看它實際怎麼動',
     'demo.lede': '右鍵 → 拉個框 → 翻譯。新內容進來時浮窗會一直跟著翻。',
+    'refund.requestBtn': '申請退款',
+    'refund.requestNote': '點了直接打開你的郵件 app，主題與內容已經寫好 —— 你只需貼上 Dodo 訂單號。',
   },
 
   // ==========================================================================
@@ -1002,6 +1010,8 @@ window.PANETRANS_I18N = {
 
     'demo.h2': '실제로 어떻게 동작하는지',
     'demo.lede': '우클릭 → 사각형 드래그 → 번역. 새로운 내용이 들어와도 팝업은 계속 지켜봅니다.',
+    'refund.requestBtn': '환불 요청',
+    'refund.requestNote': '클릭하면 메일 앱이 열리고 제목과 본문이 미리 채워집니다 — Dodo 주문 ID만 붙여넣으면 됩니다.',
   },
 
   // ==========================================================================
@@ -1132,6 +1142,8 @@ window.PANETRANS_I18N = {
 
     'demo.h2': 'Velo funcionar de verdad',
     'demo.lede': 'Clic derecho → arrastra un rectángulo → traduce. El popup sigue mirando mientras llega contenido nuevo.',
+    'refund.requestBtn': 'Solicitar reembolso',
+    'refund.requestNote': 'Abre tu app de correo con la solicitud rellenada — solo pegas tu ID de pedido de Dodo.',
   },
 
   // ==========================================================================
@@ -1262,6 +1274,8 @@ window.PANETRANS_I18N = {
 
     'demo.h2': 'Regardez-le vraiment fonctionner',
     'demo.lede': "Clic droit → glissez un rectangle → traduisez. Le popup continue à surveiller quand du nouveau contenu arrive.",
+    'refund.requestBtn': 'Demander un remboursement',
+    'refund.requestNote': "Ouvre votre application mail avec la demande pré-remplie — vous n'avez qu'à coller votre ID de commande Dodo.",
   },
 
   // ==========================================================================
@@ -1392,6 +1406,8 @@ window.PANETRANS_I18N = {
 
     'demo.h2': 'Sieh dir an, wie es wirklich läuft',
     'demo.lede': 'Rechtsklick → Rechteck ziehen → übersetzen. Das Popup schaut weiter zu, wenn neuer Inhalt reinkommt.',
+    'refund.requestBtn': 'Rückerstattung anfordern',
+    'refund.requestNote': 'Öffnet dein Mail-Programm mit der Anfrage vorausgefüllt — du fügst nur die Dodo-Bestell-ID ein.',
   },
 
   // ==========================================================================
@@ -1522,6 +1538,8 @@ window.PANETRANS_I18N = {
 
     'demo.h2': 'Veja funcionando de verdade',
     'demo.lede': 'Clique direito → arraste um retângulo → traduza. O popup continua olhando enquanto chega conteúdo novo.',
+    'refund.requestBtn': 'Solicitar reembolso',
+    'refund.requestNote': 'Abre seu app de e-mail com a solicitação pré-preenchida — você só cola seu ID de pedido da Dodo.',
   },
 
   // ==========================================================================
@@ -1652,6 +1670,8 @@ window.PANETRANS_I18N = {
 
     'demo.h2': 'Посмотрите, как это реально работает',
     'demo.lede': 'Правый клик → выделить прямоугольник → перевести. Окно продолжает следить, когда приходит новый контент.',
+    'refund.requestBtn': 'Запросить возврат',
+    'refund.requestNote': 'Откроет почтовый клиент с готовым письмом — вам останется только вставить ID заказа Dodo.',
   },
 
   // ==========================================================================
@@ -1782,5 +1802,7 @@ window.PANETRANS_I18N = {
 
     'demo.h2': 'Guardalo davvero in azione',
     'demo.lede': 'Clic destro → trascina un rettangolo → traduci. Il popup continua a guardare mentre arriva nuovo contenuto.',
+    'refund.requestBtn': 'Richiedi rimborso',
+    'refund.requestNote': 'Apre la tua app email con la richiesta pre-compilata — basta incollare il tuo ID ordine Dodo.',
   },
 };

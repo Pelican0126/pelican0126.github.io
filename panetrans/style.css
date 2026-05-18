@@ -825,6 +825,21 @@ footer {
   box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.18);
 }
 
+/* ---- Refund request CTA (one-click mailto with prefilled body) ---- */
+.refund-cta {
+  margin: 0 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.refund-cta .btn { white-space: nowrap; }
+.refund-cta-note {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 /* ---- Support page portal banner (self-serve callout) ---- */
 .support-portal-banner {
   max-width: 760px;
