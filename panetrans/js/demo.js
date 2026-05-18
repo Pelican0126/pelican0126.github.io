@@ -99,12 +99,20 @@
   function $(id) { return document.getElementById(id); }
 
   function pickLang() {
-    const dictLang = (document.documentElement.lang || 'en').toLowerCase();
-    if (TRANS[dictLang]) return dictLang;
-    // Match 'zh-CN' → 'zh', 'pt-BR' → 'pt' etc.
-    const short = dictLang.split('-')[0];
-    if (TRANS[short]) return short;
-    if (dictLang.startsWith('zh') && TRANS['zh-TW']) return 'zh-TW';
+    const raw = (document.documentElement.lang || 'en');
+    const lower = raw.toLowerCase();
+    // Match common IETF subtags. Order matters: longer / region-specific
+    // checks first so zh-TW / zh-HK / zh-MO don't collapse to simplified.
+    if (lower === 'zh-tw' || lower === 'zh-hk' || lower === 'zh-mo') return 'zh-TW';
+    // Then exact (case-insensitive) match against our dict keys.
+    for (const k of Object.keys(TRANS)) {
+      if (k.toLowerCase() === lower) return k;
+    }
+    // Fall back to language prefix (zh-CN → zh, pt-BR → pt, etc).
+    const short = lower.split('-')[0];
+    for (const k of Object.keys(TRANS)) {
+      if (k.toLowerCase() === short) return k;
+    }
     return 'en';
   }
 
