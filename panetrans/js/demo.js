@@ -151,17 +151,18 @@
     if (ctx) ctx.classList.remove('is-visible');
     if (cursor) cursor.classList.add('is-dragging');
   }
-  function rectStartGrow() { if (rect) rect.classList.add('is-growing'); }
+  function rectStartGrow() { if (rect) rect.className = 'demo-rect is-growing'; }
   function rectFinalize() {
-    if (rect) {
-      rect.classList.remove('is-growing');
-      rect.classList.add('is-final');
-    }
+    // Single className assignment so the rect never momentarily holds just
+    // `.demo-rect`. Two separate classList ops created a one-microtask gap
+    // where transform: scale(0.05) re-applied and the running transition
+    // immediately reversed direction — leaving the rect stuck at 5% size.
+    if (rect) rect.className = 'demo-rect is-final';
   }
   function cursorPark() {
     if (cursor) {
-      cursor.classList.remove('is-dragging', 'is-on-target');
-      cursor.classList.add('is-parked');
+      // Same atomic-className trick to avoid an in-between visual flicker.
+      cursor.className = 'demo-cursor is-visible is-parked';
     }
   }
   function popupAppear() {
