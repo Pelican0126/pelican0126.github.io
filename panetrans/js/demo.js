@@ -261,20 +261,13 @@
       return;
     }
 
-    // Pause only when the tab is hidden (background tab / minimized window).
-    // We don't use IntersectionObserver here — earlier experience showed it
-    // misbehaves under headless / backgrounded chrome where the first
-    // intersection callback can fire before layout settles, leaving the loop
-    // stuck. The animation is cheap (a handful of setTimeouts driving CSS
-    // class swaps), so just let it run in the background while the tab is
-    // active and the user can scroll into it at any time.
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        timers.forEach(clearTimeout);
-      } else {
-        runLoop();
-      }
-    });
+    // We don't try to pause the loop on tab-hide or scroll-out: every attempt
+    // to do that introduced an edge case (observer pre-layout deadlocks,
+    // visibilitychange firing on dev-tool focus and silently restarting the
+    // loop every query, leaving the rect stuck mid-transition). The animation
+    // is just setTimeouts driving CSS class swaps — cheap enough to let run.
+    // Background tabs get setTimeout throttling for free, so the cost when
+    // off-screen is essentially zero.
 
     // Re-translate the popup if the user changes language mid-animation.
     document.querySelectorAll('.lang-switcher [data-lang], .lang-switcher select').forEach((el) => {
