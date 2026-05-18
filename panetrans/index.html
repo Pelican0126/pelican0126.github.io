@@ -9,7 +9,7 @@
   <meta property="og:title" content="PaneTrans — A pane of clarity on every frame" data-i18n-attr="content:og.title.index">
   <meta property="og:description" content="Local-AI Chrome translator with continuous region monitoring." data-i18n-attr="content:og.desc.index">
   <meta property="og:image" content="assets/live-popup.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260518d">
 </head>
 <body>
 
@@ -73,21 +73,26 @@
         <span class="demo-url">livestream.example/chat</span>
       </div>
       <div class="demo-content">
-        <div class="demo-chat" id="demo-chat"></div>
+        <!-- Two columns: chat on the left, popup on the right. Rect lives
+             inside the chat-frame so it always overlays the chat exactly,
+             regardless of how much text it ends up holding. -->
+        <div class="demo-chat-frame">
+          <div class="demo-chat" id="demo-chat"></div>
+          <div class="demo-rect" id="demo-rect"></div>
+        </div>
+        <div class="demo-popup" id="demo-popup">
+          <div class="demo-popup-header">
+            <span class="demo-popup-dot"></span>
+            <span class="demo-popup-title">PaneTrans · Live</span>
+          </div>
+          <div class="demo-popup-body" id="demo-popup-body"></div>
+        </div>
       </div>
       <div class="demo-cursor" id="demo-cursor"></div>
       <div class="demo-context" id="demo-context">
         <div class="demo-context-item">Open Link</div>
         <div class="demo-context-item demo-context-active">→ Translate Region</div>
         <div class="demo-context-item">Inspect</div>
-      </div>
-      <div class="demo-rect" id="demo-rect"></div>
-      <div class="demo-popup" id="demo-popup">
-        <div class="demo-popup-header">
-          <span class="demo-popup-dot"></span>
-          <span class="demo-popup-title">PaneTrans · Live</span>
-        </div>
-        <div class="demo-popup-body" id="demo-popup-body"></div>
       </div>
     </div>
   </div>
@@ -167,8 +172,8 @@
   <p class="foot-fine" data-i18n="footer.copy">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
 
-<script src="js/dict.js?v=20260518c"></script>
-<script src="js/i18n.js?v=20260518c"></script>
-<script src="js/demo.js?v=20260518c"></script>
+<script src="js/dict.js?v=20260518d"></script>
+<script src="js/i18n.js?v=20260518d"></script>
+<script src="js/demo.js?v=20260518d"></script>
 </body>
 </html>

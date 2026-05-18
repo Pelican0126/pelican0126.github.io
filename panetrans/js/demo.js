@@ -71,24 +71,30 @@
 
   // ---- Animation timeline ----
   // Each step's `at` is the cumulative offset (ms) from the start of one loop.
-  const TIMELINE_MS = 18000;
+  const TIMELINE_MS = 19000;
+  // Timeline notes:
+  //   * Chat changes lead popup updates by ~750 ms — this delay is the demo's
+  //     whole point. The live dot pulses in that window so the user reads it
+  //     as "the popup is catching up to the new content" rather than as lag.
+  //   * Rectangle stays final / pulsing through the chat updates so it's
+  //     clear the same region is being monitored across scene changes.
   const STEPS = [
     { at:     0, fn: reset },
-    { at:   400, fn: cursorVisible },
-    { at:  1200, fn: cursorToTarget },
-    { at:  2400, fn: rightClickFlash },
-    { at:  2700, fn: showContextMenu },
-    { at:  4200, fn: hideContextMenuStartDrag },
-    { at:  4400, fn: rectStartGrow },
-    { at:  5400, fn: rectFinalize },
+    { at:   500, fn: cursorVisible },
+    { at:  1400, fn: cursorToTarget },
+    { at:  2500, fn: rightClickFlash },
+    { at:  2800, fn: showContextMenu },
+    { at:  4300, fn: hideContextMenuStartDrag },
+    { at:  4500, fn: rectStartGrow },
+    { at:  5500, fn: rectFinalize },
     { at:  5500, fn: cursorPark },
     { at:  6000, fn: popupAppear },
     { at:  6300, fn: renderPopup(0) },
-    { at:  8800, fn: setChat(1) },
-    { at:  9100, fn: renderPopup(1) },
-    { at: 12000, fn: setChat(2) },
-    { at: 12300, fn: renderPopup(2) },
-    { at: 16500, fn: fadeOut },
+    { at:  9000, fn: setChat(1) },
+    { at:  9750, fn: renderPopup(1) },
+    { at: 12500, fn: setChat(2) },
+    { at: 13250, fn: renderPopup(2) },
+    { at: 17500, fn: fadeOut },
   ];
 
   // ---- DOM refs (filled in init) ----
@@ -122,7 +128,15 @@
     setChat(0)();
     if (cursor) cursor.className = 'demo-cursor';
     if (ctx)    ctx.className = 'demo-context';
-    if (rect)   rect.className = 'demo-rect';
+    if (rect) {
+      // Reset rectangle without animating back through the shrink — the
+      // user is about to watch the next loop draw it fresh, so we want
+      // the rect to disappear instantly on reset.
+      rect.style.transition = 'none';
+      rect.className = 'demo-rect';
+      void rect.offsetWidth; // force reflow so the no-transition takes effect
+      rect.style.transition = '';
+    }
     if (popup)  popup.className = 'demo-popup';
     if (popupBody) popupBody.innerHTML = '';
   }

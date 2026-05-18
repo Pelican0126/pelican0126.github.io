@@ -521,6 +521,20 @@ footer {
   overflow: hidden;
 }
 
+/* Chat lives in a fixed-width frame on the left so the rectangle has a
+   stable target to overlay. The frame has a faint background so it's
+   visible even before the rectangle appears — gives the cursor a clear
+   thing to "drag" around. */
+.demo-chat-frame {
+  position: relative;
+  width: 52%;
+  min-height: 132px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 7px;
+}
+
 .demo-chat {
   display: flex;
   flex-direction: column;
@@ -593,16 +607,20 @@ footer {
   z-index: -1;
 }
 .demo-cursor.is-visible    { opacity: 1; }
-.demo-cursor.is-on-target  { left: 28%; top: 56%; }
-.demo-cursor.is-clicking   { transform: scale(0.8); }
-.demo-cursor.is-dragging   { left: 64%; top: 70%; transition-duration: 1s; }
-.demo-cursor.is-parked     { left: 64%; top: 70%; }
+/* Coordinates are tuned to land on the actual .demo-chat-frame (which sits
+   roughly x: 3-52%, y: 12-39% inside .demo-window after the title bar and
+   the demo-content padding). */
+.demo-cursor.is-on-target  { left: 4%;  top: 12%; }
+.demo-cursor.is-clicking   { left: 4%;  top: 12%; transform: scale(0.82); }
+.demo-cursor.is-dragging   { left: 50%; top: 38%; transition-duration: 1s; }
+.demo-cursor.is-parked     { left: 50%; top: 38%; }
 
-/* Right-click context menu */
+/* Right-click context menu — pops up just below the cursor's on-target
+   position, aligned to the top-left of the chat frame. */
 .demo-context {
   position: absolute;
-  top: 58%;
-  left: 28%;
+  top: 16%;
+  left: 5%;
   background: #fff;
   border: 1px solid #d4d7dd;
   border-radius: 6px;
@@ -631,51 +649,53 @@ footer {
   font-weight: 600;
 }
 
-/* Selection rectangle — dashed teal border */
+/* Selection rectangle — sits inside .demo-chat-frame and ALWAYS overlays it
+   exactly. We grow it visually via transform: scale() from the top-left so
+   it looks like the cursor is dragging a marquee out from its starting
+   point, even though the rect is always pinned to the chat content's
+   bounds. This is what makes the demo look right regardless of how much
+   chat content the current scene happens to hold. */
 .demo-rect {
   position: absolute;
-  left: 20%;
-  top: 30%;
-  width: 0;
-  height: 0;
-  border: 0 dashed var(--teal);
-  border-radius: 4px;
-  background: rgba(78, 205, 196, 0.06);
+  inset: 0;
+  border: 0 dashed transparent;
+  border-radius: 6px;
+  background: transparent;
   opacity: 0;
+  transform: scale(0.05);
+  transform-origin: top left;
   transition:
-    width 1s cubic-bezier(0.4, 0, 0.2, 1),
-    height 1s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.3s ease,
-    border-width 0.2s ease;
+    opacity 0.25s ease,
+    transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.2s,
+    background-color 0.2s;
   z-index: 3;
   pointer-events: none;
 }
-.demo-rect.is-growing {
-  opacity: 1;
-  width: 46%;
-  height: 28%;
-  border-width: 2px;
-}
+.demo-rect.is-growing,
 .demo-rect.is-final {
   opacity: 1;
-  width: 46%;
-  height: 28%;
-  border-width: 2px;
+  transform: scale(1);
+  border: 2px dashed var(--teal);
+  background: rgba(78, 205, 196, 0.08);
+}
+.demo-rect.is-final {
   animation: demo-rect-pulse 2.2s ease-in-out infinite;
 }
 @keyframes demo-rect-pulse {
-  0%, 100% { border-color: var(--teal); background-color: rgba(78, 205, 196, 0.08); }
-  50%      { border-color: rgba(78, 205, 196, 0.5); background-color: rgba(78, 205, 196, 0.03); }
+  0%, 100% { border-color: var(--teal); background-color: rgba(78, 205, 196, 0.1); }
+  50%      { border-color: rgba(78, 205, 196, 0.45); background-color: rgba(78, 205, 196, 0.03); }
 }
 .demo-rect.is-fading {
   opacity: 0;
 }
 
-/* Translation popup */
+/* Translation popup — fixed on the right side of the demo content area,
+   sized to fit two bilingual pairs comfortably. */
 .demo-popup {
   position: absolute;
-  right: 14px;
-  top: 28%;
+  right: 28px;
+  top: 60px;
   width: 38%;
   min-width: 220px;
   background: rgba(22, 24, 32, 0.86);
