@@ -18,9 +18,24 @@
  * Switching language re-runs apply() with no page reload.
  */
 (function () {
-  const SUPPORTED = ['en', 'zh', 'ja'];
+  const SUPPORTED = ['en', 'zh', 'zh-TW', 'ja', 'ko', 'es', 'fr', 'de', 'pt', 'ru', 'it'];
   const FALLBACK = 'en';
   const STORAGE_KEY = 'panetrans-lang';
+  // Map navigator.language prefixes to our codes. Order matters — we check
+  // longer prefixes first ('zh-tw' before 'zh') so Hong Kong / Taiwan users
+  // land on traditional Chinese instead of simplified.
+  const NAV_HINTS = [
+    ['zh-tw', 'zh-TW'], ['zh-hk', 'zh-TW'], ['zh-mo', 'zh-TW'],
+    ['zh',    'zh'],
+    ['ja',    'ja'],
+    ['ko',    'ko'],
+    ['es',    'es'],
+    ['fr',    'fr'],
+    ['de',    'de'],
+    ['pt',    'pt'],
+    ['ru',    'ru'],
+    ['it',    'it'],
+  ];
 
   function detectInitialLang() {
     // URL `?lang=xx` wins — that's how the legal pages' "view English version"
@@ -34,8 +49,9 @@
       if (saved && SUPPORTED.includes(saved)) return saved;
     } catch (_) { /* private mode etc. */ }
     const nav = (navigator.language || '').toLowerCase();
-    if (nav.startsWith('zh')) return 'zh';
-    if (nav.startsWith('ja')) return 'ja';
+    for (const [prefix, code] of NAV_HINTS) {
+      if (nav.startsWith(prefix)) return code;
+    }
     return FALLBACK;
   }
 
@@ -50,9 +66,14 @@
   function applyLang(lang) {
     if (!SUPPORTED.includes(lang)) lang = FALLBACK;
 
-    // Set <html lang="..."> for accessibility + SEO.
-    const htmlLangAttr = lang === 'zh' ? 'zh-CN' : (lang === 'ja' ? 'ja-JP' : 'en');
-    document.documentElement.lang = htmlLangAttr;
+    // Set <html lang="..."> for accessibility + SEO. Map our internal codes to
+    // IETF subtags where the regional flavour matters.
+    const HTML_LANG = {
+      'en':    'en', 'zh':    'zh-CN', 'zh-TW': 'zh-TW', 'ja': 'ja-JP',
+      'ko':    'ko', 'es':    'es',    'fr':    'fr',    'de': 'de',
+      'pt':    'pt-BR', 'ru': 'ru',    'it':    'it',
+    };
+    document.documentElement.lang = HTML_LANG[lang] || lang;
 
     // Text-content translations.
     document.querySelectorAll('[data-i18n]').forEach((el) => {
@@ -78,20 +99,30 @@
       });
     });
 
-    // Reflect choice in the switcher buttons (visual active state).
+    // Reflect choice in the switcher (both legacy button group and the new
+    // `<select>` variant get updated so either UI works without code changes).
     document.querySelectorAll('.lang-switcher [data-lang]').forEach((b) => {
       b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');
+    });
+    document.querySelectorAll('.lang-switcher select').forEach((s) => {
+      if (s.value !== lang) s.value = lang;
     });
 
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (_) {}
   }
 
   function wireSwitcher() {
+    // Legacy button variant.
     document.querySelectorAll('.lang-switcher [data-lang]').forEach((b) => {
       b.addEventListener('click', (e) => {
         e.preventDefault();
         applyLang(b.getAttribute('data-lang'));
       });
+    });
+    // New `<select>` variant (used everywhere now — buttons supported only
+    // for back-compat if anyone embeds the switcher in a custom widget).
+    document.querySelectorAll('.lang-switcher select').forEach((s) => {
+      s.addEventListener('change', () => applyLang(s.value));
     });
   }
 
