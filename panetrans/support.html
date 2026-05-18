@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Support — PaneTrans</title>
+  <title data-i18n="title.support">Support — PaneTrans</title>
   <link rel="icon" href="assets/icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,78 +15,83 @@
     <span>PaneTrans</span>
   </a>
   <nav>
-    <a href="index.html#features">Features</a>
-    <a href="pricing.html">Pricing</a>
+    <a href="index.html#features" data-i18n="nav.features">Features</a>
+    <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
+    <span class="lang-switcher" role="group" aria-label="Language">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="zh">中文</button>
+      <button type="button" data-lang="ja">日本語</button>
+    </span>
   </nav>
 </header>
 
 <article class="legal">
-  <h1>Support</h1>
-  <p class="legal-meta">Last updated: 2026-05-18</p>
+  <h1 data-i18n="support.h1">Support</h1>
+  <p class="legal-meta" data-i18n="support.metaDate">Last updated: 2026-05-18</p>
 
-  <p class="legal-tldr">
+  <p class="legal-tldr" data-i18n-html="support.tldr">
     Need help? Email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>
     with your Chrome version, the page URL where the problem happened, and (if
     relevant) your Paddle order ID. We reply within 2 business days.
   </p>
 
-  <h2>Quick start</h2>
+  <h2 data-i18n="support.quickStart.h2">Quick start</h2>
   <ol>
-    <li>Install PaneTrans from the Chrome Web Store.</li>
-    <li>Open any web page with text you want translated.</li>
-    <li>Right-click → <strong>Translate Region</strong>, or click the PaneTrans toolbar icon → <strong>Drag a region</strong>.</li>
-    <li>Drag a rectangle around the text. A draggable popup appears with the original and translation side-by-side.</li>
-    <li>The popup keeps re-translating as the underlying text changes — close it with the × when you're done.</li>
+    <li data-i18n="support.quickStart.li1">Install PaneTrans from the Chrome Web Store.</li>
+    <li data-i18n="support.quickStart.li2">Open any web page with text you want translated.</li>
+    <li data-i18n-html="support.quickStart.li3">Right-click → <strong>Translate Region</strong>, or click the PaneTrans toolbar icon → <strong>Drag a region</strong>.</li>
+    <li data-i18n="support.quickStart.li4">Drag a rectangle around the text. A draggable popup appears with the original and translation side-by-side.</li>
+    <li data-i18n="support.quickStart.li5">The popup keeps re-translating as the underlying text changes — close it with the × when you're done.</li>
   </ol>
 
-  <h2>Common issues</h2>
+  <h2 data-i18n="support.issues.h2">Common issues</h2>
 
-  <h3>The first translation is slow.</h3>
-  <p>The first time you pick a translation model, PaneTrans downloads it from Hugging Face's CDN (around 160 MB for OPUS-MT, larger for NLLB / M2M / Gemma). The model is then cached in your browser, so subsequent translations are instant. You can pre-download models from the toolbar popup → <strong>Models</strong>.</p>
+  <h3 data-i18n="support.issue.slowFirst.h3">The first translation is slow.</h3>
+  <p data-i18n-html="support.issue.slowFirst.p">The first time you pick a translation model, PaneTrans downloads it from Hugging Face's CDN (around 160 MB for OPUS-MT, larger for NLLB / M2M / Gemma). The model is then cached in your browser, so subsequent translations are instant. You can pre-download models from the toolbar popup → <strong>Models</strong>.</p>
 
-  <h3>The popup shows the original text but no translation.</h3>
-  <p>Usually means the selected model is still downloading or your machine doesn't have WebGPU. Open the toolbar popup → <strong>Models</strong> and check the download progress. If WebGPU is unavailable, PaneTrans falls back to WASM (slower but works on any machine).</p>
+  <h3 data-i18n="support.issue.noTrans.h3">The popup shows the original text but no translation.</h3>
+  <p data-i18n-html="support.issue.noTrans.p">Usually means the selected model is still downloading or your machine doesn't have WebGPU. Open the toolbar popup → <strong>Models</strong> and check the download progress. If WebGPU is unavailable, PaneTrans falls back to WASM (slower but works on any machine).</p>
 
-  <h3>"Translate Region" isn't in the right-click menu.</h3>
-  <p>Make sure the extension is enabled at <code>chrome://extensions</code>. If you just installed it, reload the page once — the context-menu item is registered when the page loads.</p>
+  <h3 data-i18n="support.issue.noMenu.h3">"Translate Region" isn't in the right-click menu.</h3>
+  <p data-i18n-html="support.issue.noMenu.p">Make sure the extension is enabled at <code>chrome://extensions</code>. If you just installed it, reload the page once — the context-menu item is registered when the page loads.</p>
 
-  <h3>YouTube bilingual subtitles aren't appearing.</h3>
-  <p>Open the toolbar popup, switch the <strong>YouTube subtitles</strong> toggle on, and reload the YouTube tab. The feature only activates on <code>youtube.com/watch?v=…</code> pages.</p>
+  <h3 data-i18n="support.issue.noYt.h3">YouTube bilingual subtitles aren't appearing.</h3>
+  <p data-i18n-html="support.issue.noYt.p">Open the toolbar popup, switch the <strong>YouTube subtitles</strong> toggle on, and reload the YouTube tab. The feature only activates on <code>youtube.com/watch?v=…</code> pages.</p>
 
-  <h3>OCR (text in images / videos) isn't working.</h3>
-  <p>PaneTrans uses Tesseract.js for OCR; it downloads language data from <code>tessdata.projectnaptha.com</code> on first use. If your network blocks that host, OCR will fail. The error message in the popup tells you which language data is missing.</p>
+  <h3 data-i18n="support.issue.noOcr.h3">OCR (text in images / videos) isn't working.</h3>
+  <p data-i18n-html="support.issue.noOcr.p">PaneTrans uses Tesseract.js for OCR; it downloads language data from <code>tessdata.projectnaptha.com</code> on first use. If your network blocks that host, OCR will fail. The error message in the popup tells you which language data is missing.</p>
 
-  <h2>License keys (Pro)</h2>
+  <h2 data-i18n="support.license.h2">License keys (Pro)</h2>
 
-  <h3>I bought Pro but my license key didn't arrive.</h3>
-  <p>Check your spam folder for the receipt from Paddle. If it's not there, email us with the address you used at checkout and we'll resend the key.</p>
+  <h3 data-i18n="support.license.notArrived.h3">I bought Pro but my license key didn't arrive.</h3>
+  <p data-i18n="support.license.notArrived.p">Check your spam folder for the receipt from Paddle. If it's not there, email us with the address you used at checkout and we'll resend the key.</p>
 
-  <h3>Activating the key.</h3>
-  <p>Open the toolbar popup → <strong>Upgrade</strong> → paste the key → <strong>Activate</strong>. The Pro models (gpt-oss, Gemma 3) become available in the model picker once activation succeeds.</p>
+  <h3 data-i18n="support.license.activate.h3">Activating the key.</h3>
+  <p data-i18n-html="support.license.activate.p">Open the toolbar popup → <strong>Upgrade</strong> → paste the key → <strong>Activate</strong>. The Pro models (gpt-oss, Gemma 3) become available in the model picker once activation succeeds.</p>
 
-  <h3>Using Pro on multiple browsers.</h3>
-  <p>Your key activates on multiple browsers — sign in with the same Chrome / Edge / Brave profile and activate again on each one. If you hit the activation limit, email us and we'll reset it.</p>
+  <h3 data-i18n="support.license.multi.h3">Using Pro on multiple browsers.</h3>
+  <p data-i18n="support.license.multi.p">Your key activates on multiple browsers — sign in with the same Chrome / Edge / Brave profile and activate again on each one. If you hit the activation limit, email us and we'll reset it.</p>
 
-  <h3>Refunds.</h3>
-  <p>14-day no-questions-asked. See the <a href="refund.html">Refund Policy</a> for the exact procedure.</p>
+  <h3 data-i18n="support.license.refund.h3">Refunds.</h3>
+  <p data-i18n-html="support.license.refund.p">14-day no-questions-asked. See the <a href="refund.html">Refund Policy</a> for the exact procedure.</p>
 
-  <h2>Contact</h2>
-  <p>
+  <h2 data-i18n="support.contact.h2">Contact</h2>
+  <p data-i18n-html="support.contact.intro">
     Email: <a href="mailto:hi@julineshang.win">hi@julineshang.win</a><br>
     When you write, please include:
   </p>
   <ul>
-    <li>Your Chrome / Edge / Brave version (from <code>chrome://version</code>)</li>
-    <li>The URL of the page where the problem happened (if web-related)</li>
-    <li>A screenshot of the popup or any error message</li>
-    <li>Your Paddle order ID (if it's a license / billing question)</li>
+    <li data-i18n-html="support.contact.li1">Your Chrome / Edge / Brave version (from <code>chrome://version</code>)</li>
+    <li data-i18n="support.contact.li2">The URL of the page where the problem happened (if web-related)</li>
+    <li data-i18n="support.contact.li3">A screenshot of the popup or any error message</li>
+    <li data-i18n="support.contact.li4">Your Paddle order ID (if it's a license / billing question)</li>
   </ul>
 
-  <h2>Privacy &amp; policies</h2>
+  <h2 data-i18n="support.policies.h2">Privacy &amp; policies</h2>
   <ul>
-    <li><a href="privacy.html">Privacy Policy</a></li>
-    <li><a href="terms.html">Terms of Service</a></li>
-    <li><a href="refund.html">Refund Policy</a></li>
+    <li><a href="privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a></li>
+    <li><a href="terms.html" data-i18n="footer.legal.terms">Terms of Service</a></li>
+    <li><a href="refund.html" data-i18n="footer.legal.refund">Refund Policy</a></li>
   </ul>
 </article>
 
@@ -94,26 +99,28 @@
   <div class="foot-grid">
     <div>
       <strong>PaneTrans</strong>
-      <p>A pane of clarity on every frame.</p>
+      <p data-i18n="footer.tagline">A pane of clarity on every frame.</p>
     </div>
     <div>
-      <strong>Product</strong>
-      <a href="index.html#features">Features</a>
-      <a href="pricing.html">Pricing</a>
+      <strong data-i18n="footer.product">Product</strong>
+      <a href="index.html#features" data-i18n="nav.features">Features</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
     </div>
     <div>
-      <strong>Legal</strong>
-      <a href="terms.html">Terms of Service</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="refund.html">Refund Policy</a>
+      <strong data-i18n="footer.legal">Legal</strong>
+      <a href="terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+      <a href="privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+      <a href="refund.html" data-i18n="footer.legal.refund">Refund Policy</a>
     </div>
     <div>
-      <strong>Contact</strong>
+      <strong data-i18n="footer.contact">Contact</strong>
       <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>
     </div>
   </div>
-  <p class="foot-fine">© 2026 PaneTrans · Local AI translator for Chrome</p>
+  <p class="foot-fine" data-i18n="footer.copy">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
 
+<script src="js/dict.js"></script>
+<script src="js/i18n.js"></script>
 </body>
 </html>

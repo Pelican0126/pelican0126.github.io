@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Pricing — PaneTrans</title>
-  <meta name="description" content="PaneTrans pricing: free real-time translation for 10+ languages, $14.99 lifetime or $2.99/mo for LLM-grade models.">
+  <title data-i18n="title.pricing">Pricing — PaneTrans</title>
+  <meta name="description" content="PaneTrans pricing: free real-time translation for 10+ languages, $14.99 lifetime or $2.99/mo for LLM-grade models." data-i18n-attr="content:meta.pricing">
   <link rel="icon" href="assets/icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -16,14 +16,19 @@
     <span>PaneTrans</span>
   </a>
   <nav>
-    <a href="index.html#features">Features</a>
-    <a href="pricing.html" aria-current="page">Pricing</a>
+    <a href="index.html#features" data-i18n="nav.features">Features</a>
+    <a href="pricing.html" aria-current="page" data-i18n="nav.pricing">Pricing</a>
+    <span class="lang-switcher" role="group" aria-label="Language">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="zh">中文</button>
+      <button type="button" data-lang="ja">日本語</button>
+    </span>
   </nav>
 </header>
 
 <section class="pricing">
-  <h1>Pricing</h1>
-  <p class="lede">
+  <h1 data-i18n="pricing.h1">Pricing</h1>
+  <p class="lede" data-i18n="pricing.lede">
     PaneTrans is free to use for real-time translation across 10+ languages.
     Pro unlocks larger LLM-based models for higher fluency.
   </p>
@@ -31,79 +36,79 @@
   <div class="price-grid">
     <article class="price-card">
       <header>
-        <h2>Free</h2>
+        <h2 data-i18n="pricing.free.h2">Free</h2>
         <p class="price">$0</p>
-        <p class="price-sub">Forever</p>
+        <p class="price-sub" data-i18n="pricing.free.priceSub">Forever</p>
       </header>
       <ul>
-        <li>Drag-select region translation, continuous mode</li>
-        <li>YouTube bilingual subtitles</li>
-        <li>OPUS-MT (160 MB · real-time)</li>
-        <li>NLLB-200 (600 M params)</li>
-        <li>M2M-100 (418 M params)</li>
-        <li>10+ languages, all language pairs</li>
-        <li>Local processing — no data leaves your browser</li>
+        <li data-i18n="pricing.free.li1">Drag-select region translation, continuous mode</li>
+        <li data-i18n="pricing.free.li2">YouTube bilingual subtitles</li>
+        <li data-i18n="pricing.free.li3">OPUS-MT (160 MB · real-time)</li>
+        <li data-i18n="pricing.free.li4">NLLB-200 (600 M params)</li>
+        <li data-i18n="pricing.free.li5">M2M-100 (418 M params)</li>
+        <li data-i18n="pricing.free.li6">10+ languages, all language pairs</li>
+        <li data-i18n="pricing.free.li7">Local processing — no data leaves your browser</li>
       </ul>
-      <a class="btn btn-ghost" href="https://chromewebstore.google.com/" target="_blank" rel="noopener">Install free</a>
+      <a class="btn btn-ghost" href="https://chromewebstore.google.com/" target="_blank" rel="noopener" data-i18n="pricing.free.cta">Install free</a>
     </article>
 
     <article class="price-card price-card-pro">
       <header>
-        <span class="badge">Best value</span>
-        <h2>Lifetime</h2>
+        <span class="badge" data-i18n="pricing.lifetime.badge">Best value</span>
+        <h2 data-i18n="pricing.lifetime.h2">Lifetime</h2>
         <p class="price">$14.99</p>
-        <p class="price-sub">One-time · forever</p>
+        <p class="price-sub" data-i18n="pricing.lifetime.priceSub">One-time · forever</p>
       </header>
       <ul>
-        <li>Everything in Free</li>
-        <li><strong>gpt-oss 1.5B</strong> — LLM-grade translation</li>
-        <li><strong>Gemma 3 (4B)</strong> — context-aware fluency</li>
-        <li>Priority email support</li>
-        <li>All future model updates included</li>
-        <li>Use on every browser you sign into</li>
+        <li data-i18n="pricing.lifetime.li1">Everything in Free</li>
+        <li data-i18n-html="pricing.lifetime.li2"><strong>gpt-oss 1.5B</strong> — LLM-grade translation</li>
+        <li data-i18n-html="pricing.lifetime.li3"><strong>Gemma 3 (4B)</strong> — context-aware fluency</li>
+        <li data-i18n="pricing.lifetime.li4">Priority email support</li>
+        <li data-i18n="pricing.lifetime.li5">All future model updates included</li>
+        <li data-i18n="pricing.lifetime.li6">Use on every browser you sign into</li>
       </ul>
-      <a class="btn btn-primary" id="buy-lifetime" href="#">Buy Lifetime — $14.99</a>
-      <p class="price-note">14-day refund, no questions asked.</p>
+      <a class="btn btn-primary" id="buy-lifetime" href="#" data-i18n="pricing.lifetime.cta">Buy Lifetime — $14.99</a>
+      <p class="price-note" data-i18n="pricing.lifetime.note">14-day refund, no questions asked.</p>
     </article>
 
     <article class="price-card">
       <header>
-        <h2>Monthly</h2>
+        <h2 data-i18n="pricing.monthly.h2">Monthly</h2>
         <p class="price">$2.99<span class="price-suffix">/mo</span></p>
-        <p class="price-sub">Cancel any time</p>
+        <p class="price-sub" data-i18n="pricing.monthly.priceSub">Cancel any time</p>
       </header>
       <ul>
-        <li>Everything in Free</li>
-        <li><strong>gpt-oss 1.5B</strong> — LLM-grade translation</li>
-        <li><strong>Gemma 3 (4B)</strong> — context-aware fluency</li>
-        <li>Email support</li>
-        <li>Cancel any time, no contract</li>
+        <li data-i18n="pricing.monthly.li1">Everything in Free</li>
+        <li data-i18n-html="pricing.monthly.li2"><strong>gpt-oss 1.5B</strong> — LLM-grade translation</li>
+        <li data-i18n-html="pricing.monthly.li3"><strong>Gemma 3 (4B)</strong> — context-aware fluency</li>
+        <li data-i18n="pricing.monthly.li4">Email support</li>
+        <li data-i18n="pricing.monthly.li5">Cancel any time, no contract</li>
       </ul>
-      <a class="btn btn-ghost" id="buy-monthly" href="#">Subscribe — $2.99/mo</a>
-      <p class="price-note">14-day refund on the first charge.</p>
+      <a class="btn btn-ghost" id="buy-monthly" href="#" data-i18n="pricing.monthly.cta">Subscribe — $2.99/mo</a>
+      <p class="price-note" data-i18n="pricing.monthly.note">14-day refund on the first charge.</p>
     </article>
   </div>
 
-  <h2 class="faq-title">FAQ</h2>
+  <h2 class="faq-title" data-i18n="pricing.faq.h2">FAQ</h2>
   <details class="faq">
-    <summary>Where does my payment go? Is my card data safe?</summary>
-    <p>Payments are processed by Paddle.com, a Merchant of Record handling tax and compliance in 200+ countries. PaneTrans never sees your card details — your data stays in Paddle's PCI-compliant infrastructure.</p>
+    <summary data-i18n="pricing.faq.q1">Where does my payment go? Is my card data safe?</summary>
+    <p data-i18n="pricing.faq.a1">Payments are processed by Paddle.com, a Merchant of Record handling tax and compliance in 200+ countries. PaneTrans never sees your card details — your data stays in Paddle's PCI-compliant infrastructure.</p>
   </details>
   <details class="faq">
-    <summary>What's the difference between Lifetime and Monthly?</summary>
-    <p>Lifetime is a single $14.99 payment for permanent access — including all future model updates. Monthly is $2.99/mo, cancellable any time. Lifetime breaks even after 5 months.</p>
+    <summary data-i18n="pricing.faq.q2">What's the difference between Lifetime and Monthly?</summary>
+    <p data-i18n="pricing.faq.a2">Lifetime is a single $14.99 payment for permanent access — including all future model updates. Monthly is $2.99/mo, cancellable any time. Lifetime breaks even after 5 months.</p>
   </details>
   <details class="faq">
-    <summary>Can I use Pro on multiple computers?</summary>
-    <p>Yes. After purchase you'll receive a license key by email. Activate it on as many of your personal browsers as you need.</p>
+    <summary data-i18n="pricing.faq.q3">Can I use Pro on multiple computers?</summary>
+    <p data-i18n="pricing.faq.a3">Yes. After purchase you'll receive a license key by email. Activate it on as many of your personal browsers as you need.</p>
   </details>
   <details class="faq">
-    <summary>How do refunds work?</summary>
-    <p>14-day no-questions-asked refund window. Email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> with your purchase email and we'll process it. See the <a href="refund.html">full refund policy</a> for details.</p>
+    <summary data-i18n="pricing.faq.q4">How do refunds work?</summary>
+    <p data-i18n-html="pricing.faq.a4">14-day no-questions-asked refund window. Email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> with your purchase email and we'll process it. See the <a href="refund.html">full refund policy</a> for details.</p>
   </details>
   <details class="faq">
-    <summary>Does PaneTrans send any data to your servers?</summary>
-    <p>No translation data leaves your browser. The only network requests are: (1) downloading model files from Hugging Face the first time, (2) license validation against our license server. Both are documented in the <a href="privacy.html">privacy policy</a>.</p>
+    <summary data-i18n="pricing.faq.q5">Does PaneTrans send any data to your servers?</summary>
+    <p data-i18n-html="pricing.faq.a5">No translation data leaves your browser. The only network requests are: (1) downloading model files from Hugging Face the first time, (2) license validation against our license server. Both are documented in the <a href="privacy.html">privacy policy</a>.</p>
   </details>
 </section>
 
@@ -111,26 +116,28 @@
   <div class="foot-grid">
     <div>
       <strong>PaneTrans</strong>
-      <p>A pane of clarity on every frame.</p>
+      <p data-i18n="footer.tagline">A pane of clarity on every frame.</p>
     </div>
     <div>
-      <strong>Product</strong>
-      <a href="index.html#features">Features</a>
-      <a href="pricing.html">Pricing</a>
+      <strong data-i18n="footer.product">Product</strong>
+      <a href="index.html#features" data-i18n="nav.features">Features</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
     </div>
     <div>
-      <strong>Legal</strong>
-      <a href="terms.html">Terms of Service</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="refund.html">Refund Policy</a>
+      <strong data-i18n="footer.legal">Legal</strong>
+      <a href="terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+      <a href="privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+      <a href="refund.html" data-i18n="footer.legal.refund">Refund Policy</a>
     </div>
     <div>
-      <strong>Contact</strong>
+      <strong data-i18n="footer.contact">Contact</strong>
       <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>
     </div>
   </div>
-  <p class="foot-fine">© 2026 PaneTrans · Local AI translator for Chrome</p>
+  <p class="foot-fine" data-i18n="footer.copy">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
 
+<script src="js/dict.js"></script>
+<script src="js/i18n.js"></script>
 </body>
 </html>

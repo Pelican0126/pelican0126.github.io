@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Privacy Policy — PaneTrans</title>
+  <title data-i18n="title.privacy">Privacy Policy — PaneTrans</title>
   <link rel="icon" href="assets/icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,16 +15,23 @@
     <span>PaneTrans</span>
   </a>
   <nav>
-    <a href="index.html#features">Features</a>
-    <a href="pricing.html">Pricing</a>
+    <a href="index.html#features" data-i18n="nav.features">Features</a>
+    <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
+    <span class="lang-switcher" role="group" aria-label="Language">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="zh">中文</button>
+      <button type="button" data-lang="ja">日本語</button>
+    </span>
   </nav>
 </header>
 
-<article class="legal">
-  <h1>Privacy Policy</h1>
-  <p class="legal-meta">Effective date: 2026-04-25 · Last updated: 2026-04-25</p>
+<div class="canonical-note" data-i18n-html="legal.canonicalNote"></div>
 
-  <p class="legal-tldr">
+<article class="legal">
+  <h1 data-i18n="privacy.h1">Privacy Policy</h1>
+  <p class="legal-meta" data-i18n="privacy.effective">Effective date: 2026-04-25 · Last updated: 2026-04-25</p>
+
+  <p class="legal-tldr" data-i18n-html="privacy.tldr">
     <strong>TL;DR.</strong> PaneTrans does not collect, transmit, or store the
     text you translate. Translation happens entirely inside your browser.
     The only network requests the extension makes are: (1) downloading model
@@ -32,87 +39,89 @@
     your license key against our license server when you activate a paid plan.
   </p>
 
-  <h2>1. Who we are</h2>
-  <p>"PaneTrans" is operated as an individual project by the developer registered at <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>. This policy describes how we treat the information you provide when you install, use, or purchase the PaneTrans extension.</p>
+  <h2 data-i18n="privacy.h2.1">1. Who we are</h2>
+  <p data-i18n-html="privacy.p.1">"PaneTrans" is operated as an individual project by the developer registered at <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>. This policy describes how we treat the information you provide when you install, use, or purchase the PaneTrans extension.</p>
 
-  <h2>2. What runs locally vs. on a server</h2>
-  <p>The core translation pipeline — text extraction, model inference, OCR (optical character recognition for video frames), and rendering of the translation popup — runs entirely inside your browser using <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> and ONNX models. <strong>The text you translate never leaves your device.</strong></p>
+  <h2 data-i18n="privacy.h2.2">2. What runs locally vs. on a server</h2>
+  <p data-i18n-html="privacy.p.2">The core translation pipeline — text extraction, model inference, OCR (optical character recognition for video frames), and rendering of the translation popup — runs entirely inside your browser using <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> and ONNX models. <strong>The text you translate never leaves your device.</strong></p>
 
-  <h2>3. Network requests we do make</h2>
+  <h2 data-i18n="privacy.h2.3">3. Network requests we do make</h2>
   <ul>
-    <li><strong>Model downloads.</strong> When you select a translation model for the first time, the extension downloads its weight files from Hugging Face's CDN (huggingface.co / hf.co) and caches them in your browser's storage for offline use. Hugging Face may log your IP address as part of the standard HTTP request.</li>
-    <li><strong>OCR worker.</strong> When falling back to OCR for image/video content, the extension downloads Tesseract.js language data from <code>tessdata.projectnaptha.com</code> and a small WASM binary from <code>cdn.jsdelivr.net</code>. These are static asset CDNs.</li>
-    <li><strong>License validation (paid users only).</strong> When you paste a license key into the popup, the extension sends the key (and only the key) to our license server. The server returns whether the key is valid and what plan it belongs to. We do not log the IP address of these requests for longer than 7 days; we do log the license-key ID and timestamp for fraud detection.</li>
+    <li data-i18n-html="privacy.li.3a"><strong>Model downloads.</strong> When you select a translation model for the first time, the extension downloads its weight files from Hugging Face's CDN (huggingface.co / hf.co) and caches them in your browser's storage for offline use. Hugging Face may log your IP address as part of the standard HTTP request.</li>
+    <li data-i18n-html="privacy.li.3b"><strong>OCR worker.</strong> When falling back to OCR for image/video content, the extension downloads Tesseract.js language data from <code>tessdata.projectnaptha.com</code> and a small WASM binary from <code>cdn.jsdelivr.net</code>. These are static asset CDNs.</li>
+    <li data-i18n-html="privacy.li.3c"><strong>License validation (paid users only).</strong> When you paste a license key into the popup, the extension sends the key (and only the key) to our license server. The server returns whether the key is valid and what plan it belongs to. We do not log the IP address of these requests for longer than 7 days; we do log the license-key ID and timestamp for fraud detection.</li>
   </ul>
 
-  <h2>4. What we do NOT collect</h2>
+  <h2 data-i18n="privacy.h2.4">4. What we do NOT collect</h2>
   <ul>
-    <li>The text you select for translation.</li>
-    <li>The pages you visit.</li>
-    <li>Your browsing history.</li>
-    <li>Any analytics or telemetry. There is no Google Analytics, no Sentry, no PostHog inside the extension.</li>
-    <li>Form data, passwords, cookies, or any DOM content outside of the rectangle you explicitly drag.</li>
+    <li data-i18n="privacy.li.4a">The text you select for translation.</li>
+    <li data-i18n="privacy.li.4b">The pages you visit.</li>
+    <li data-i18n="privacy.li.4c">Your browsing history.</li>
+    <li data-i18n="privacy.li.4d">Any analytics or telemetry. There is no Google Analytics, no Sentry, no PostHog inside the extension.</li>
+    <li data-i18n="privacy.li.4e">Form data, passwords, cookies, or any DOM content outside of the rectangle you explicitly drag.</li>
   </ul>
 
-  <h2>5. Payment data</h2>
-  <p>If you purchase a paid plan, payment is processed by <strong>Paddle.com Market Limited</strong>, our Merchant of Record. Paddle handles your card details, billing address, and tax information directly — we never see or store your card. Paddle is GDPR- and CCPA-compliant. See <a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noopener">Paddle's privacy policy</a>.</p>
-  <p>We receive from Paddle: your email address, license-key identifier, plan, and purchase date. We use this only to (a) deliver and validate your license key, (b) provide refunds and support, (c) keep tax records as required by law.</p>
+  <h2 data-i18n="privacy.h2.5">5. Payment data</h2>
+  <p data-i18n-html="privacy.p.5a">If you purchase a paid plan, payment is processed by <strong>Paddle.com Market Limited</strong>, our Merchant of Record. Paddle handles your card details, billing address, and tax information directly — we never see or store your card. Paddle is GDPR- and CCPA-compliant. See <a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noopener">Paddle's privacy policy</a>.</p>
+  <p data-i18n="privacy.p.5b">We receive from Paddle: your email address, license-key identifier, plan, and purchase date. We use this only to (a) deliver and validate your license key, (b) provide refunds and support, (c) keep tax records as required by law.</p>
 
-  <h2>6. Storage on your device</h2>
-  <p>The extension stores in <code>chrome.storage.local</code> (your browser, your machine):</p>
+  <h2 data-i18n="privacy.h2.6">6. Storage on your device</h2>
+  <p data-i18n-html="privacy.p.6a">The extension stores in <code>chrome.storage.local</code> (your browser, your machine):</p>
   <ul>
-    <li>Your UI preferences (selected language, model, font size).</li>
-    <li>Your license key, if you've activated one, and the cached "last validated at" timestamp (used for offline grace).</li>
-    <li>The download progress / readiness state of each translation model.</li>
+    <li data-i18n="privacy.li.6a">Your UI preferences (selected language, model, font size).</li>
+    <li data-i18n="privacy.li.6b">Your license key, if you've activated one, and the cached "last validated at" timestamp (used for offline grace).</li>
+    <li data-i18n="privacy.li.6c">The download progress / readiness state of each translation model.</li>
   </ul>
-  <p>You can clear this at any time by uninstalling the extension or clearing the extension's storage from <code>chrome://extensions</code>.</p>
+  <p data-i18n-html="privacy.p.6b">You can clear this at any time by uninstalling the extension or clearing the extension's storage from <code>chrome://extensions</code>.</p>
 
-  <h2>7. Permissions and why we ask</h2>
+  <h2 data-i18n="privacy.h2.7">7. Permissions and why we ask</h2>
   <ul>
-    <li><strong><code>&lt;all_urls&gt;</code></strong>: required so the region-translate feature works on any website you choose. The extension does not auto-read any page; it only acts on regions you explicitly drag.</li>
-    <li><strong><code>storage</code></strong>: to remember your settings and license between sessions.</li>
-    <li><strong><code>activeTab</code> + <code>scripting</code></strong>: to inject the region-select overlay when you click the extension button.</li>
-    <li><strong><code>contextMenus</code></strong>: to add the "Translate Region" right-click menu item.</li>
-    <li><strong><code>offscreen</code></strong>: required by Chrome MV3 to run AI inference outside the service worker (which has memory limits incompatible with model files).</li>
+    <li data-i18n-html="privacy.li.7a"><strong><code>&lt;all_urls&gt;</code></strong>: required so the region-translate feature works on any website you choose. The extension does not auto-read any page; it only acts on regions you explicitly drag.</li>
+    <li data-i18n-html="privacy.li.7b"><strong><code>storage</code></strong>: to remember your settings and license between sessions.</li>
+    <li data-i18n-html="privacy.li.7c"><strong><code>activeTab</code> + <code>scripting</code></strong>: to inject the region-select overlay when you click the extension button.</li>
+    <li data-i18n-html="privacy.li.7d"><strong><code>contextMenus</code></strong>: to add the "Translate Region" right-click menu item.</li>
+    <li data-i18n-html="privacy.li.7e"><strong><code>offscreen</code></strong>: required by Chrome MV3 to run AI inference outside the service worker (which has memory limits incompatible with model files).</li>
   </ul>
 
-  <h2>8. Children</h2>
-  <p>PaneTrans is not directed at children under 13. We do not knowingly collect personal data from children.</p>
+  <h2 data-i18n="privacy.h2.8">8. Children</h2>
+  <p data-i18n="privacy.p.8">PaneTrans is not directed at children under 13. We do not knowingly collect personal data from children.</p>
 
-  <h2>9. Your rights (GDPR / CCPA)</h2>
-  <p>If you are an EU/UK resident, you have the right to access, rectify, delete, and export the personal data we hold about you (essentially: your email and license key). California residents have analogous rights under the CCPA. Email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> with your purchase email to exercise these rights.</p>
+  <h2 data-i18n="privacy.h2.9">9. Your rights (GDPR / CCPA)</h2>
+  <p data-i18n-html="privacy.p.9">If you are an EU/UK resident, you have the right to access, rectify, delete, and export the personal data we hold about you (essentially: your email and license key). California residents have analogous rights under the CCPA. Email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> with your purchase email to exercise these rights.</p>
 
-  <h2>10. Changes</h2>
-  <p>We will post any updated version of this policy on this page and update the "Last updated" date. If a change materially affects your rights, we will notify active license-holders by email.</p>
+  <h2 data-i18n="privacy.h2.10">10. Changes</h2>
+  <p data-i18n="privacy.p.10">We will post any updated version of this policy on this page and update the "Last updated" date. If a change materially affects your rights, we will notify active license-holders by email.</p>
 
-  <h2>11. Contact</h2>
-  <p>Privacy or data-protection questions: <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>.</p>
+  <h2 data-i18n="privacy.h2.11">11. Contact</h2>
+  <p data-i18n-html="privacy.p.11">Privacy or data-protection questions: <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>.</p>
 </article>
 
 <footer>
   <div class="foot-grid">
     <div>
       <strong>PaneTrans</strong>
-      <p>A pane of clarity on every frame.</p>
+      <p data-i18n="footer.tagline">A pane of clarity on every frame.</p>
     </div>
     <div>
-      <strong>Product</strong>
-      <a href="index.html#features">Features</a>
-      <a href="pricing.html">Pricing</a>
+      <strong data-i18n="footer.product">Product</strong>
+      <a href="index.html#features" data-i18n="nav.features">Features</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
     </div>
     <div>
-      <strong>Legal</strong>
-      <a href="terms.html">Terms of Service</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="refund.html">Refund Policy</a>
+      <strong data-i18n="footer.legal">Legal</strong>
+      <a href="terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+      <a href="privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+      <a href="refund.html" data-i18n="footer.legal.refund">Refund Policy</a>
     </div>
     <div>
-      <strong>Contact</strong>
+      <strong data-i18n="footer.contact">Contact</strong>
       <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>
     </div>
   </div>
-  <p class="foot-fine">© 2026 PaneTrans · Local AI translator for Chrome</p>
+  <p class="foot-fine" data-i18n="footer.copy">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
 
+<script src="js/dict.js"></script>
+<script src="js/i18n.js"></script>
 </body>
 </html>

@@ -442,6 +442,63 @@ footer {
   margin: 0 auto;
 }
 
+/* ---- Language switcher (in header nav) ---- */
+.lang-switcher {
+  display: inline-flex;
+  margin-left: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  background: #fff;
+}
+.lang-switcher button {
+  background: transparent;
+  border: none;
+  padding: 5px 11px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: background 0.12s, color 0.12s;
+}
+.lang-switcher button:hover {
+  color: var(--ink);
+  background: rgba(78, 205, 196, 0.08);
+}
+.lang-switcher button[aria-pressed="true"] {
+  background: var(--ink);
+  color: #fff;
+}
+.lang-switcher button[aria-pressed="true"]:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* ---- Canonical-version banner (legal pages, non-en) ---- */
+.canonical-note {
+  max-width: 760px;
+  margin: 0 auto 0;
+  padding: 12px 18px;
+  background: #fff8e6;
+  border: 1px solid #ffe2a3;
+  border-radius: 8px;
+  color: #6e4d00;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.canonical-note:empty { display: none; }
+.canonical-note a {
+  color: #6e4d00;
+  text-decoration: underline;
+  font-weight: 600;
+}
+/* Legal pages need a touch of top padding when the note is present. */
+body:has(.canonical-note:not(:empty)) .legal {
+  padding-top: 24px;
+}
+
 /* ---- Mobile ---- */
 @media (max-width: 760px) {
   .hero {
@@ -455,5 +512,6 @@ footer {
   .feat-grid, .price-grid { grid-template-columns: 1fr; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
   .hdr { padding: 14px 20px; }
-  .hdr nav { gap: 16px; }
+  .hdr nav { gap: 14px; }
+  .lang-switcher button { padding: 4px 9px; font-size: 11px; }
 }

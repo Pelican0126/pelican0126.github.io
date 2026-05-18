@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>PaneTrans — Local-AI Chrome translator with live region monitoring</title>
-  <meta name="description" content="Drag a region on any web page and PaneTrans pins a glass popup with live translation that updates whenever the text changes. Powered by local AI — no cloud, no API keys, nothing leaves your browser.">
+  <title data-i18n="title.index">PaneTrans — Local-AI Chrome translator with live region monitoring</title>
+  <meta name="description" content="Drag a region on any web page and PaneTrans pins a glass popup with live translation that updates whenever the text changes. Powered by local AI — no cloud, no API keys, nothing leaves your browser." data-i18n-attr="content:meta.index">
   <link rel="icon" href="assets/icon.png">
-  <meta property="og:title" content="PaneTrans — A pane of clarity on every frame">
-  <meta property="og:description" content="Local-AI Chrome translator with continuous region monitoring.">
+  <meta property="og:title" content="PaneTrans — A pane of clarity on every frame" data-i18n-attr="content:og.title.index">
+  <meta property="og:description" content="Local-AI Chrome translator with continuous region monitoring." data-i18n-attr="content:og.desc.index">
   <meta property="og:image" content="assets/live-popup.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -19,26 +19,31 @@
     <span>PaneTrans</span>
   </a>
   <nav>
-    <a href="#features">Features</a>
-    <a href="pricing.html">Pricing</a>
+    <a href="#features" data-i18n="nav.features">Features</a>
+    <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
+    <span class="lang-switcher" role="group" aria-label="Language">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="zh">中文</button>
+      <button type="button" data-lang="ja">日本語</button>
+    </span>
   </nav>
 </header>
 
 <section class="hero">
   <div class="hero-text">
-    <h1>A pane of clarity on every frame.</h1>
-    <p class="lede">
+    <h1 data-i18n="index.hero.h1">A pane of clarity on every frame.</h1>
+    <p class="lede" data-i18n-html="index.hero.lede">
       Drag a rectangle on any web page. PaneTrans pins a glass popup with
       <strong>live translation</strong> that updates the moment the text changes —
       live chat, video subtitles, ticker text, anywhere.
     </p>
-    <p class="lede-small">
+    <p class="lede-small" data-i18n="index.hero.ledeSmall">
       All translation runs locally on your machine. No cloud. No API keys.
       Nothing leaves your browser.
     </p>
     <div class="cta">
-      <a class="btn btn-primary" href="pricing.html">See pricing</a>
-      <a class="btn btn-ghost" href="#features">How it works</a>
+      <a class="btn btn-primary" href="pricing.html" data-i18n="index.cta.seePricing">See pricing</a>
+      <a class="btn btn-ghost" href="#features" data-i18n="index.cta.howItWorks">How it works</a>
     </div>
   </div>
   <div class="hero-shot">
@@ -47,19 +52,19 @@
 </section>
 
 <section class="features" id="features">
-  <h2>What PaneTrans actually does</h2>
+  <h2 data-i18n="index.features.h2">What PaneTrans actually does</h2>
   <div class="feat-grid">
     <article class="feat">
-      <h3>Drag, then watch.</h3>
-      <p>
+      <h3 data-i18n="index.feat1.h3">Drag, then watch.</h3>
+      <p data-i18n-html="index.feat1.p">
         Right-click anywhere → <em>Translate Region</em> → drag a rectangle.
         A draggable popup shows the original and the translation side-by-side.
       </p>
       <img src="assets/selection.png" alt="Drag-select overlay">
     </article>
     <article class="feat">
-      <h3>It keeps watching.</h3>
-      <p>
+      <h3 data-i18n="index.feat2.h3">It keeps watching.</h3>
+      <p data-i18n-html="index.feat2.p">
         A <code>MutationObserver</code> tracks the rectangle. Live chat lines,
         subtitle changes, ticker updates — the popup retranslates automatically.
         Like sticking a real-time subtitle strip onto any slice of the page.
@@ -67,8 +72,8 @@
       <img src="assets/live-popup.png" alt="Live region popup">
     </article>
     <article class="feat">
-      <h3>Local AI, picked per task.</h3>
-      <p>
+      <h3 data-i18n="index.feat3.h3">Local AI, picked per task.</h3>
+      <p data-i18n-html="index.feat3.p">
         Free tier: <strong>OPUS-MT</strong> (~160 MB / pair, real-time on WebGPU)
         and <strong>NLLB-200</strong> / <strong>M2M-100</strong> for higher quality.
         Pro tier: LLM-grade <strong>gpt-oss</strong> and <strong>Gemma 3</strong>
@@ -80,45 +85,47 @@
 </section>
 
 <section class="trust">
-  <h2>Why a Chinese student / engineer / anyone working with English content uses this</h2>
+  <h2 data-i18n="index.trust.h2">Why anyone working with foreign-language content uses this</h2>
   <ul class="trust-list">
-    <li><strong>Zero data leaks.</strong> Translation models live in your browser cache. No request to a third-party server. Works offline once the model is downloaded.</li>
-    <li><strong>Persistent, not single-shot.</strong> Most translators give you one translation and stop. PaneTrans pins a popup that follows the region until you close it.</li>
-    <li><strong>Bilingual YouTube subtitles</strong> as a separate, opt-in feature for video learners.</li>
-    <li><strong>Open architecture.</strong> Built on <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> + <a href="https://huggingface.co/Xenova" target="_blank" rel="noopener">Xenova ONNX models</a>. You can audit the model list in <code>src/utils/languages.js</code>.</li>
+    <li data-i18n-html="index.trust.li1"><strong>Zero data leaks.</strong> Translation models live in your browser cache. No request to a third-party server. Works offline once the model is downloaded.</li>
+    <li data-i18n-html="index.trust.li2"><strong>Persistent, not single-shot.</strong> Most translators give you one translation and stop. PaneTrans pins a popup that follows the region until you close it.</li>
+    <li data-i18n-html="index.trust.li3"><strong>Bilingual YouTube subtitles</strong> as a separate, opt-in feature for video learners.</li>
+    <li data-i18n-html="index.trust.li4"><strong>Open architecture.</strong> Built on <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> + <a href="https://huggingface.co/Xenova" target="_blank" rel="noopener">Xenova ONNX models</a>. You can audit the model list in <code>src/utils/languages.js</code>.</li>
   </ul>
 </section>
 
 <section class="cta-band">
-  <h2>Ready to try it?</h2>
-  <p>The Free tier handles real-time translation for 10+ languages. Pro unlocks LLM-grade models for nuanced text.</p>
-  <a class="btn btn-primary" href="pricing.html">Pricing</a>
+  <h2 data-i18n="index.ctaBand.h2">Ready to try it?</h2>
+  <p data-i18n="index.ctaBand.p">The Free tier handles real-time translation for 10+ languages. Pro unlocks LLM-grade models for nuanced text.</p>
+  <a class="btn btn-primary" href="pricing.html" data-i18n="index.ctaBand.btn">Pricing</a>
 </section>
 
 <footer>
   <div class="foot-grid">
     <div>
       <strong>PaneTrans</strong>
-      <p>A pane of clarity on every frame.</p>
+      <p data-i18n="footer.tagline">A pane of clarity on every frame.</p>
     </div>
     <div>
-      <strong>Product</strong>
-      <a href="#features">Features</a>
-      <a href="pricing.html">Pricing</a>
+      <strong data-i18n="footer.product">Product</strong>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
     </div>
     <div>
-      <strong>Legal</strong>
-      <a href="terms.html">Terms of Service</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="refund.html">Refund Policy</a>
+      <strong data-i18n="footer.legal">Legal</strong>
+      <a href="terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+      <a href="privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+      <a href="refund.html" data-i18n="footer.legal.refund">Refund Policy</a>
     </div>
     <div>
-      <strong>Contact</strong>
+      <strong data-i18n="footer.contact">Contact</strong>
       <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>
     </div>
   </div>
-  <p class="foot-fine">© 2026 PaneTrans · Local AI translator for Chrome</p>
+  <p class="foot-fine" data-i18n="footer.copy">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
 
+<script src="js/dict.js"></script>
+<script src="js/i18n.js"></script>
 </body>
 </html>
