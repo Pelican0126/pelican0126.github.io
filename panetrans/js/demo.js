@@ -239,14 +239,19 @@
     }
 
     // Pause when the section scrolls out of view; resume when it scrolls back.
-    let visible = true;
+    // Start as `false` so the IntersectionObserver's first call drives the
+    // initial decision — if the stage is already on screen, the observer
+    // flips visible to true and kicks off runLoop. If it's below the fold,
+    // we wait for the user to scroll to it. Threshold is intentionally tiny
+    // (any pixel visible) so the demo starts the moment a sliver appears.
+    let visible = false;
     const obs = new IntersectionObserver((entries) => {
       const next = entries[0].isIntersecting;
       if (next === visible) return;
       visible = next;
       if (visible) runLoop();
       else timers.forEach(clearTimeout);
-    }, { threshold: 0.15 });
+    }, { threshold: 0.01 });
     obs.observe(stage);
 
     // Re-translate the popup if the user changes language mid-animation.
@@ -258,7 +263,8 @@
       });
     });
 
-    runLoop();
+    // No initial runLoop() — the IntersectionObserver above fires synchronously
+    // after observe() and will start the loop if the stage is already visible.
   }
 
   if (document.readyState === 'loading') {
