@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Privacy Policy — Spendlytics</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="hdr">
+  <a class="logo" href="/spendlytics/privacy.html">
+    <span>Spendlytics</span>
+  </a>
+  <nav>
+    <a href="/spendlytics/support.html">Support</a>
+    <a href="#zh">中文</a>
+  </nav>
+</header>
+
+<article class="legal">
+  <h1>Spendlytics Privacy Policy</h1>
+  <p class="legal-meta">Last updated: 2026-05-29 · App: Spendlytics (Bundle ID <code>com.tongjunfang.pebble</code>)</p>
+
+  <p class="legal-tldr">
+    <strong>TL;DR.</strong> Spendlytics keeps your ledger on your own device.
+    There is no Spendlytics account and no Spendlytics server — we do not
+    receive, store, or sync your records. The only time data leaves your device
+    is when <em>you</em> use the optional, bring-your-own-key AI receipt
+    recognition, which sends the receipt image (or on-device OCR text) directly
+    to the third-party AI provider <em>you</em> configured. No analytics, no
+    ads, no tracking.
+  </p>
+
+  <h2>Overview</h2>
+  <p>Spendlytics is a personal expense-tracking app. It is built to keep your financial data on your own device. There is <strong>no Spendlytics account, no sign-up, and no Spendlytics server</strong> — we do not operate a backend that receives, stores, or syncs your records. The descriptions below match how the app actually works in its current released version.</p>
+
+  <h2>Data stored on your device</h2>
+  <p>All of your ledger data — transactions, amounts, merchants, notes, categories, accounts, and recurring rules — is stored <strong>locally on your device only</strong>, using Apple's on-device SwiftData/Core Data storage.</p>
+  <ul>
+    <li>We do <strong>not</strong> upload this data to any server we control.</li>
+    <li>The app ships with cloud sync (iCloud/CloudKit) <strong>disabled</strong>; your ledger is not synced off the device by the app.</li>
+    <li>We have no ability to read, access, or recover your ledger data. It lives on your device (and in your own device/iCloud backups, which are governed by Apple's policies, not ours).</li>
+  </ul>
+
+  <h2>Camera and photo library</h2>
+  <p>The app may request access to your <strong>camera</strong> and <strong>photo library</strong>. These are used only when you choose to scan or import a receipt for the optional premium AI recognition feature. The in-app permission prompts state:</p>
+  <ul>
+    <li>Camera: <em>"Premium feature: capture a receipt to auto-detect amount and merchant."</em></li>
+    <li>Photo Library: <em>"Premium feature: pick a receipt from your photo library to auto-detect amount and merchant."</em></li>
+  </ul>
+  <p>Images are used to extract bill fields (amount, merchant, date, category, note). If you do not use the receipt-scan feature, the app does not need or use these permissions.</p>
+
+  <h2>Premium AI receipt recognition (third-party processing)</h2>
+  <p>The premium "AI recognition" feature is <strong>bring-your-own-key (BYOK)</strong>: it works only after <em>you</em> configure an AI provider and enter <em>your own</em> API key. The app does not include a built-in cloud AI service of ours.</p>
+  <p>When you use this feature, the app sends data <strong>directly from your device to the third-party AI provider endpoint that you configured</strong> — not to us. Depending on the app's recognition mode:</p>
+  <ul>
+    <li><strong>Image mode (default):</strong> the receipt or screenshot <strong>image</strong> you selected is sent to your configured provider.</li>
+    <li><strong>OCR text mode (fallback):</strong> text extracted from the image <strong>on your device</strong> using Apple's Vision framework is sent instead of the image.</li>
+  </ul>
+  <p>In both cases the <strong>only purpose</strong> is to extract structured bill fields (amount, merchant, date, suggested category, an optional note, and a source-type hint). The extracted fields are returned to your device and saved to your local ledger.</p>
+  <ul>
+    <li>The destination is whichever provider <em>you</em> select. Built-in provider presets include <strong>OpenAI, Anthropic, DeepSeek, Moonshot, and Together</strong>, plus a <strong>Custom</strong> option where you supply your own endpoint URL. Your chosen provider's own privacy policy and terms govern how they handle the data you send them.</li>
+    <li>All AI requests are sent over <strong>HTTPS</strong>; the app refuses to send to a non-HTTPS endpoint.</li>
+    <li>Your API key is stored in the device's <strong>Keychain</strong> and is sent only to the provider endpoint you configured, in the request's authorization header. The key is not configured for iCloud Keychain sync by the app.</li>
+    <li>We (the developer) do not receive, proxy, store, or log the images, OCR text, API key, or extracted fields on any server.</li>
+  </ul>
+  <p>If you never enable or use this feature, no receipt data, image, or text leaves your device through it.</p>
+
+  <h2>No tracking, no analytics, no ads</h2>
+  <p>Spendlytics contains <strong>no third-party analytics, advertising, attribution, or crash-reporting SDKs</strong> (for example: no Firebase, Google Analytics, Sentry, Crashlytics, Amplitude, Mixpanel, AppsFlyer, Segment, or similar). The app does <strong>not</strong> track you across other apps or websites, does not build an advertising profile, and shows no ads. We do not collect a device identifier for tracking.</p>
+
+  <h2>In-app diagnostic logs</h2>
+  <p>For troubleshooting the receipt-import flow, the app may write <strong>diagnostic log lines on your device</strong> (for example, the detected receipt source type, such as "receipt" or "alipay"). These logs stay on your device and are not transmitted to us automatically.</p>
+
+  <h2>Purchases</h2>
+  <p>The premium tier is sold via Apple's In-App Purchase. Purchase and subscription processing is handled by <strong>Apple (StoreKit)</strong> under Apple's privacy policy. We do not receive your payment details.</p>
+
+  <h2>Data retention and deletion</h2>
+  <p>Because your ledger data is stored only on your device:</p>
+  <ul>
+    <li>It is retained for as long as you keep the app installed (or until you delete individual records inside the app).</li>
+    <li>You can delete it at any time by deleting records in the app or by deleting the app, which removes its locally stored data from the device.</li>
+    <li>Data you sent to a third-party AI provider is retained and deleted according to <strong>that provider's</strong> policies, not ours.</li>
+  </ul>
+
+  <h2>Children's privacy (rated 4+)</h2>
+  <p>Spendlytics is rated <strong>4+</strong> and contains no objectionable content. The app does not knowingly collect personal information from children, and it does not include advertising or cross-app tracking. Note that the optional premium AI feature requires an adult to provide a third-party API key and sends data to a third-party service; it is not intended to be set up by children.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes, we will update the "Last updated" date above and publish the revised version at the same location.</p>
+
+  <h2>Contact</h2>
+  <p>For privacy questions, contact <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>. Spendlytics is operated as an individual project by the developer reachable at that address.</p>
+
+  <hr id="zh">
+
+  <h1>Spendlytics 隐私政策</h1>
+  <p class="legal-meta">最后更新：2026-05-29 · App：Spendlytics(Bundle ID <code>com.tongjunfang.pebble</code>)</p>
+
+  <p class="legal-tldr">
+    <strong>太长不看。</strong> Spendlytics 把你的账本保存在你自己的设备上,没有
+    Spendlytics 账号、也没有我们的服务器 —— 我们不接收、不存储、不同步你的记录。
+    唯一会让数据离开设备的情形,是<em>你</em>主动使用可选的「自带密钥」AI 小票识别,
+    它会把小票图片(或设备本地 OCR 文本)直接发送到<em>你自己配置</em>的第三方 AI
+    服务商。无分析、无广告、无追踪。
+  </p>
+
+  <h2>概述</h2>
+  <p>Spendlytics 是一款个人记账 App,设计上将你的财务数据保存在你自己的设备上。本 App <strong>没有 Spendlytics 账号、无需注册,也没有我们的服务器</strong> —— 我们不运营任何接收、存储或同步你记录的后端。以下描述与当前已发布版本中 App 的实际行为一致。</p>
+
+  <h2>保存在你设备上的数据</h2>
+  <p>你的全部账本数据 —— 交易、金额、商家、备注、分类、账户、周期记账规则 —— 都<strong>仅保存在你的设备本地</strong>,使用 Apple 的设备端 SwiftData / Core Data 存储。</p>
+  <ul>
+    <li>我们<strong>不会</strong>把这些数据上传到任何由我们控制的服务器。</li>
+    <li>本 App 发布版本<strong>默认关闭</strong>云同步(iCloud / CloudKit);App 不会把你的账本同步到设备之外。</li>
+    <li>我们无法读取、访问或恢复你的账本数据。它保存在你的设备上(以及你自己的设备 / iCloud 备份中,这部分受 Apple 的政策约束,而非我们的政策)。</li>
+  </ul>
+
+  <h2>相机与相册</h2>
+  <p>App 可能会请求访问你的<strong>相机</strong>和<strong>相册</strong>。仅当你主动选择扫描或导入小票、用于可选的高级 AI 识别功能时才会用到。App 内的权限弹窗说明为:</p>
+  <ul>
+    <li>相机:<em>"高级功能:拍摄小票以自动识别金额和商家。"</em></li>
+    <li>相册:<em>"高级功能:从相册中选择小票以自动识别金额和商家。"</em></li>
+  </ul>
+  <p>图片仅用于提取账单字段(金额、商家、日期、分类、备注)。如果你不使用小票扫描功能,App 不需要也不会使用这些权限。</p>
+
+  <h2>高级 AI 小票识别(第三方处理)</h2>
+  <p>高级版"AI 识别"功能采用<strong>自带密钥(BYOK,Bring Your Own Key)</strong>模式:只有在<em>你</em>自行配置 AI 服务商并填入<em>你自己的</em> API 密钥后才能使用。本 App 不包含由我们提供的内置云端 AI 服务。</p>
+  <p>当你使用该功能时,App 会<strong>从你的设备直接将数据发送到你所配置的第三方 AI 服务商接口</strong> —— 而不是发给我们。根据 App 的识别模式:</p>
+  <ul>
+    <li><strong>图片模式(默认):</strong> 把你选择的小票或截图<strong>图片</strong>发送到你配置的服务商。</li>
+    <li><strong>OCR 文本模式(回退):</strong> 改为发送在<strong>你设备本地</strong>用 Apple Vision 框架从图片中识别出的文本,而不是图片本身。</li>
+  </ul>
+  <p>两种情况下,<strong>唯一用途</strong>都是提取结构化账单字段(金额、商家、日期、建议分类、可选备注,以及来源类型提示)。提取出的字段会返回到你的设备并保存到本地账本。</p>
+  <ul>
+    <li>数据发往哪个服务商由<em>你</em>选择。内置的服务商预设包括 <strong>OpenAI、Anthropic、DeepSeek、Moonshot、Together</strong>,以及可填写自有接口地址的 <strong>Custom(自定义)</strong>选项。你所选服务商如何处理你发送的数据,受其自身的隐私政策和条款约束。</li>
+    <li>所有 AI 请求均通过 <strong>HTTPS</strong> 发送;App 会拒绝向非 HTTPS 接口发送数据。</li>
+    <li>你的 API 密钥保存在设备的<strong>钥匙串(Keychain)</strong>中,仅在请求的授权头里发送给你配置的服务商接口。App 未将该密钥配置为 iCloud 钥匙串同步。</li>
+    <li>我们(开发者)不会在任何服务器上接收、代理、存储或记录这些图片、OCR 文本、API 密钥或提取出的字段。</li>
+  </ul>
+  <p>如果你从未启用或使用该功能,就不会有任何小票数据、图片或文本经由它离开你的设备。</p>
+
+  <h2>无追踪、无分析、无广告</h2>
+  <p>Spendlytics <strong>不包含任何第三方分析、广告、归因或崩溃上报 SDK</strong>(例如:没有 Firebase、Google Analytics、Sentry、Crashlytics、Amplitude、Mixpanel、AppsFlyer、Segment 等)。本 App <strong>不会</strong>跨其他 App 或网站追踪你,不会构建广告画像,也不展示广告。我们不会为追踪目的收集设备标识符。</p>
+
+  <h2>App 内诊断日志</h2>
+  <p>为排查小票导入流程的问题,App 可能会在<strong>你的设备上</strong>写入<strong>诊断日志</strong>(例如识别到的小票来源类型,如 "receipt" 或 "alipay")。这些日志保留在你的设备上,不会自动传输给我们。</p>
+
+  <h2>购买</h2>
+  <p>高级版通过 Apple 的 App 内购买出售。购买和订阅的处理由 <strong>Apple(StoreKit)</strong>完成,受 Apple 的隐私政策约束。我们不会收到你的支付信息。</p>
+
+  <h2>数据保留与删除</h2>
+  <p>由于你的账本数据仅保存在你的设备上:</p>
+  <ul>
+    <li>只要你保留 App 安装(或直到你在 App 内删除单条记录),数据就会一直保留。</li>
+    <li>你可以随时通过在 App 内删除记录、或删除 App 来清除数据;删除 App 会移除其在设备上本地保存的数据。</li>
+    <li>你发送给第三方 AI 服务商的数据,按<strong>该服务商</strong>的政策保留和删除,而非我们的政策。</li>
+  </ul>
+
+  <h2>儿童隐私(分级 4+)</h2>
+  <p>Spendlytics 分级为 <strong>4+</strong>,不含不当内容。本 App 不会在知情的情况下收集儿童的个人信息,也不包含广告或跨 App 追踪。请注意:可选的高级 AI 功能需要由成年人提供第三方 API 密钥,并会将数据发送给第三方服务,不适合由儿童自行设置。</p>
+
+  <h2>政策变更</h2>
+  <p>若本政策发生变更,我们将更新上方的"最后更新"日期,并在相同位置发布修订版本。</p>
+
+  <h2>联系方式</h2>
+  <p>隐私相关问题,请联系 <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>。Spendlytics 由该邮箱可联系到的开发者以个人项目形式运营。</p>
+
+  <p class="legal-meta" style="margin-top:2rem">© 2026 Spendlytics · <a href="/spendlytics/support.html">Support</a></p>
+</article>
+
+</body>
+</html>
