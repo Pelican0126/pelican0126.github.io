@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title data-i18n="title.index">PaneTrans — Local-AI Chrome translator with live region monitoring</title>
-  <meta name="description" content="Drag a region on any web page and PaneTrans pins a glass popup with live translation that updates whenever the text changes. Powered by local AI — no cloud, no API keys, nothing leaves your browser." data-i18n-attr="content:meta.index">
+  <meta name="description" content="Drag a region on any web page and PaneTrans pins a glass popup with live translation that updates whenever the text changes. On-device AI by default; an optional Cloud tier adds top-quality LLM translation on any device." data-i18n-attr="content:meta.index">
   <link rel="icon" href="assets/icon.png">
   <meta property="og:title" content="PaneTrans — A pane of clarity on every frame" data-i18n-attr="content:og.title.index">
-  <meta property="og:description" content="Local-AI Chrome translator with continuous region monitoring." data-i18n-attr="content:og.desc.index">
+  <meta property="og:description" content="Local-AI Chrome translator with continuous region monitoring, plus an optional Cloud LLM tier." data-i18n-attr="content:og.desc.index">
   <meta property="og:image" content="assets/live-popup.png">
-  <link rel="stylesheet" href="style.css?v=20260519c">
+  <link rel="stylesheet" href="style.css?v=20260610a">
 </head>
 <body>
 
@@ -47,9 +47,10 @@
       <strong>live translation</strong> that updates the moment the text changes —
       live chat, video subtitles, ticker text, anywhere.
     </p>
-    <p class="lede-small" data-i18n="index.hero.ledeSmall">
-      All translation runs locally on your machine. No cloud. No API keys.
-      Nothing leaves your browser.
+    <p class="lede-small" data-i18n-html="index.hero.ledeSmall">
+      The free, on-device tiers keep every translation inside your browser —
+      no API key, nothing sent anywhere. Or switch on the optional
+      <strong>Cloud</strong> subscription for top-quality LLM translation on any device.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="pricing.html" data-i18n="index.cta.seePricing">See pricing</a>
@@ -119,12 +120,13 @@
       <img src="assets/live-popup.png" alt="Live region popup">
     </article>
     <article class="feat">
-      <h3 data-i18n="index.feat3.h3">Local AI, picked per task.</h3>
+      <h3 data-i18n="index.feat3.h3">Local AI, picked per task — plus optional Cloud.</h3>
       <p data-i18n-html="index.feat3.p">
-        Free tier: <strong>OPUS-MT</strong> (~160 MB / pair, real-time on WebGPU)
-        and <strong>NLLB-200</strong> / <strong>M2M-100</strong> for higher quality.
-        Pro tier: LLM-grade <strong>Qwen 3</strong> and <strong>Gemma 3</strong>
-        for the most fluent output.
+        Free, on-device tier: <strong>OPUS-MT</strong> (~160 MB / pair, real-time on WebGPU)
+        plus <strong>NLLB-200</strong> / <strong>M2M-100</strong>. Pro adds on-device LLMs
+        <strong>Qwen 3</strong> / <strong>Gemma 3</strong>. New: an optional
+        <strong>Cloud</strong> tier streams a hosted LLM for top quality on any device —
+        no download, no GPU.
       </p>
       <img src="assets/popup.png" alt="Translation model picker">
     </article>
@@ -134,7 +136,7 @@
 <section class="trust">
   <h2 data-i18n="index.trust.h2">Why anyone working with foreign-language content uses this</h2>
   <ul class="trust-list">
-    <li data-i18n-html="index.trust.li1"><strong>Zero data leaks.</strong> Translation models live in your browser cache. No request to a third-party server. Works offline once the model is downloaded.</li>
+    <li data-i18n-html="index.trust.li1"><strong>On-device by default.</strong> The free and Pro models run from your browser cache — no third-party server, works offline. The optional Cloud tier is the only part that sends text out, and only when you choose it.</li>
     <li data-i18n-html="index.trust.li2"><strong>Persistent, not single-shot.</strong> Most translators give you one translation and stop. PaneTrans pins a popup that follows the region until you close it.</li>
     <li data-i18n-html="index.trust.li3"><strong>Bilingual YouTube subtitles</strong> as a separate, opt-in feature for video learners.</li>
     <li data-i18n-html="index.trust.li4"><strong>Open architecture.</strong> Built on <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> + <a href="https://huggingface.co/Xenova" target="_blank" rel="noopener">Xenova ONNX models</a>. You can audit the model list in <code>src/utils/languages.js</code>.</li>
@@ -172,8 +174,8 @@
   <p class="foot-fine" data-i18n="footer.copy">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
 
-<script src="js/dict.js?v=20260519c"></script>
-<script src="js/i18n.js?v=20260519c"></script>
-<script src="js/demo.js?v=20260519c"></script>
+<script src="js/dict.js?v=20260610a"></script>
+<script src="js/i18n.js?v=20260610a"></script>
+<script src="js/demo.js?v=20260610a"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title data-i18n="title.privacy">Privacy Policy — PaneTrans</title>
   <link rel="icon" href="assets/icon.png">
-  <link rel="stylesheet" href="style.css?v=20260519c">
+  <link rel="stylesheet" href="style.css?v=20260610a">
 </head>
 <body>
 
@@ -42,29 +42,31 @@
   <p class="legal-meta" data-i18n="privacy.effective">Effective date: 2026-04-25 · Last updated: 2026-04-25</p>
 
   <p class="legal-tldr" data-i18n-html="privacy.tldr">
-    <strong>TL;DR.</strong> PaneTrans does not collect, transmit, or store the
-    text you translate. Translation happens entirely inside your browser.
-    The only network requests the extension makes are: (1) downloading model
-    files from Hugging Face the first time you use a model, and (2) validating
-    your license key against our license server when you activate a paid plan.
+    <strong>TL;DR.</strong> On the free and Pro tiers, translation happens
+    entirely inside your browser — your text is not collected, transmitted, or
+    stored. The optional <strong>Cloud</strong> tier is the exception: when you
+    use it, the text you translate is sent to our server (and our model
+    provider) to produce the translation, then discarded. Either way, we run no
+    ads or analytics and never sell your data.
   </p>
 
   <h2 data-i18n="privacy.h2.1">1. Who we are</h2>
   <p data-i18n-html="privacy.p.1">"PaneTrans" is operated as an individual project by the developer registered at <a href="mailto:hi@julineshang.win">hi@julineshang.win</a>. This policy describes how we treat the information you provide when you install, use, or purchase the PaneTrans extension.</p>
 
   <h2 data-i18n="privacy.h2.2">2. What runs locally vs. on a server</h2>
-  <p data-i18n-html="privacy.p.2">The core translation pipeline — text extraction, model inference, OCR (optical character recognition for video frames), and rendering of the translation popup — runs entirely inside your browser using <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> and ONNX models. <strong>The text you translate never leaves your device.</strong></p>
+  <p data-i18n-html="privacy.p.2">On the free and Pro tiers, the core translation pipeline — text extraction, model inference, OCR (optical character recognition for video frames), and rendering of the translation popup — runs entirely inside your browser using <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> and ONNX models. <strong>On these tiers, the text you translate never leaves your device.</strong> The optional <strong>Cloud</strong> tier is the one exception — it sends the text you translate to our server (see §3.4).</p>
 
   <h2 data-i18n="privacy.h2.3">3. Network requests we do make</h2>
   <ul>
     <li data-i18n-html="privacy.li.3a"><strong>Model downloads.</strong> When you select a translation model for the first time, the extension downloads its weight files from Hugging Face's CDN (huggingface.co / hf.co) and caches them in your browser's storage for offline use. Hugging Face may log your IP address as part of the standard HTTP request.</li>
     <li data-i18n-html="privacy.li.3b"><strong>OCR worker.</strong> When falling back to OCR for image/video content, the extension downloads Tesseract.js language data from <code>tessdata.projectnaptha.com</code> and a small WASM binary from <code>cdn.jsdelivr.net</code>. These are static asset CDNs.</li>
     <li data-i18n-html="privacy.li.3c"><strong>License validation (paid users only).</strong> When you paste a license key into the popup, the extension sends the key (and only the key) to our license server. The server returns whether the key is valid and what plan it belongs to. We do not log the IP address of these requests for longer than 7 days; we do log the license-key ID and timestamp for fraud detection.</li>
+    <li data-i18n-html="privacy.li.3d"><strong>Cloud translation (Cloud subscribers only).</strong> When you use the Cloud model, the extension sends the text you selected — together with your license key — to our translation server (a Cloudflare Worker), which forwards it to our model provider to generate the translation and streams the result back. We use this only to produce your translation and to meter your monthly usage; <strong>we do not store the translated text</strong> once the request completes. This happens only on the Cloud tier and only for text you actively translate — never on the free or Pro tiers. Do not translate text you are not permitted to share with a third-party processor.</li>
   </ul>
 
   <h2 data-i18n="privacy.h2.4">4. What we do NOT collect</h2>
   <ul>
-    <li data-i18n="privacy.li.4a">The text you select for translation.</li>
+    <li data-i18n-html="privacy.li.4a">The text you select for translation, on the free and Pro on-device tiers. (The optional Cloud tier necessarily processes that text on our server to translate it — see §3.4 — but does not store it.)</li>
     <li data-i18n="privacy.li.4b">The pages you visit.</li>
     <li data-i18n="privacy.li.4c">Your browsing history.</li>
     <li data-i18n="privacy.li.4d">Any analytics or telemetry. There is no Google Analytics, no Sentry, no PostHog inside the extension.</li>
@@ -131,7 +133,7 @@
   <p class="foot-fine" data-i18n="footer.copy">© 2026 PaneTrans · Local AI translator for Chrome</p>
 </footer>
 
-<script src="js/dict.js?v=20260519c"></script>
-<script src="js/i18n.js?v=20260519c"></script>
+<script src="js/dict.js?v=20260610a"></script>
+<script src="js/i18n.js?v=20260610a"></script>
 </body>
 </html>
