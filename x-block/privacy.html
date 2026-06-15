@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>隐私政策 — X 机器人拉黑助手 / Privacy Policy</title>
+<style>
+  :root{ --red:#f4212e; --ink:#0f1419; --mut:#536471; --line:#e6e8ea; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font:16px/1.7 -apple-system,"Segoe UI",system-ui,"PingFang SC","Microsoft YaHei",sans-serif; color:var(--ink); }
+  a{ color:var(--red); }
+  .wrap{ max-width:760px; margin:0 auto; padding:0 20px; }
+  header.hdr{ border-bottom:1px solid var(--line); }
+  .hdr .wrap{ display:flex; align-items:center; height:60px; }
+  .logo{ display:flex; align-items:center; gap:9px; font-weight:800; text-decoration:none; color:var(--ink); font-size:17px; }
+  .logo .mk{ width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,#ff6a3d,var(--red)); display:flex; align-items:center; justify-content:center; font-size:17px; }
+  h1{ font-size:25px; } h2{ font-size:18px; margin-top:30px; }
+  code{ background:#f3f3f3; padding:1px 5px; border-radius:4px; }
+  .muted{ color:var(--mut); font-size:14px; }
+  hr{ border:0; border-top:1px solid var(--line); margin:40px 0; }
+  footer{ border-top:1px solid var(--line); color:var(--mut); font-size:13px; padding:24px 0; text-align:center; margin-top:48px; }
+</style>
+</head>
+<body>
+<header class="hdr"><div class="wrap"><a class="logo" href="/x-block/"><span class="mk">🤖</span>X 机器人拉黑助手</a></div></header>
+<div class="wrap">
+
+<h1>隐私政策</h1>
+<p class="muted">最后更新:2026-06-15</p>
+
+<p>「X 机器人拉黑助手」(以下称"本扩展")是一个在 X(Twitter)上用 AI 识别并屏蔽机器人 / 色情 / 引流 / 诈骗账号的浏览器扩展。本政策说明本扩展处理哪些数据、如何使用、以及如何存储。</p>
+
+<h2>1. 本扩展处理的数据</h2>
+<p>为了判断一个账号是否为垃圾账号,本扩展会在你浏览 X 时读取页面上<strong>公开可见</strong>的账号信息并发送给"判定服务"用于分类:</p>
+<ul>
+  <li>账号的显示名、用户名(@handle)、简介、头像 URL、关注数等公开资料</li>
+  <li>账号所发推文 / 回复的<strong>文本内容</strong></li>
+</ul>
+<p>本扩展<strong>不</strong>读取、收集或上传:你的私信、密码、浏览历史、其它网站的数据,也不读取你 X 账号的登录凭据。</p>
+
+<h2>2. 数据发送到哪里</h2>
+<p>上述账号信息会发送到<strong>你自己选择的"判定服务"</strong>,二选一:</p>
+<ul>
+  <li><strong>官方订阅</strong>:发送到本项目判定服务端(<code>ai.julineshang.win</code>),用于 AI 实时分类并按"次数"计费;请求携带你的订阅激活码用于鉴权与额度统计。判定内容仅用于实时分类、不作长期留存;仅记录调用次数等用于计费的最小元数据。</li>
+  <li><strong>自带 API(BYOK)</strong>:发送到<strong>你自己配置</strong>的 OpenAI 兼容 AI 端点。数据流向完全由你的服务商决定,本扩展不经手、不留存。</li>
+</ul>
+<p>除你选定的判定服务外,本扩展<strong>不会</strong>把任何数据发送给作者或任何第三方,<strong>不出售</strong>你的数据,也<strong>不用于广告</strong>。</p>
+
+<h2>3. 本地存储的数据</h2>
+<p>以下数据仅保存在你浏览器本地(<code>chrome.storage.local</code>),不上传云端:</p>
+<ul>
+  <li>你的设置(模式、灵敏度、白名单等)</li>
+  <li>你的 <strong>API Key / 订阅激活码</strong>(仅本地保存;激活码在调用判定服务时作为鉴权令牌发送)</li>
+  <li>已拉黑记录、AI 自学习到的高频垃圾词</li>
+</ul>
+
+<h2>4. 屏蔽操作</h2>
+<p>当判定为垃圾账号时,本扩展会复用你<strong>当前已登录的 X 会话</strong>,调用 X 自身的屏蔽接口完成屏蔽(等同于你手动点"屏蔽")。此操作在你的浏览器内、用你自己的身份完成,不涉及把 X 凭据发送到任何外部服务器。屏蔽可随时在 X 上手动取消。</p>
+
+<h2>5. 你的控制权</h2>
+<ul>
+  <li>可随时在弹窗里关闭、切换"只标记 / 自动拉黑"模式</li>
+  <li>可用白名单永不屏蔽指定账号</li>
+  <li>卸载扩展即清除所有本地数据</li>
+</ul>
+
+<h2>6. 联系方式</h2>
+<p>隐私相关问题请联系:<a href="mailto:hi@julineshang.win">hi@julineshang.win</a></p>
+
+<hr />
+
+<h1 id="en">Privacy Policy</h1>
+<p class="muted">Last updated: 2026-06-15</p>
+<p>X Bot Blocker uses AI to detect and block bot / spam / escort / scam accounts on X (Twitter).</p>
+<h2>Data processed</h2>
+<p>To classify an account, the extension reads <strong>publicly visible</strong> account info on pages you view (display name, @handle, bio, avatar URL, follower counts) and the <strong>text</strong> of posts/replies, and sends them to a classification service for analysis. It does <strong>not</strong> read your DMs, passwords, browsing history, other sites, or your X login credentials.</p>
+<h2>Where data is sent</h2>
+<p>Account info is sent only to the classification service <strong>you choose</strong>: (a) the official subscription backend (<code>ai.julineshang.win</code>), which classifies in real time and logs only minimal billing metadata (call counts), with your subscription key sent as an auth token; or (b) your own OpenAI-compatible endpoint (BYOK), where data flow is governed by your provider. We do <strong>not</strong> sell your data, use it for ads, or send it to any other third party.</p>
+<h2>Local storage</h2>
+<p>Settings, your API key / subscription key, the block log, and learned spam keywords are stored only in your browser (<code>chrome.storage.local</code>) and never uploaded — except the subscription key, sent to the classification service for authentication.</p>
+<h2>Blocking</h2>
+<p>Blocking reuses your already-logged-in X session to call X's own block API (equivalent to clicking "Block" yourself). Your X credentials are never sent to any external server. Blocks can be undone on X anytime.</p>
+<h2>Contact</h2>
+<p><a href="mailto:hi@julineshang.win">hi@julineshang.win</a></p>
+
+</div>
+<footer><div class="wrap">© 2026 X 机器人拉黑助手 · <a href="/x-block/">首页</a></div></footer>
+</body>
+</html>
