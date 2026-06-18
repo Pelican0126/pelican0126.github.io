@@ -54,6 +54,12 @@ window.PANETRANS_I18N = {
     'index.ctaBand.h2': 'Ready to try it?',
     'index.ctaBand.p': 'The Free tier handles real-time translation for 10+ languages. Pro unlocks on-device LLM models; the optional Cloud tier streams a hosted LLM for top quality on any device.',
     'index.ctaBand.btn': 'Pricing',
+    'index.whatsnew.h2': 'What’s new in 0.8.0',
+    'index.whatsnew.li1': '<strong>Dark mode + a cleaner look.</strong> The popup now follows your system light/dark theme, with a refreshed, more consistent design.',
+    'index.whatsnew.li2': '<strong>Right-click translate, fixed.</strong> “Translate selection” now works on the first click — even on tabs that were already open before the extension started.',
+    'index.whatsnew.li3': '<strong>Always the right language.</strong> Switching source or target language no longer risks translating with the wrong model — the loaded model and your selection stay in sync.',
+    'index.whatsnew.li4': '<strong>Snappier, lighter, with retry.</strong> Status updates pause when the popup is hidden, on-device OCR runs more steadily, and a failed translation now shows a clear message with a Retry button.',
+    'index.whatsnew.li5': '<strong>Accessible.</strong> Full keyboard navigation and screen-reader labels throughout the popup.',
 
     // ---- pricing.html ----
     'title.pricing': 'Pricing — PaneTrans',
@@ -313,6 +319,12 @@ window.PANETRANS_I18N = {
     'index.ctaBand.h2': '想试试吗？',
     'index.ctaBand.p': '免费版可为 10 多种语言提供实时翻译。Pro 解锁本地 LLM 模型；可选的 Cloud 套餐通过流式传输托管 LLM，在任何设备上提供顶级质量。',
     'index.ctaBand.btn': '定价',
+    'index.whatsnew.h2': '0.8.0 新增',
+    'index.whatsnew.li1': '<strong>深色模式 + 全新外观。</strong> 弹窗现在跟随系统深/浅色主题，整体设计更统一、更干净。',
+    'index.whatsnew.li2': '<strong>右键翻译已修复。</strong>「翻译选中文字」现在第一次点击就生效——即使是扩展启动前就已经打开的标签页。',
+    'index.whatsnew.li3': '<strong>语言永远不会选错。</strong> 切换源/目标语言不再可能用错模型——已加载的模型和你的选择始终保持一致。',
+    'index.whatsnew.li4': '<strong>更快、更省、可重试。</strong> 弹窗不可见时暂停状态刷新，本地 OCR 运行更稳；翻译失败会给出清晰提示和「重试」按钮。',
+    'index.whatsnew.li5': '<strong>无障碍支持。</strong> 弹窗全程支持键盘操作和屏幕阅读器标签。',
 
     // ---- pricing ----
     'title.pricing': '定价 — PaneTrans',
