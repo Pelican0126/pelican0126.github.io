@@ -67,6 +67,13 @@ const parts = statement.map((part) => {
   .scan:hover, .scan:focus-visible { background: var(--bill-wash); }
   .scan:hover .scan__tag, .scan:focus-visible .scan__tag { color: var(--tide); }
 
+  /* Small type leaves less room between lines: open the leading and tuck the tag under its frame. */
+  @media (max-width: 600px) {
+    .intro__statement { line-height: 2.4; }
+    .scan { --frame-inset: 0.5em -0.04em; }
+    .scan__tag { bottom: 0; font-size: 11px; }
+  }
+
   /* The brackets start wide and soft, then close in on the phrase — a focus lock. */
   @keyframes lock {
     from { opacity: 0; transform: scale(1.5, 1.9); }
