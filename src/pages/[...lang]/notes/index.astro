@@ -1,0 +1,24 @@
+---
+import Base from '../../../layouts/Base.astro';
+import NoteList from '../../../components/NoteList.astro';
+import { langPaths, type Lang } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { getNotes } from '../../../lib/notes';
+
+export const getStaticPaths = langPaths;
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const notes = await getNotes(lang);
+---
+<Base lang={lang} path="notes" title={t('notes.title', lang)} description={t('notes.lead', lang)}>
+  <div class="wrap page">
+    <h1 class="page__title">{t('notes.title', lang)}</h1>
+    <p class="page__lead">{t('notes.lead', lang)}</p>
+    <div class="section">
+      <NoteList notes={notes} lang={lang} />
+    </div>
+  </div>
+</Base>

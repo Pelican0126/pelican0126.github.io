@@ -1,0 +1,31 @@
+---
+import { type Lang } from '../i18n';
+import { t } from '../i18n/ui';
+import { site } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const profiles = [{ label: 'GitHub', href: site.github }, ...site.links.map((l) => ({ label: l.label[lang], href: l.href }))];
+---
+<section id="contact" class="section contact">
+  <h2 class="section__title">{t('contact.title', lang)}</h2>
+  <p class="contact__lead">{t('contact.lead', lang)}</p>
+  <a class="contact__email" href={`mailto:${site.email}`}>{site.email}</a>
+  <p class="contact__profiles">
+    {profiles.map((p) => <a href={p.href} rel="noopener">{p.label} →</a>)}
+  </p>
+</section>
+
+<style>
+  .contact__lead { margin-top: 8px; max-width: 34em; color: var(--ink-2); }
+  .contact__email {
+    display: inline-block; margin-top: 18px;
+    font-family: var(--font-display); font-size: clamp(24px, 4.4vw, 40px); line-height: 1.3;
+    color: var(--ink); text-decoration-color: var(--bill); text-decoration-thickness: 2px; text-underline-offset: 0.22em;
+    overflow-wrap: anywhere;
+  }
+  .contact__email:hover { text-decoration-thickness: 4px; }
+  .contact__profiles { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 16px; }
+</style>

@@ -1,0 +1,62 @@
+---
+import '@fontsource-variable/atkinson-hyperlegible-next';
+import '@fontsource/dm-mono/400.css';
+import '@fontsource/dm-mono/500.css';
+import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { HTML_LANG, LANGS, asset, href, otherLang, type Lang } from '../i18n';
+import { site, siteMeta } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  path: string; // route-relative path of this page: '' (home), 'work/moti'
+  title?: string; // page title; the site name is appended
+  description?: string;
+  // Where the language toggle goes when this page has no translation (defaults to `path`).
+  altPath?: string;
+}
+
+const { lang, path, title, description, altPath = path } = Astro.props;
+const pageTitle = title ? `${title} · ${site.handle}` : siteMeta.title[lang];
+const pageDesc = description ?? siteMeta.description[lang];
+const origin = Astro.site!.origin;
+const canonical = origin + href(path, lang);
+const translated = altPath === path;
+---
+<!doctype html>
+<html lang={HTML_LANG[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <link rel="canonical" href={canonical} />
+    {translated && LANGS.map((l) => <link rel="alternate" hreflang={HTML_LANG[l]} href={origin + href(path, l)} />)}
+    {translated && <link rel="alternate" hreflang="x-default" href={origin + href(path, 'zh')} />}
+    <link rel="alternate" type="application/rss+xml" title={siteMeta.title[lang]} href={href('rss.xml', lang)} />
+    <link rel="sitemap" href={asset('sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={origin + asset('og.png')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Apply a saved theme before first paint to avoid a flash. -->
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <Header lang={lang} path={path} altHref={href(altPath, otherLang(lang))} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

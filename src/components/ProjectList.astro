@@ -1,0 +1,67 @@
+---
+import { href, type Lang } from '../i18n';
+import { t } from '../i18n/ui';
+import type { Project } from '../data/projects';
+import Status from './Status.astro';
+
+interface Props {
+  projects: Project[];
+  lang: Lang;
+}
+const { projects, lang } = Astro.props;
+
+// Where a row goes:
+//  - has an intro       -> its page /work/<slug>/
+//  - public with a repo -> GitHub
+//  - otherwise          -> nowhere (private repos are never linked)
+const rows = projects.map((project) => {
+  if (project.intro) return { project, link: href('work/' + project.slug, lang), go: t('work.details', lang) };
+  if (project.visibility === 'public' && project.repo) return { project, link: project.repo, go: t('work.repo', lang), external: true };
+  return { project };
+});
+---
+<ul class="rows plain-list">
+  {rows.map(({ project, link, go, external }) => {
+    const Row = link ? 'a' : 'div';
+    return (
+      <li>
+        <Row class:list={['row', link && 'row--link frame']} href={link} rel={external ? 'noopener' : undefined}>
+          <span class="row__name">
+            {project.name[lang]}
+            {project.label && <span class="row__label">{project.label[lang]}</span>}
+          </span>
+          <span class="row__tagline">{project.tagline[lang]}</span>
+          <span class="row__meta">
+            <Status status={project.status} lang={lang} />
+            <span class="row__go mono">{go ?? t('work.private', lang)}</span>
+          </span>
+        </Row>
+      </li>
+    );
+  })}
+</ul>
+
+<style>
+  .rows li + li { border-top: 1px solid var(--line); }
+  .row {
+    --pad: 14px;
+    display: grid; gap: 6px 28px; align-items: baseline;
+    margin-inline: calc(var(--pad) * -1); padding: 20px var(--pad);
+    color: inherit; text-decoration: none;
+  }
+  .row__name { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.6em; font-family: var(--font-display); font-size: 21px; line-height: 1.35; }
+  .row__label { font-size: 16px; color: var(--ink-2); }
+  .row__tagline { color: var(--ink-2); font-size: 16px; line-height: 1.6; }
+  .row__meta { display: flex; align-items: baseline; gap: 16px; }
+  .row--link .row__go { color: var(--tide); }
+
+  /* The viewfinder closes in on the row you point at. */
+  .row--link::before { opacity: 0; inset: -5px -6px; transition: opacity 0.12s ease-out, inset 0.18s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .row--link:hover, .row--link:focus-visible { background: var(--surface); }
+  .row--link:hover::before, .row--link:focus-visible::before { opacity: 1; inset: 0; }
+
+  @media (min-width: 820px) {
+    .row { grid-template-columns: minmax(200px, 0.9fr) 2fr minmax(150px, auto); }
+    .row__meta { flex-direction: column; align-items: flex-end; gap: 4px; }
+  }
+</style>

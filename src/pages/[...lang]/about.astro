@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import Contact from '../../components/Contact.astro';
+import { langPaths, type Lang } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { bio, timeline } from '../../data/profile';
+import { offers } from '../../data/offers';
+
+export const getStaticPaths = langPaths;
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const [lede, ...rest] = bio;
+---
+<Base lang={lang} path="about" title={t('about.title', lang)} description={lede[lang]}>
+  <div class="wrap page">
+    <h1 class="page__title">{t('about.title', lang)}</h1>
+    <p class="about__lede">{lede[lang]}</p>
+    <div class="about__bio">
+      {rest.map((p) => <p>{p[lang]}</p>)}
+    </div>
+
+    {timeline.length > 0 && (
+      <section class="section">
+        <h2 class="section__title section__head">{t('about.timeline', lang)}</h2>
+        <dl class="timeline">
+          {timeline.map((item) => (
+            <div>
+              <dt class="mono">{item.period}</dt>
+              <dd>
+                <strong>{item.title[lang]}</strong>
+                {item.detail && <p>{item.detail[lang]}</p>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
+
+    <section id="services" class="section">
+      <h2 class="section__title">{t('about.services', lang)}</h2>
+      <p class="section__lead">{t('about.servicesLead', lang)}</p>
+      <dl class="services">
+        {offers.map((o) => (
+          <div>
+            <dt>{o.title[lang]}</dt>
+            <dd>{o.blurb[lang]}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <Contact lang={lang} />
+  </div>
+</Base>
+
+<style>
+  .about__lede { margin-top: 24px; max-width: 26em; font-family: var(--font-display); font-size: clamp(21px, 2.8vw, 28px); line-height: 1.75; }
+  .about__bio { margin-top: 20px; max-width: 40em; }
+  .about__bio p + p { margin-top: 1em; }
+
+  dl, dd { margin: 0; }
+  .timeline > div, .services > div { display: grid; gap: 4px 28px; padding-block: 18px; }
+  .timeline > div + div, .services > div + div { border-top: 1px solid var(--line); }
+  .timeline dd p, .services dd { color: var(--ink-2); font-size: 16px; line-height: 1.6; }
+  .services { margin-top: 8px; }
+  .services dt { font-family: var(--font-display); font-size: 19px; line-height: 1.4; }
+
+  @media (min-width: 820px) {
+    .timeline > div { grid-template-columns: 110px 1fr; align-items: baseline; }
+    .services > div { grid-template-columns: minmax(200px, 0.9fr) 2fr; align-items: baseline; }
+  }
+</style>

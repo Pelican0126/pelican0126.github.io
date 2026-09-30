@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import Intro from '../../components/Intro.astro';
+import ProjectList from '../../components/ProjectList.astro';
+import NoteList from '../../components/NoteList.astro';
+import Contact from '../../components/Contact.astro';
+import { href, langPaths, type Lang } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { lately } from '../../data/profile';
+import { products } from '../../data/projects';
+import { getNotes } from '../../lib/notes';
+
+export const getStaticPaths = langPaths;
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const notes = (await getNotes(lang)).slice(0, 3);
+---
+<Base lang={lang} path="">
+  <Intro lang={lang} />
+
+  <div class="wrap home">
+    {lately.length > 0 && (
+      <section class="lately" aria-labelledby="lately-title">
+        <h2 id="lately-title" class="mono">{t('home.lately', lang)}</h2>
+        <ul class="plain-list">
+          {lately.map((item) => (
+            <li>
+              <span class="mono">{item.date}</span>
+              {item.path ? <a href={href(item.path, lang)}>{item.text[lang]}</a> : <span>{item.text[lang]}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section id="work" class="section">
+      <div class="section__head">
+        <h2 class="section__title">{t('home.work', lang)}</h2>
+        <a class="section__more" href={href('work', lang)}>{t('home.workAll', lang)}</a>
+      </div>
+      <ProjectList projects={products} lang={lang} />
+    </section>
+
+    {notes.length > 0 && (
+      <section id="notes" class="section">
+        <div class="section__head">
+          <h2 class="section__title">{t('home.notes', lang)}</h2>
+          <a class="section__more" href={href('notes', lang)}>{t('home.notesAll', lang)}</a>
+        </div>
+        <NoteList notes={notes} lang={lang} />
+      </section>
+    )}
+
+    <Contact lang={lang} />
+  </div>
+</Base>
+
+<style>
+  .home { padding-bottom: clamp(56px, 9vw, 104px); }
+
+  .lately { margin-top: clamp(28px, 5vw, 48px); display: grid; gap: 6px 28px; }
+  .lately h2 { font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; line-height: inherit; padding-top: 3px; }
+  .lately li { display: flex; gap: 14px; align-items: baseline; font-size: 16px; }
+  .lately li + li { margin-top: 4px; }
+  .lately li .mono { flex: none; }
+  .lately a { color: inherit; text-decoration-color: var(--line); }
+  .lately a:hover { text-decoration-color: var(--bill); }
+  @media (min-width: 820px) {
+    .lately { grid-template-columns: 110px 1fr; }
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { LANGS, formatDate, href, isoDate, langParam, otherLang, type Lang } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { getNotes, type Note } from '../../../lib/notes';
+
+export async function getStaticPaths() {
+  const byLang = Object.fromEntries(await Promise.all(LANGS.map(async (lang) => [lang, await getNotes(lang)]))) as Record<Lang, Note[]>;
+  return LANGS.flatMap((lang) =>
+    byLang[lang].map((note) => ({
+      params: { lang: langParam(lang), slug: note.slug },
+      props: { lang, note, translated: byLang[otherLang(lang)].some((n) => n.slug === note.slug) },
+    })),
+  );
+}
+
+interface Props {
+  lang: Lang;
+  note: Note;
+  translated: boolean; // the same note exists in the other language
+}
+const { lang, note, translated } = Astro.props;
+const { Content } = await render(note);
+const path = 'notes/' + note.slug;
+---
+<Base lang={lang} path={path} altPath={translated ? path : 'notes'} title={note.data.title} description={note.data.description}>
+  <article class="wrap page">
+    <a class="back" href={href('notes', lang)}>{t('notes.back', lang)}</a>
+    <h1 class="page__title">{note.data.title}</h1>
+    <p class="mono note__date"><time datetime={isoDate(note.data.date)}>{formatDate(note.data.date, lang)}</time></p>
+    <div class="prose note__body">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page__title { max-width: 18em; }
+  .note__date { margin-top: 10px; }
+  .note__body { margin-top: 32px; }
+</style>

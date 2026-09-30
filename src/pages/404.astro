@@ -1,0 +1,18 @@
+---
+// GitHub Pages serves this one file for every missing URL, in either language — so it speaks both.
+import Base from '../layouts/Base.astro';
+import { href } from '../i18n';
+---
+<Base lang="zh" path="" title="404">
+  <section class="wrap page lost">
+    <p class="mono">404</p>
+    <h1 class="page__title">这个页面不存在</h1>
+    <p class="page__lead">链接可能失效了，或者页面被移走了。<a href={href('', 'zh')}>回到首页 →</a></p>
+    <p class="page__lead" lang="en">This page doesn’t exist — the link may be broken, or the page has moved. <a href={href('', 'en')}>Back to home →</a></p>
+  </section>
+</Base>
+
+<style>
+  .lost { padding-block: clamp(64px, 14vw, 160px); }
+  .lost .mono { margin-bottom: 8px; }
+</style>

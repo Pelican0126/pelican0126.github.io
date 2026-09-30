@@ -1,0 +1,66 @@
+---
+import { href, otherLang, type Lang } from '../i18n';
+import { t, type UIKey } from '../i18n/ui';
+import { site } from '../data/site';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  lang: Lang;
+  path: string;
+  altHref: string; // this page in the other language
+}
+const { lang, path, altHref } = Astro.props;
+
+const links: { key: UIKey; path: string }[] = [
+  { key: 'nav.work', path: 'work' },
+  { key: 'nav.notes', path: 'notes' },
+  { key: 'nav.about', path: 'about' },
+];
+const isCurrent = (p: string) => path === p || path.startsWith(p + '/');
+// 'Pelican0126' → 'Pelican' + '0126'
+const word = site.handle.replace(/\d+$/, '');
+const digits = site.handle.slice(word.length);
+---
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="brand" href={href('', lang)} aria-label={site.handle}>
+      <span class="brand__mark frame" aria-hidden="true"></span>
+      <span class="brand__word">{word}</span><span class="brand__digits">{digits}</span>
+    </a>
+    <nav class="nav" aria-label={lang === 'zh' ? '主导航' : 'Primary'}>
+      {links.map((l) => (
+        <a href={href(l.path, lang)} aria-current={isCurrent(l.path) ? 'page' : undefined}>{t(l.key, lang)}</a>
+      ))}
+    </nav>
+    <div class="header__tools">
+      <a class="tool" href={altHref} lang={otherLang(lang) === 'zh' ? 'zh-CN' : 'en'} aria-label={t('nav.switchLang', lang)} title={t('nav.switchLang', lang)}>
+        {lang === 'zh' ? 'EN' : '中'}
+      </a>
+      <ThemeToggle label={t('nav.theme', lang)} />
+    </div>
+  </div>
+</header>
+
+<style>
+  .header__inner { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 28px; padding-block: 18px; }
+
+  .brand { display: inline-flex; align-items: center; color: var(--ink); text-decoration: none; font-family: var(--font-display); font-size: 20px; line-height: 1; }
+  .brand__mark { --frame-arm: 5px; width: 18px; height: 18px; margin-right: 10px; }
+  .brand__mark::after { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: var(--ink); }
+  .brand__digits { font-family: var(--font-mono); font-size: 13px; color: var(--ink-3); margin-left: 3px; align-self: flex-end; }
+
+  .nav { display: flex; gap: 22px; }
+  .nav a { color: var(--ink-2); text-decoration: none; font-size: 16px; padding-block: 4px; }
+  .nav a:hover { color: var(--ink); }
+  .nav a[aria-current='page'] { color: var(--ink); box-shadow: 0 2px 0 var(--bill); }
+
+  .header__tools { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+
+  @media (max-width: 480px) {
+    .brand__digits { display: none; }
+  }
+  /* Too narrow for one row: brand and tools on top, links underneath. */
+  @media (max-width: 440px) {
+    .nav { order: 1; width: 100%; }
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import { href, isoDate, type Lang } from '../i18n';
+import { t } from '../i18n/ui';
+import type { Note } from '../lib/notes';
+
+interface Props {
+  notes: Note[];
+  lang: Lang;
+}
+const { notes, lang } = Astro.props;
+---
+{notes.length === 0 ? (
+  <p class="notes-empty">{t('notes.empty', lang)}</p>
+) : (
+  <ul class="notes plain-list">
+    {notes.map((note) => (
+      <li>
+        <a class="note" href={href('notes/' + note.slug, lang)}>
+          <time class="mono" datetime={isoDate(note.data.date)}>{isoDate(note.data.date)}</time>
+          <span class="note__title">{note.data.title}</span>
+          <span class="note__desc">{note.data.description}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+
+<style>
+  .notes li + li { border-top: 1px solid var(--line); }
+  .note { display: grid; gap: 2px 28px; padding-block: 18px; color: inherit; text-decoration: none; }
+  .note__title { font-family: var(--font-display); font-size: 21px; line-height: 1.35; }
+  .note__desc { color: var(--ink-2); font-size: 16px; line-height: 1.6; }
+  .note:hover .note__title, .note:focus-visible .note__title { text-decoration: underline; text-decoration-color: var(--bill); text-decoration-thickness: 2px; text-underline-offset: 0.25em; }
+  .notes-empty { color: var(--ink-2); padding-block: 18px; }
+
+  @media (min-width: 820px) {
+    .note { grid-template-columns: 110px 1fr; align-items: baseline; }
+    .note__desc { grid-column: 2; }
+  }
+</style>

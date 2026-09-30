@@ -1,0 +1,20 @@
+---
+import { type Lang } from '../i18n';
+import { t } from '../i18n/ui';
+import type { ProjectStatus } from '../data/projects';
+
+interface Props {
+  status: ProjectStatus;
+  lang: Lang;
+}
+const { status, lang } = Astro.props;
+---
+<span class={`status status--${status}`}>{t(`status.${status}`, lang)}</span>
+
+<style>
+  .status { display: inline-flex; align-items: center; gap: 7px; font: 400 13px/1.4 var(--font-mono); color: var(--ink-2); white-space: nowrap; }
+  .status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
+  .status--shipped::before, .status--live::before { background: var(--ok); }
+  .status--active::before { background: var(--bill); }
+  .status--paused::before { background: none; box-shadow: inset 0 0 0 1.5px var(--ink-3); }
+</style>

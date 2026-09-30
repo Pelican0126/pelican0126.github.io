@@ -1,0 +1,149 @@
+/* ============================================================
+   Tokens. One set of names; light-dark() picks the value from the
+   active color-scheme, which the theme toggle overrides via data-theme.
+   ============================================================ */
+:root {
+  color-scheme: light dark;
+
+  --mist: light-dark(#f2f5f7, #0c1622); /* page */
+  --surface: light-dark(#ffffff, #132033); /* raised / hover */
+  --ink: light-dark(#13233a, #e4ebf3); /* text */
+  --ink-2: light-dark(#4b5c72, #a3b3c6); /* secondary text */
+  --ink-3: light-dark(#66768a, #7d8fa6); /* captions */
+  --line: light-dark(#d5dde5, #24344c);
+  --tide: light-dark(#1f5c94, #8cbbea); /* links */
+  --bill: light-dark(#e8961a, #f3b241); /* the viewfinder mark — never text */
+  --bill-wash: light-dark(#fbedcf, #35290f);
+  --ok: light-dark(#23875a, #5fcf9b);
+
+  --font-display: 'LXGW WenKai', 'Kaiti SC', STKaiti, KaiTi, serif;
+  --font-body: 'Atkinson Hyperlegible Next Variable', -apple-system, 'PingFang SC',
+    'HarmonyOS Sans SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+
+  --maxw: 1040px;
+  --gutter: clamp(20px, 5vw, 40px);
+  --radius: 6px;
+}
+/* LXGW WenKai draws curly quotes and dashes full-width — right for Chinese, wrong for
+   English ("I’ m"). On English pages, take just those marks from the body face. */
+@font-face {
+  font-family: 'Latin Marks';
+  src: url('@fontsource-variable/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 200 800;
+  font-display: swap;
+  unicode-range: U+2013-2014, U+2018-2019, U+201C-201D, U+2026;
+}
+:root:lang(en) { --font-display: 'Latin Marks', 'LXGW WenKai', 'Kaiti SC', STKaiti, KaiTi, serif; }
+
+:root[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark'] { color-scheme: dark; }
+
+/* ============================================================ Base */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--mist);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+main { flex: 1; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 400; line-height: 1.25; }
+p, ul, ol { margin: 0; }
+a { color: var(--tide); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 2px; }
+img, video { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--tide); outline-offset: 3px; border-radius: 2px; }
+::selection { background: var(--bill-wash); }
+
+.wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
+.mono { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.02em; color: var(--ink-3); }
+.plain-list { list-style: none; padding: 0; }
+
+/* ============================================================
+   The viewfinder. Four corner brackets drawn on ::before, the way a
+   camera or an OCR overlay marks the thing it has locked onto.
+   Tune with --frame-inset / --frame-arm / --frame-weight.
+   ============================================================ */
+.frame { position: relative; }
+.frame::before {
+  --_c: var(--bill);
+  --_w: var(--frame-weight, 2px);
+  --_l: var(--frame-arm, 10px);
+  content: '';
+  position: absolute;
+  inset: var(--frame-inset, 0);
+  pointer-events: none;
+  background:
+    linear-gradient(var(--_c) 0 0) left top / var(--_l) var(--_w),
+    linear-gradient(var(--_c) 0 0) left top / var(--_w) var(--_l),
+    linear-gradient(var(--_c) 0 0) right top / var(--_l) var(--_w),
+    linear-gradient(var(--_c) 0 0) right top / var(--_w) var(--_l),
+    linear-gradient(var(--_c) 0 0) left bottom / var(--_l) var(--_w),
+    linear-gradient(var(--_c) 0 0) left bottom / var(--_w) var(--_l),
+    linear-gradient(var(--_c) 0 0) right bottom / var(--_l) var(--_w),
+    linear-gradient(var(--_c) 0 0) right bottom / var(--_w) var(--_l);
+  background-repeat: no-repeat;
+}
+
+/* ============================================================ Page scaffolding */
+.page { padding-block: clamp(36px, 7vw, 72px) clamp(48px, 8vw, 96px); }
+.page__title { font-size: clamp(32px, 5.5vw, 48px); }
+.page__lead { margin-top: 12px; max-width: 40em; color: var(--ink-2); font-size: 18px; }
+.back { display: inline-block; margin-bottom: 28px; font-size: 15px; color: var(--ink-2); text-decoration: none; }
+.back:hover { color: var(--ink); }
+
+.section { margin-top: clamp(48px, 8vw, 84px); }
+.section__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+.section__title { font-size: clamp(22px, 3vw, 28px); }
+.section__more { font-size: 15px; white-space: nowrap; }
+.section__lead { color: var(--ink-2); margin-bottom: 8px; }
+
+/* ============================================================ Buttons & chips */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border: 1px solid var(--ink); border-radius: var(--radius);
+  font-size: 15px; font-weight: 600; line-height: 1.4; text-decoration: none;
+  color: var(--ink); background: transparent;
+}
+.btn:hover { background: var(--surface); }
+.btn--solid { background: var(--ink); color: var(--mist); }
+.btn--solid:hover { background: var(--tide); border-color: var(--tide); }
+
+/* Square icon-sized control in the header (language + theme). */
+.tool {
+  display: inline-grid; place-items: center; width: 36px; height: 36px; padding: 0;
+  border: 0; border-radius: var(--radius); background: none; cursor: pointer;
+  color: var(--ink-2); font: 500 13px var(--font-mono); text-decoration: none;
+}
+.tool:hover { color: var(--ink); background: var(--surface); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px 14px; list-style: none; padding: 0; }
+.chips li { font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); }
+.chips li + li::before { content: '·'; margin-right: 14px; color: var(--ink-3); }
+
+/* ============================================================ Prose (notes, legal pages) */
+.prose { max-width: 40em; }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 { font-size: 22px; margin-top: 2em; }
+.prose h3 { font-size: 18px; margin-top: 1.6em; }
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose li + li { margin-top: 0.4em; }
+.prose strong { font-weight: 700; }
+.prose code { font-family: var(--font-mono); font-size: 0.9em; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 0.1em 0.35em; }
+.prose pre { overflow-x: auto; padding: 16px; border-radius: var(--radius); border: 1px solid var(--line); font-size: 14px; line-height: 1.6; }
+.prose pre code { background: none; border: 0; padding: 0; }
+.prose blockquote { margin-inline: 0; padding-left: 1em; border-left: 2px solid var(--bill); color: var(--ink-2); }
+.prose hr { border: 0; border-top: 1px solid var(--line); margin-block: 2em; }
+.prose img { border-radius: var(--radius); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
