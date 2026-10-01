@@ -147,9 +147,10 @@ export const projects: Project[] = [
       zh: '导入你的题库，对着题目拍一下就出答案，还能用手机本地 AI 给你讲解',
       en: 'Load your question bank, point the camera at a question, and the answer pops up — with on-phone AI to explain it',
     },
-    status: 'active',
+    status: 'shipped',
     visibility: 'private',
     stack: ['Swift', 'SwiftUI', 'OCR'],
+    links: [{ label: { zh: 'App Store', en: 'App Store (China)' }, href: 'https://apps.apple.com/cn/app/id6780907669' }],
     intro: {
       summary: {
         zh: '一个 iPhone 上的刷题 / 拍照搜题 App。先把你的题库（Excel/CSV）导进去，之后对着纸上的题拍一下，它认出字、在题库里找到对应那题、立刻给答案；付费版还能用手机本地的 AI 离线给你讲解。整个过程都在手机上跑，不用服务器、真机也不用联网。',
@@ -196,6 +197,48 @@ export const projects: Project[] = [
       note: {
         zh: '已经在 App Store 上线，买断和订阅都能用了。',
         en: 'Live on the App Store, with both one-time purchase and subscription working.',
+      },
+    },
+  },
+
+  {
+    slug: 'courtside',
+    name: { zh: 'CourtSide', en: 'CourtSide' },
+    label: { zh: '网球计分', en: 'tennis scoring' },
+    tagline: {
+      zh: '在 Apple Watch 上给网球比赛记分：点一下记一分，局和盘都替你算好',
+      en: 'Keep score of a tennis match on your Apple Watch — one tap per point, and it works out the games and sets for you',
+    },
+    status: 'active',
+    visibility: 'private',
+    stack: ['Swift', 'SwiftUI', 'watchOS'],
+    intro: {
+      summary: {
+        zh: '一个 Apple Watch 网球计分 App，配一个 iPhone 伴侣 App。打球时在手腕上点一下就记一分，点错了一键撤回；平分、占先、抢七、决胜盘这些规则都由手表算好，每一分、每一局、每一盘和整场结束时的震动各不一样，不用低头也知道打到哪了。记分的同时会开一个网球运动记录，心率和卡路里就显示在记分板上，打完自动存进 Apple 健身。',
+        en: 'An Apple Watch app for keeping score in tennis, with an iPhone companion. One tap on your wrist records a point and one tap undoes a mistake; deuce, advantage, tiebreaks and deciding sets are all worked out on the watch, and points, games, sets and the end of the match each have their own haptic, so you know the state of play without looking. While you score it runs a tennis workout — heart rate and calories sit right on the scoreboard, and the match is saved to Apple Fitness when it ends.',
+      },
+      features: [
+        { zh: '点一下记一分，点错一键撤回', en: 'One tap per point, one tap to undo' },
+        {
+          zh: '四种赛制：单盘、三盘两胜（抢十决胜）、三盘两胜（完整决胜盘）、职业盘',
+          en: 'Four formats: a single set, best of three with a match tiebreak, best of three played out in full, and a pro set',
+        },
+        {
+          zh: '分、局、盘、整场结束的震动各不相同，不看表也知道比分走到哪',
+          en: 'Points, games, sets and the match each feel different on the wrist, so you can follow the score without looking',
+        },
+        {
+          zh: '记分时同步记录网球运动：心率和卡路里在记分板上，打完存进 Apple 健身',
+          en: 'Records a tennis workout as you score: heart rate and calories on the scoreboard, saved to Apple Fitness afterwards',
+        },
+        {
+          zh: '联赛的比赛在 iPhone 上选好交给手表，比分实时同步',
+          en: 'Pick a league match on the iPhone, hand it to the watch, and the score syncs live',
+        },
+      ],
+      note: {
+        zh: '这是给客户做的项目，还在开发中；这里只介绍它能做什么。',
+        en: 'Built for a client and still in progress — this page only covers what it does.',
       },
     },
   },

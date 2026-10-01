@@ -63,8 +63,8 @@ export const bio: L[] = [
     en: 'I’m Pelican, a developer who builds products on my own. I like making small AI tools people actually use — especially the kind where your data stays on your own phone or computer instead of going up to the cloud.',
   },
   {
-    zh: '做得最多的是 iPhone App 和 Chrome 扩展：记账的 FernBudget 已经在 App Store 上架，翻译扩展 PaneTrans 和 X 机器人拉黑助手在 Chrome 商店里能直接装。顺手也写些开源的小工具。',
-    en: 'Mostly that means iPhone apps and Chrome extensions: FernBudget, an expense tracker, is on the App Store; PaneTrans, a translation extension, and X Bot Blocker, which blocks spam accounts on X, are on the Chrome Web Store. I write open-source tools along the way too.',
+    zh: '做得最多的是 iPhone App 和 Chrome 扩展：记账的 FernBudget 和拍照搜题的易拍答已经在 App Store 上架，翻译扩展 PaneTrans 和 X 机器人拉黑助手在 Chrome 商店里能直接装。顺手也写些开源的小工具。',
+    en: 'Mostly that means iPhone apps and Chrome extensions: FernBudget, an expense tracker, and MoTi, which finds the answer to a question you photograph, are on the App Store; PaneTrans, a translation extension, and X Bot Blocker, which blocks spam accounts on X, are on the Chrome Web Store. I write open-source tools along the way too.',
   },
   {
     zh: '这个站放我做过的东西，还有做的时候记下的笔记。',
