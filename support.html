@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Support — PaneTrans</title>
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hdr">
+  <a class="logo" href="/">
+    <img src="assets/icon.png" alt="" width="32" height="32">
+    <span>PaneTrans</span>
+  </a>
+  <nav>
+    <a href="index.html#features">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="https://github.com/Pelican0126/panetrans" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<article class="legal">
+  <h1>Support</h1>
+  <p class="legal-meta">Response time: typically within 1–2 business days.</p>
+
+  <h2>Contact</h2>
+  <p>Email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> from any address you can read. To help us fix a bug faster, please include:</p>
+  <ul>
+    <li>What you were trying to do (e.g. "translate Spanish YouTube subtitles to English")</li>
+    <li>What happened instead — error message, missing translation, or slow response</li>
+    <li>Browser version (paste from <code>chrome://version</code>)</li>
+    <li>Extension version (toolbar popup → footer)</li>
+  </ul>
+
+  <h2>Common questions</h2>
+
+  <p><strong>The toolbar icon does nothing on a particular page.</strong> Chrome blocks every extension on certain pages (the Chrome Web Store, <code>chrome://</code> internal pages, a small number of financial websites). PaneTrans cannot run there — try the same action on a normal page.</p>
+
+  <p><strong>Translation is slow the first time.</strong> The first run of a given model downloads its weights (50–300 MB) into your browser cache. Subsequent uses are near-instant. You can pre-download a model from the popup → Model Picker.</p>
+
+  <p><strong>I bought a Pro license but the popup still says "Free".</strong> Check your inbox for an email from <code>noreply@dodopayments.com</code> containing your license key. Open the extension popup → Pro section → paste the key → Activate. If the email never arrived, check spam and then email us with the address you used at checkout so we can re-issue the key.</p>
+
+  <p><strong>My license key is rejected.</strong> Make sure you copied the whole key (no leading/trailing spaces or line breaks). Lifetime keys never expire; subscription keys auto-renew on each successful charge. If a previously-working key stops working, email us and we will look up the activation history.</p>
+
+  <p><strong>I want a refund.</strong> Refunds are honored within 2 days of purchase. See the <a href="refund.html">Refund Policy</a> for the full terms, then email <a href="mailto:hi@julineshang.win">hi@julineshang.win</a> from the address you used at checkout.</p>
+
+  <p><strong>Does PaneTrans send my browsing data anywhere?</strong> No. All translation runs locally on your device. The only outbound network traffic is downloading model files from Hugging Face on first use, OCR data from <code>tessdata.projectnaptha.com</code>, and (for Pro users) a license-key validation request that contains only the key string. Read the full <a href="privacy.html">Privacy Policy</a> for details.</p>
+
+  <h2>Service status</h2>
+  <p>Translation has no central service — it runs entirely in your browser, so there is nothing to be "down." The only server-facing component is the optional license-validation Worker; if it is ever unreachable, previously-activated Pro features remain unlocked from local cache and the popup retries quietly in the background.</p>
+</article>
+
+</body>
+</html>
