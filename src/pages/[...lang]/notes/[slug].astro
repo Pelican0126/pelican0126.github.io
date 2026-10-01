@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import { LANGS, formatDate, href, isoDate, langParam, otherLang, type Lang } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { getNotes, type Note } from '../../../lib/notes';
@@ -24,9 +25,9 @@ const { lang, note, translated } = Astro.props;
 const { Content } = await render(note);
 const path = 'notes/' + note.slug;
 ---
-<Base lang={lang} path={path} altPath={translated ? path : 'notes'} title={note.data.title} description={note.data.description}>
+<Base lang={lang} path={path} section="notes" altPath={translated ? path : 'notes'} title={note.data.title} description={note.data.description}>
   <article class="wrap page">
-    <a class="back" href={href('notes', lang)}>{t('notes.back', lang)}</a>
+    <Breadcrumbs label={t('crumbs.label', lang)} items={[{ label: t('notes.title', lang), href: href('notes', lang) }, { label: note.data.title }]} />
     <h1 class="page__title">{note.data.title}</h1>
     <p class="mono note__date"><time datetime={isoDate(note.data.date)}>{formatDate(note.data.date, lang)}</time></p>
     <div class="prose note__body">

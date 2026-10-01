@@ -1,0 +1,129 @@
+---
+// A product's home page at /<slug>/ (en: /en/<slug>/), generated from its `intro`.
+// Products with their own hand-made site in public/<slug>/ don't come through here.
+import Base from '../../../layouts/Base.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import Status from '../../../components/Status.astro';
+import { LANGS, asset, href, langParam, type Lang } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { projects, type Project } from '../../../data/projects';
+import { getProjectDocs } from '../../../lib/legal';
+import '../../../lib/projects'; // runs the URL-structure checks
+
+export function getStaticPaths() {
+  return LANGS.flatMap((lang) =>
+    projects
+      .filter((p) => p.intro)
+      .map((project) => ({ params: { lang: langParam(lang), product: project.slug }, props: { lang, project } })),
+  );
+}
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+const { lang, project } = Astro.props;
+const { demo } = project;
+const intro = project.intro!;
+const isPublic = project.visibility === 'public';
+const title = [project.name[lang], project.label?.[lang]].filter(Boolean).join(' · ');
+const docs = await getProjectDocs(project.slug, lang);
+---
+<Base lang={lang} path={project.slug} section="work" title={title} description={project.tagline[lang]}>
+  <article class:list={['wrap page product', demo?.portrait && 'product--side']}>
+    <header class="product__head">
+      <Breadcrumbs
+        label={t('crumbs.label', lang)}
+        items={[{ label: t('work.title', lang), href: href('work', lang) }, { label: project.name[lang] }]}
+      />
+      <p class="product__state">
+        <Status status={project.status} lang={lang} />
+        <span class="mono">{isPublic ? t('work.openSource', lang) : t('work.private', lang)}</span>
+      </p>
+      <h1 class="page__title">
+        {project.name[lang]}
+        {project.label && <span class="product__label">{project.label[lang]}</span>}
+      </h1>
+      <p class="page__lead">{project.tagline[lang]}</p>
+      {(project.repo || project.links?.length) && (
+        <p class="product__actions">
+          {isPublic && project.repo && <a class="btn btn--solid" href={project.repo} rel="noopener">{t('work.repo', lang)}</a>}
+          {project.links?.map((l) => <a class="btn" href={l.href} rel="noopener">{l.label[lang]}</a>)}
+        </p>
+      )}
+    </header>
+
+    {demo && (
+      <div class="product__media frame">
+        {demo.type === 'video' ? (
+          <video src={asset(demo.src)} poster={demo.poster && asset(demo.poster)} controls playsinline preload="none"></video>
+        ) : (
+          <img src={asset(demo.src)} alt={project.name[lang]} loading="lazy" />
+        )}
+      </div>
+    )}
+
+    <div class="product__body">
+      <p class="product__summary">{intro.summary[lang]}</p>
+
+      <h2>{t('work.highlights', lang)}</h2>
+      <ul class="product__features">
+        {intro.features.map((f) => <li>{f[lang]}</li>)}
+      </ul>
+
+      <h2>{t('work.stack', lang)}</h2>
+      <ul class="chips">
+        {project.stack.map((s) => <li>{s}</li>)}
+      </ul>
+
+      {intro.note && <p class="product__note">{intro.note[lang]}</p>}
+
+      {docs.length > 0 && (
+        <>
+          <h2>{t('work.docs', lang)}</h2>
+          <ul class="product__docs plain-list">
+            {docs.map((d) => <li><a href={href(`${project.slug}/${d.doc}`, lang)}>{d.data.label} →</a></li>)}
+          </ul>
+        </>
+      )}
+
+      <p class="mono product__meta">{isPublic ? t('work.repoNote', lang) : t('work.privateNote', lang)}</p>
+
+      <div class="product__cta">
+        <p>{t('work.ctaLead', lang)}</p>
+        <a class="btn" href={href('about', lang) + '#contact'}>{t('work.cta', lang)}</a>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .product { display: grid; gap: clamp(28px, 5vw, 48px); }
+  .product__state { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .product__label { margin-left: 0.4em; font-size: 0.55em; color: var(--ink-2); white-space: nowrap; }
+  .product__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+
+  /* The demo sits inside the viewfinder. */
+  .product__media { --frame-inset: -9px; --frame-arm: 18px; margin: 9px; }
+  .product__media video, .product__media img { width: 100%; height: auto; border-radius: var(--radius); background: var(--surface); }
+
+  .product__body { max-width: 40em; }
+  .product__summary { font-size: 18px; }
+  .product__body h2 { margin-top: 36px; margin-bottom: 12px; font-size: 20px; }
+  .product__features { padding-left: 1.2em; }
+  .product__features li + li { margin-top: 6px; }
+  .product__features li::marker { color: var(--bill); }
+  .product__note { margin-top: 32px; padding-left: 16px; border-left: 2px solid var(--bill); }
+  .product__docs { display: flex; flex-wrap: wrap; gap: 6px 24px; }
+  .product__meta { margin-top: 28px; }
+  .product__cta { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .product__cta p { margin-bottom: 14px; color: var(--ink-2); }
+
+  /* Portrait demos (phone recordings, extension popups) stand beside the text. */
+  .product--side .product__media { max-width: 340px; }
+  @media (min-width: 900px) {
+    .product--side { grid-template-columns: minmax(0, 1fr) 340px; column-gap: 64px; align-items: start; }
+    .product--side .product__head, .product--side .product__body { grid-column: 1; }
+    .product--side .product__media { grid-column: 2; grid-row: 1 / span 2; position: sticky; top: 24px; }
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+// "This page is also in English / 本站也有中文版" — shown only when the reader's preferred
+// language isn't this page's. Base.astro decides before first paint (data-suggest-lang on <html>),
+// so the bar never pops in. Written in the reader's language, i.e. the other one.
+import { HTML_LANG, otherLang, type Lang } from '../i18n';
+import { t } from '../i18n/ui';
+
+interface Props {
+  lang: Lang; // this page's language
+  altHref: string; // this page in the other language
+}
+const { lang, altHref } = Astro.props;
+const other = otherLang(lang);
+---
+<div class="lang-hint" lang={HTML_LANG[other]}>
+  <div class="wrap lang-hint__inner">
+    <span>{t('hint.text', lang)}</span>
+    <a href={altHref} data-lang-choice={other}>{t('hint.link', lang)}</a>
+    <button type="button" class="lang-hint__close" data-lang-choice={lang} aria-label={t('hint.stay', lang)} title={t('hint.stay', lang)}>×</button>
+  </div>
+</div>
+
+<style>
+  .lang-hint { display: none; background: var(--bill-wash); font-size: 15px; }
+  :global(:root[data-suggest-lang]) .lang-hint { display: block; }
+  .lang-hint__inner { display: flex; align-items: center; gap: 6px 14px; flex-wrap: wrap; padding-block: 8px; }
+  .lang-hint a { color: var(--ink); font-weight: 600; }
+  .lang-hint__close {
+    margin-left: auto; width: 28px; height: 28px; padding: 0; border: 0; border-radius: var(--radius);
+    background: none; color: var(--ink-2); font-size: 20px; line-height: 1; cursor: pointer;
+  }
+  .lang-hint__close:hover { color: var(--ink); background: var(--surface); }
+</style>

@@ -14,7 +14,7 @@ interface Props {
 const { lang } = Astro.props;
 const [lede, ...rest] = bio;
 ---
-<Base lang={lang} path="about" title={t('about.title', lang)} description={lede[lang]}>
+<Base lang={lang} path="about" section="about" title={t('about.title', lang)} description={lede[lang]}>
   <div class="wrap page">
     <h1 class="page__title">{t('about.title', lang)}</h1>
     <p class="about__lede">{lede[lang]}</p>

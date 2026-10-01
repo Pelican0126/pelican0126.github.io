@@ -1,7 +1,8 @@
 ---
-import { href, type Lang } from '../i18n';
+import { type Lang } from '../i18n';
 import { t } from '../i18n/ui';
 import type { Project } from '../data/projects';
+import { projectLink } from '../lib/projects';
 import Status from './Status.astro';
 
 interface Props {
@@ -10,22 +11,20 @@ interface Props {
 }
 const { projects, lang } = Astro.props;
 
-// Where a row goes:
-//  - has an intro       -> its page /work/<slug>/
-//  - public with a repo -> GitHub
-//  - otherwise          -> nowhere (private repos are never linked)
+// A product row opens its home page (/<slug>/); a public tool opens GitHub;
+// a private tool without a page isn't a link (private repos are never linked).
 const rows = projects.map((project) => {
-  if (project.intro) return { project, link: href('work/' + project.slug, lang), go: t('work.details', lang) };
-  if (project.visibility === 'public' && project.repo) return { project, link: project.repo, go: t('work.repo', lang), external: true };
-  return { project };
+  const link = projectLink(project, lang);
+  const go = !link ? t('work.private', lang) : link.external ? t('work.repo', lang) : t('work.home', lang);
+  return { project, link, go };
 });
 ---
 <ul class="rows plain-list">
-  {rows.map(({ project, link, go, external }) => {
+  {rows.map(({ project, link, go }) => {
     const Row = link ? 'a' : 'div';
     return (
       <li>
-        <Row class:list={['row', link && 'row--link frame']} href={link} rel={external ? 'noopener' : undefined}>
+        <Row class:list={['row', link && 'row--link frame']} href={link?.href} rel={link?.external ? 'noopener' : undefined}>
           <span class="row__name">
             {project.name[lang]}
             {project.label && <span class="row__label">{project.label[lang]}</span>}
@@ -33,7 +32,7 @@ const rows = projects.map((project) => {
           <span class="row__tagline">{project.tagline[lang]}</span>
           <span class="row__meta">
             <Status status={project.status} lang={lang} />
-            <span class="row__go mono">{go ?? t('work.private', lang)}</span>
+            <span class="row__go mono">{go}</span>
           </span>
         </Row>
       </li>

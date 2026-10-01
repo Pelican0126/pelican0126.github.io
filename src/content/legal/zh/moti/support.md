@@ -1,5 +1,6 @@
 ---
 title: 易拍答 技术支持
+label: 技术支持
 description: 易拍答技术支持：常见问题与联系方式。
 subtitle: 拍照搜题 · 题库刷题 · 错题本
 ---

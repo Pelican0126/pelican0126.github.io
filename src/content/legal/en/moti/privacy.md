@@ -1,5 +1,6 @@
 ---
 title: MoTi Privacy Policy
+label: Privacy
 description: 'MoTi privacy policy: no personal data collected or uploaded; everything runs on-device.'
 subtitle: 'Effective date: June 25, 2026'
 ---

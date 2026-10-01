@@ -4,10 +4,14 @@ export type ProjectStatus = 'shipped' | 'live' | 'active' | 'paused';
 
 export interface ProjectLink {
   label: L;
-  href?: string; // external URL (App Store, Chrome Web Store…)
-  path?: string; // page on this site, route-relative: 'work/moti/privacy'
+  href: string; // external URL (App Store, Chrome Web Store…)
 }
 
+// URL rule: every product lives in exactly one top-level folder named after its slug.
+//   /<slug>/          the product's home — either generated from `intro` below, or a
+//                     hand-made site in public/<slug>/ (`ownSite`)
+//   /<slug>/<doc>/    its privacy / support pages (src/content/legal/<lang>/<slug>/<doc>.md)
+// /work/ is only the index. See src/lib/projects.ts for the checks that enforce this.
 export interface Project {
   slug: string;
   name: L;
@@ -17,9 +21,12 @@ export interface Project {
   visibility: 'public' | 'private';
   stack: string[]; // public, non-sensitive tech chips only
   repo?: string; // ONLY ever set for PUBLIC repos
-  links?: ProjectLink[];
+  // The product's own hand-made site sits in public/<slug>/ and is its home page.
+  // It must handle both languages itself and accept ?lang=zh|en (links pass the reader's language).
+  ownSite?: boolean;
+  links?: ProjectLink[]; // shown on a generated home page
   demo?: { type: 'video' | 'image'; src: string; poster?: string; portrait?: boolean }; // media in /public
-  // A project with an intro gets its own page under /work/<slug>/.
+  // A generated home page at /<slug>/.
   intro?: {
     summary: L; // marketing-level, NO private-repo content
     features: L[];
@@ -32,7 +39,7 @@ export interface Project {
 // Private repos never get a `repo` link. Copy below is original product-level marketing.
 
 export const projects: Project[] = [
-  // ───────────────────────── Products (each has a page) ─────────────────────────
+  // ───────────────────────── Products (each has a home at /<slug>/) ─────────────────────────
   {
     slug: 'panetrans',
     name: { zh: 'PaneTrans', en: 'PaneTrans' },
@@ -44,35 +51,13 @@ export const projects: Project[] = [
     status: 'live',
     visibility: 'private',
     stack: ['Chrome', 'WebGPU', 'OCR'],
-    demo: { type: 'video', src: 'media/panetrans.mp4', poster: 'media/panetrans.jpg' },
-    links: [
-      {
-        label: { zh: 'Chrome 商店', en: 'Chrome Web Store' },
-        href: 'https://chromewebstore.google.com/detail/iienfgpjfginkjecmdfeakkfmlibfdcj',
-      },
-    ],
-    intro: {
-      summary: {
-        zh: '一个 Chrome 扩展。你在网页上框出一块地方，旁边就弹出一个能拖的小窗，框里的字一变，译文跟着变——有点像给聊天框、弹幕、视频画面贴了条实时字幕。翻译是在你自己浏览器里跑的，免费档完全断网也能用，原文一个字都不往外传。',
-        en: 'A Chrome extension. You box off a patch of a page and a little draggable window pops up next to it; when the text inside changes, the translation changes with it — a bit like sticking a live subtitle onto a chat box, a comment stream, or a video. The translating runs in your own browser, the free tier works fully offline, and not a word of the original is sent anywhere.',
-      },
-      features: [
-        { zh: '框一块就实时翻译，里面的字一变译文跟着变', en: 'Box a region and it translates live, following the text as it changes' },
-        { zh: 'YouTube 双语字幕', en: 'Bilingual YouTube subtitles' },
-        { zh: '整页翻译，连画面里的字也能认', en: 'Whole-page translation, and it can read text baked into images too' },
-        { zh: '翻译全在你浏览器里跑，不上传', en: 'All the translating happens in your browser — nothing uploaded' },
-        { zh: '想要更准的翻译，也有云端档可选', en: 'Want sharper translations? There’s a cloud tier too' },
-      ],
-      note: {
-        zh: '翻译在本地跑这点，是它最不容易被抄走的地方——在意隐私的人会喜欢，而大厂反而不太愿意这么做。',
-        en: 'Doing the translating locally is the part that’s hardest to copy — people who care about privacy like it, and it’s exactly what the big players are reluctant to do.',
-      },
-    },
+    // public/panetrans/ is synced from the extension repo (scripts/sync-site.sh there);
+    // it carries its own translations and takes ?lang=zh|en.
+    ownSite: true,
   },
   {
     slug: 'x-block',
-    name: { zh: 'X-Block-Bot', en: 'X-Block-Bot' },
-    label: { zh: '屏蔽垃圾号', en: 'block the spam' },
+    name: { zh: 'X 机器人拉黑助手', en: 'X Bot Blocker' },
     tagline: {
       zh: '自动认出 X 上的机器人和垃圾号，帮你悄悄拉黑——免费，就在你浏览器里本地跑',
       en: 'Spots the bots and spam accounts on X and quietly blocks them for you — free, and it runs locally in your browser',
@@ -83,25 +68,44 @@ export const projects: Project[] = [
     demo: { type: 'video', src: 'media/x-block.mp4', poster: 'media/x-block.jpg', portrait: true },
     links: [
       {
-        label: { zh: 'Chrome 商店', en: 'Chrome Web Store' },
+        label: { zh: '免费添加到 Chrome', en: 'Add to Chrome — free' },
         href: 'https://chromewebstore.google.com/detail/piclkcjckegmdggejmijcpebebdhneco',
       },
     ],
     intro: {
       summary: {
-        zh: '一个 Chrome 扩展，帮你认出 X 上的机器人、垃圾号和诈骗号——时间线、回复、搜索、通知里都管。认出来后给它标个记号，或者直接悄悄拉黑；万一拉错了，也能一键放回来。装上就能用，本地规则不需要任何配置；想认得更全，可以接上你自己的 AI。',
-        en: 'A Chrome extension that spots bots, spam and scam accounts on X — in the timeline, replies, search and notifications. It either tags them or quietly blocks them, and if it gets one wrong you can put it back with one click. It works as soon as it’s installed, on local rules that need no setup; plug in your own AI if you want it to catch more.',
+        zh: '自动识别并静默屏蔽 X（Twitter）上的机器人、色情、引流、诈骗账号——时间线、回复、搜索、通知全界面覆盖，真人不误伤。本地规则秒判铁证，接上你自己的 AI 还能看懂黑话、自我进化。',
+        en: 'Automatically spots and quietly blocks bot, porn, lead-farming and scam accounts on X (Twitter) — across the timeline, replies, search and notifications — without catching real people. Local rules settle the obvious cases instantly; plug in your own AI and it also reads coded spam and keeps learning.',
       },
       features: [
-        { zh: '装上即用：本地规则直接判，不用账号也不用 key', en: 'Works out of the box: local rules do the judging — no account, no key' },
-        { zh: '时间线、回复、搜索、通知里都能悄悄批量拉黑', en: 'Quietly bulk-blocks across timeline, replies, search and notifications' },
-        { zh: '拉错了一键解封，自动加进白名单', en: 'One-click unblock if it slips, and it remembers them next time' },
-        { zh: '想更准就接你自己的 AI，key 只存在你电脑上，没有中间服务器', en: 'Want it sharper? Plug in your own AI — the key stays on your machine, no server in the middle' },
-        { zh: '越用越准：常见的垃圾词会自动沉淀成本地规则', en: 'Gets better with use: recurring spam phrases turn into local rules on their own' },
+        {
+          zh: 'AI 精准判定：看懂露骨与「编码 / 黑话」垃圾（约炮拉客、引流话术、币圈诈骗），正常吐槽的真人绝不误伤。',
+          en: 'Sharp AI calls: it understands explicit and coded spam — hookup bait, lead-farming scripts, crypto scams — and leaves real people venting alone.',
+        },
+        {
+          zh: '全界面覆盖：时间线、回复、搜索、通知、新粉丝——你刷到哪、收到谁，都自动判，看见即处理。',
+          en: 'Everywhere you look: timeline, replies, search, notifications, new followers — whatever you scroll past or hear from gets checked and handled on sight.',
+        },
+        {
+          zh: '静默秒拉：复用你已登录的会话，无弹窗、无感，几秒内成片消失。已拉黑的号一进帖子就隐藏。',
+          en: 'Silent, instant blocks: it reuses your logged-in session, with no pop-ups — whole swathes disappear in seconds, and blocked accounts are hidden as soon as you open a thread.',
+        },
+        {
+          zh: '越用越准：把 AI 反复拉黑里的高频垃圾词自动沉淀成本地秒拉规则——你刷得越多，它越快越省。',
+          en: 'Gets better with use: spam phrases the AI keeps catching become instant local rules — the more you scroll, the faster and cheaper it gets.',
+        },
+        {
+          zh: '隐私优先：默认全部在本地判定，数据不出浏览器；接 AI 时直连你自己的服务商，Key 仅存本地；没有作者服务器。',
+          en: 'Privacy first: by default everything is judged locally and nothing leaves your browser; with AI on, it talks straight to your own provider and the key stays on your machine. There is no author server.',
+        },
+        {
+          zh: '两种用法：装上即用，本地规则免配置；想要更全，填上你自己的 OpenAI 兼容 API（BYOK），AI 一起判。',
+          en: 'Two ways to run it: install and go, with local rules and zero setup; or add your own OpenAI-compatible API (BYOK) and let the AI weigh in too.',
+        },
       ],
       note: {
-        zh: '完全免费。默认全在本地判定，数据不出浏览器。',
-        en: 'Completely free. By default everything is judged locally and nothing leaves your browser.',
+        zh: '完全免费 · 本地运行、无服务器 · 可选接入你自己的 AI',
+        en: 'Completely free · runs locally, no server · your own AI is optional',
       },
     },
   },
@@ -116,7 +120,7 @@ export const projects: Project[] = [
     visibility: 'public',
     repo: 'https://github.com/Pelican0126/glm-coding-rush',
     stack: ['Chrome', 'JS'],
-    demo: { type: 'image', src: 'media/glm.jpg', portrait: true },
+    demo: { type: 'image', src: 'media/glm-rush.jpg', portrait: true },
     intro: {
       summary: {
         zh: '我自己用的一个 Chrome 扩展，也是个「让浏览器自动干活」的例子：它替你盯着某个东西有没有补货，一上架就飞快点进去、加进购物车，然后停在支付页让你自己来付（绝不自动付款）。想做类似的网页自动化，可以直接拿它当参考。',
@@ -146,10 +150,6 @@ export const projects: Project[] = [
     status: 'active',
     visibility: 'private',
     stack: ['Swift', 'SwiftUI', 'OCR'],
-    links: [
-      { label: { zh: '隐私政策', en: 'Privacy' }, path: 'work/moti/privacy' },
-      { label: { zh: '技术支持', en: 'Support' }, path: 'work/moti/support' },
-    ],
     intro: {
       summary: {
         zh: '一个 iPhone 上的刷题 / 拍照搜题 App。先把你的题库（Excel/CSV）导进去，之后对着纸上的题拍一下，它认出字、在题库里找到对应那题、立刻给答案；付费版还能用手机本地的 AI 离线给你讲解。整个过程都在手机上跑，不用服务器、真机也不用联网。',
@@ -180,7 +180,7 @@ export const projects: Project[] = [
     visibility: 'private',
     stack: ['Swift', 'SwiftUI', 'OCR'],
     links: [{ label: { zh: 'App Store', en: 'App Store' }, href: 'https://apps.apple.com/app/id6770550959' }],
-    demo: { type: 'video', src: 'media/pebble.mp4', poster: 'media/pebble.jpg', portrait: true },
+    demo: { type: 'video', src: 'media/fernbudget.mp4', poster: 'media/fernbudget.jpg', portrait: true },
     intro: {
       summary: {
         zh: '一个已经上架 App Store 的 iPhone 记账 App。你拍张纸质小票，或者截个支付宝、微信、PayPal、银行、电商的账单图，它就自动认出金额、商家、日期、分类，帮你记上；配合快捷指令能一键导入，灵动岛上还能看识别进度。用的是你自己的 AI key，key 只存在手机本地。',
@@ -274,9 +274,9 @@ export const projects: Project[] = [
   },
 ];
 
-/** Projects with their own page under /work/<slug>/. */
-export const products = projects.filter((p) => p.intro);
-export const moreProjects = projects.filter((p) => !p.intro);
+/** Products: each has a home page at /<slug>/. The rest are listed on /work/ only. */
+export const products = projects.filter((p) => p.intro || p.ownSite);
+export const moreProjects = projects.filter((p) => !p.intro && !p.ownSite);
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

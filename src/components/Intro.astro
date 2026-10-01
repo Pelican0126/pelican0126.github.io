@@ -1,9 +1,10 @@
 ---
 // The home page opening. The sentence describes three things the products do; each of
 // those phrases is "locked onto" by a viewfinder and links to the product that does it.
-import { href, type Lang } from '../i18n';
+import { type Lang } from '../i18n';
 import { intro } from '../data/profile';
 import { getProject } from '../data/projects';
+import { projectLink } from '../lib/projects';
 
 interface Props {
   lang: Lang;
@@ -15,8 +16,9 @@ let framed = 0;
 const parts = statement.map((part) => {
   if (typeof part === 'string') return { text: part };
   const project = getProject(part.project);
-  if (!project) throw new Error(`intro: unknown project "${part.project}"`);
-  return { text: part.text, tag: project.name[lang], link: href('work/' + project.slug, lang), index: framed++ };
+  const link = project && projectLink(project, lang);
+  if (!project || !link) throw new Error(`intro: "${part.project}" is not a project with a page`);
+  return { text: part.text, tag: project.name[lang], link: link.href, index: framed++ };
 });
 ---
 <section class="intro wrap">

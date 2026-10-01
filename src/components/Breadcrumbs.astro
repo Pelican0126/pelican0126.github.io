@@ -1,0 +1,26 @@
+---
+// Where this page sits: section › product › page. The last crumb is the current page.
+interface Props {
+  items: { label: string; href?: string }[];
+  label: string; // accessible name of the trail
+}
+const { items, label } = Astro.props;
+---
+<nav class="crumbs mono" aria-label={label}>
+  <ol class="plain-list">
+    {items.map((item, i) => (
+      <li>
+        {item.href && i < items.length - 1 ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .crumbs { margin-bottom: 28px; }
+  .crumbs ol { display: flex; flex-wrap: wrap; gap: 4px 0; }
+  .crumbs li + li::before { content: '/'; margin-inline: 10px; color: var(--line); }
+  .crumbs a { color: var(--ink-2); text-decoration: none; }
+  .crumbs a:hover { color: var(--ink); text-decoration: underline; }
+  .crumbs [aria-current] { color: var(--ink-3); }
+</style>

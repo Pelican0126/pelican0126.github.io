@@ -1,5 +1,6 @@
 ---
 title: MoTi Support
+label: Support
 description: 'MoTi support: FAQ and contact.'
 subtitle: Scan to search · Practice · Mistake book
 ---

@@ -6,24 +6,30 @@ import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import LangHint from '../components/LangHint.astro';
 import { HTML_LANG, LANGS, asset, href, otherLang, type Lang } from '../i18n';
+import type { Section } from '../components/Header.astro';
 import { site, siteMeta } from '../data/site';
 
 interface Props {
   lang: Lang;
-  path: string; // route-relative path of this page: '' (home), 'work/moti'
+  path: string; // route-relative path of this page: '' (home), 'moti/privacy'
+  section?: Section; // which top-level section this page belongs to (highlighted in the nav)
   title?: string; // page title; the site name is appended
   description?: string;
   // Where the language toggle goes when this page has no translation (defaults to `path`).
   altPath?: string;
 }
 
-const { lang, path, title, description, altPath = path } = Astro.props;
+const { lang, path, section, title, description, altPath = path } = Astro.props;
 const pageTitle = title ? `${title} · ${site.handle}` : siteMeta.title[lang];
 const pageDesc = description ?? siteMeta.description[lang];
 const origin = Astro.site!.origin;
 const canonical = origin + href(path, lang);
 const translated = altPath === path;
+const altHref = href(altPath, otherLang(lang));
+const OG_LOCALE: Record<Lang, string> = { zh: 'zh_CN', en: 'en_US' };
+const OG_IMAGE: Record<Lang, string> = { zh: 'og.png', en: 'og-en.png' };
 ---
 <!doctype html>
 <html lang={HTML_LANG[lang]}>
@@ -42,21 +48,38 @@ const translated = altPath === path;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDesc} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={origin + asset('og.png')} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    {translated && <meta property="og:locale:alternate" content={OG_LOCALE[otherLang(lang)]} />}
+    <meta property="og:image" content={origin + asset(OG_IMAGE[lang])} />
     <meta name="twitter:card" content="summary_large_image" />
-    <!-- Apply a saved theme before first paint to avoid a flash. -->
+    <!-- Before first paint: apply the saved theme, and decide whether to offer the other language
+         (the reader's saved choice, else their browser language, differs from this page's). -->
     <script is:inline>
       try {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+        const root = document.documentElement;
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+        const page = root.lang.startsWith('zh') ? 'zh' : 'en';
+        const wanted = localStorage.getItem('lang') || (/^zh\b/i.test(navigator.language) ? 'zh' : 'en');
+        if (wanted !== page) root.dataset.suggestLang = wanted;
       } catch {}
     </script>
   </head>
   <body>
-    <Header lang={lang} path={path} altHref={href(altPath, otherLang(lang))} />
+    <LangHint lang={lang} altHref={altHref} />
+    <Header lang={lang} section={section} altHref={altHref} />
     <main>
       <slot />
     </main>
     <Footer lang={lang} />
+    <!-- Remember an explicit language choice (the header switch, or either button in the hint). -->
+    <script is:inline>
+      document.addEventListener('click', (event) => {
+        const el = event.target instanceof Element && event.target.closest('[data-lang-choice]');
+        if (!el) return;
+        try { localStorage.setItem('lang', el.dataset.langChoice); } catch {}
+        document.documentElement.removeAttribute('data-suggest-lang');
+      });
+    </script>
   </body>
 </html>

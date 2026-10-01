@@ -35,9 +35,9 @@ export const intro: Record<Lang, { hello: string; statement: IntroPart[]; after:
 };
 
 // ───────────────────────── Lately ─────────────────────────
-// Short dated lines on the home page, newest first. `path` is route-relative
-// ('work/x-block', 'notes/<slug>'). Leave the list empty to hide the section.
-export const lately: { date: string; text: L; path?: string }[] = [
+// Short dated lines on the home page, newest first. Link either to a project (its slug)
+// or to a page by route-relative `path` ('notes/<slug>'). Empty list = section hidden.
+export const lately: { date: string; text: L; project?: string; path?: string }[] = [
   {
     date: '2026-09',
     text: {
@@ -49,10 +49,10 @@ export const lately: { date: string; text: L; path?: string }[] = [
   {
     date: '2026-09',
     text: {
-      zh: 'X-Block-Bot 改成完全免费、默认纯本地运行，AI 变成可选',
-      en: 'X-Block-Bot went fully free and local by default; the AI part is now optional',
+      zh: 'X 机器人拉黑助手改成完全免费、默认纯本地运行，AI 变成可选',
+      en: 'X Bot Blocker went fully free and local by default; the AI part is now optional',
     },
-    path: 'work/x-block',
+    project: 'x-block',
   },
 ];
 
@@ -63,8 +63,8 @@ export const bio: L[] = [
     en: 'I’m Pelican, a developer who builds products on my own. I like making small AI tools people actually use — especially the kind where your data stays on your own phone or computer instead of going up to the cloud.',
   },
   {
-    zh: '做得最多的是 iPhone App 和 Chrome 扩展：记账的 FernBudget 已经在 App Store 上架，翻译扩展 PaneTrans 和屏蔽垃圾号的 X-Block-Bot 在 Chrome 商店里能直接装。顺手也写些开源的小工具。',
-    en: 'Mostly that means iPhone apps and Chrome extensions: FernBudget, an expense tracker, is on the App Store; PaneTrans, a translation extension, and X-Block-Bot, which blocks spam accounts, are on the Chrome Web Store. I write open-source tools along the way too.',
+    zh: '做得最多的是 iPhone App 和 Chrome 扩展：记账的 FernBudget 已经在 App Store 上架，翻译扩展 PaneTrans 和 X 机器人拉黑助手在 Chrome 商店里能直接装。顺手也写些开源的小工具。',
+    en: 'Mostly that means iPhone apps and Chrome extensions: FernBudget, an expense tracker, is on the App Store; PaneTrans, a translation extension, and X Bot Blocker, which blocks spam accounts on X, are on the Chrome Web Store. I write open-source tools along the way too.',
   },
   {
     zh: '这个站放我做过的东西，还有做的时候记下的笔记。',

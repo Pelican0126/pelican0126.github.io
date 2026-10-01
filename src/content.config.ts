@@ -14,12 +14,13 @@ const notes = defineCollection({
   }),
 });
 
-// Privacy / support pages that app stores link to. Served at /work/<project>/<doc>/ —
-// those URLs are registered with the stores, so don't rename the files.
+// A product's privacy / support pages, served at /<project>/<doc>/. App stores link to
+// these URLs, so don't rename the files once a store has them.
 const legal = defineCollection({
   loader: glob({ pattern: '{zh,en}/*/*.md', base: './src/content/legal' }),
   schema: z.object({
-    title: z.string(),
+    title: z.string(), // full page title, e.g. '易拍答 隐私政策'
+    label: z.string(), // short name used in links and breadcrumbs, e.g. '隐私政策'
     description: z.string(),
     subtitle: z.string(), // the line under the title: effective date, or what the app does
   }),

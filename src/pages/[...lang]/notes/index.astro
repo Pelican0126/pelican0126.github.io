@@ -13,7 +13,7 @@ interface Props {
 const { lang } = Astro.props;
 const notes = await getNotes(lang);
 ---
-<Base lang={lang} path="notes" title={t('notes.title', lang)} description={t('notes.lead', lang)}>
+<Base lang={lang} path="notes" section="notes" title={t('notes.title', lang)} description={t('notes.lead', lang)}>
   <div class="wrap page">
     <h1 class="page__title">{t('notes.title', lang)}</h1>
     <p class="page__lead">{t('notes.lead', lang)}</p>

@@ -7,8 +7,9 @@ import Contact from '../../components/Contact.astro';
 import { href, langPaths, type Lang } from '../../i18n';
 import { t } from '../../i18n/ui';
 import { lately } from '../../data/profile';
-import { products } from '../../data/projects';
+import { getProject, products } from '../../data/projects';
 import { getNotes } from '../../lib/notes';
+import { projectLink } from '../../lib/projects';
 
 export const getStaticPaths = langPaths;
 
@@ -17,6 +18,16 @@ interface Props {
 }
 const { lang } = Astro.props;
 const notes = (await getNotes(lang)).slice(0, 3);
+
+// A 'lately' line links to a project's page or to a page on this site.
+const latelyLink = (item: (typeof lately)[number]) => {
+  if (item.project) {
+    const project = getProject(item.project);
+    if (!project) throw new Error(`lately: unknown project "${item.project}"`);
+    return projectLink(project, lang)?.href;
+  }
+  return item.path === undefined ? undefined : href(item.path, lang);
+};
 ---
 <Base lang={lang} path="">
   <Intro lang={lang} />
@@ -29,7 +40,7 @@ const notes = (await getNotes(lang)).slice(0, 3);
           {lately.map((item) => (
             <li>
               <span class="mono">{item.date}</span>
-              {item.path ? <a href={href(item.path, lang)}>{item.text[lang]}</a> : <span>{item.text[lang]}</span>}
+              {latelyLink(item) ? <a href={latelyLink(item)}>{item.text[lang]}</a> : <span>{item.text[lang]}</span>}
             </li>
           ))}
         </ul>

@@ -12,7 +12,7 @@ interface Props {
 }
 const { lang } = Astro.props;
 ---
-<Base lang={lang} path="work" title={t('work.title', lang)} description={t('work.lead', lang)}>
+<Base lang={lang} path="work" section="work" title={t('work.title', lang)} description={t('work.lead', lang)}>
   <div class="wrap page">
     <h1 class="page__title">{t('work.title', lang)}</h1>
     <p class="page__lead">{t('work.lead', lang)}</p>

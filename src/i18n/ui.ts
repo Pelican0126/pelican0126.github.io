@@ -8,6 +8,11 @@ const ui = {
   'nav.about': { zh: '关于', en: 'About' },
   'nav.switchLang': { zh: 'Switch to English', en: '切换到中文' },
   'nav.theme': { zh: '切换深浅色', en: 'Switch light / dark' },
+  'crumbs.label': { zh: '当前位置', en: 'You are here' },
+  // The language hint speaks the reader's language — the other one from the page's.
+  'hint.text': { zh: 'This site is also in English.', en: '本站也有中文版。' },
+  'hint.link': { zh: 'Read it in English →', en: '切换到中文 →' },
+  'hint.stay': { zh: 'Stay on the Chinese version', en: '继续看英文版' },
 
   'home.lately': { zh: '最近', en: 'Lately' },
   'home.work': { zh: '作品', en: 'Work' },
@@ -17,20 +22,20 @@ const ui = {
 
   'work.title': { zh: '作品', en: 'Work' },
   'work.lead': {
-    zh: '我做过的东西。前面几个写得细一点，点开能看介绍和演示。',
-    en: 'Things I’ve made. The first few have their own page, with a write-up and a demo.',
+    zh: '我做过的东西。每个产品都有自己的主页；开源的小工具直接连到 GitHub。',
+    en: 'Things I’ve made. Each product has its own page; the open-source tools link straight to GitHub.',
   },
   'work.products': { zh: '产品', en: 'Products' },
   'work.more': { zh: '开源与小工具', en: 'Open source & small tools' },
-  'work.back': { zh: '← 全部作品', en: '← All work' },
   'work.highlights': { zh: '亮点', en: 'Highlights' },
   'work.stack': { zh: '技术栈', en: 'Stack' },
   'work.openSource': { zh: '开源', en: 'Open source' },
   'work.private': { zh: '私有', en: 'Private' },
   'work.repoNote': { zh: '开源，可直接查看源码。', en: 'Open source — browse the code.' },
   'work.privateNote': { zh: '私有项目，仅展示介绍。', en: 'Private project — intro only.' },
-  'work.details': { zh: '详情 →', en: 'Details →' },
+  'work.home': { zh: '产品主页 →', en: 'Product page →' },
   'work.repo': { zh: 'GitHub →', en: 'GitHub →' },
+  'work.docs': { zh: '条款与支持', en: 'Policies & support' },
   'work.ctaLead': {
     zh: '有想法、想给产品加 AI、或者只想问问，都可以找我。',
     en: 'Got an idea, want AI in your product, or just curious? Reach out.',
@@ -45,7 +50,6 @@ const ui = {
   'notes.title': { zh: '笔记', en: 'Notes' },
   'notes.lead': { zh: '做东西的时候记下来的一些事。', en: 'Things I write down while building.' },
   'notes.empty': { zh: '还没有笔记。', en: 'No notes yet.' },
-  'notes.back': { zh: '← 全部笔记', en: '← All notes' },
 
   'about.title': { zh: '关于', en: 'About' },
   'about.timeline': { zh: '经历', en: 'Timeline' },

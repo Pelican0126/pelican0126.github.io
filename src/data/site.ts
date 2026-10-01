@@ -8,7 +8,7 @@ export const site = {
   name: { zh: 'Pelican', en: 'Pelican' } satisfies L,
   email: 'hi@julineshang.win',
   github: 'https://github.com/Pelican0126',
-  source: 'https://github.com/Pelican0126/personal-site',
+  source: 'https://github.com/Pelican0126/pelican0126.github.io',
   // Other profiles shown next to email + GitHub. Add { label, href } entries to show them.
   links: [] as { label: L; href: string }[],
 } as const;
