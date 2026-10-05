@@ -63,6 +63,8 @@ src/
 - **Add a product:** append to `src/data/projects.ts` with either an `intro` (generated page) or
   `ownSite: true` plus `public/<slug>/index.html`. Its privacy/support pages go in
   `src/content/legal/<lang>/<slug>/<doc>.md` with `title`, `label`, `description`, `subtitle`.
+  Set `client: true` for work done for a client: it gets its own "Client work" section on `/work/`
+  and stays off the home page.
 - **Change the home sentence or the "lately" lines:** `src/data/profile.ts`.
 - **Add experience / education:** fill `timeline` in `src/data/profile.ts`; the About page shows it once
   it has entries.
@@ -72,6 +74,8 @@ src/
 So is the site. The personal-site copy must not contain server addresses, API keys, or internals of
 the private products. Private projects get product-level copy and **no repo link**; only public repos
 set `repo` in `projects.ts`. Product policy pages are published as written by the product.
+Client work is stricter still: no client name, product name, brand, backend or business details, and
+demos only from my own pre-contract prototypes, never the client's build.
 
 ## Commands
 

@@ -26,6 +26,7 @@ const { lang, project } = Astro.props;
 const { demo } = project;
 const intro = project.intro!;
 const isPublic = project.visibility === 'public';
+const kind = isPublic ? 'openSource' : project.client ? 'client' : 'private';
 const title = [project.name[lang], project.label?.[lang]].filter(Boolean).join(' · ');
 const docs = await getProjectDocs(project.slug, lang);
 ---
@@ -38,7 +39,7 @@ const docs = await getProjectDocs(project.slug, lang);
       />
       <p class="product__state">
         <Status status={project.status} lang={lang} />
-        <span class="mono">{isPublic ? t('work.openSource', lang) : t('work.private', lang)}</span>
+        <span class="mono">{t(`work.${kind}`, lang)}</span>
       </p>
       <h1 class="page__title">
         {project.name[lang]}
@@ -87,7 +88,7 @@ const docs = await getProjectDocs(project.slug, lang);
         </>
       )}
 
-      <p class="mono product__meta">{isPublic ? t('work.repoNote', lang) : t('work.privateNote', lang)}</p>
+      <p class="mono product__meta">{t(`work.${kind}Note`, lang)}</p>
 
       <div class="product__cta">
         <p>{t('work.ctaLead', lang)}</p>

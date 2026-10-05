@@ -19,6 +19,7 @@ export interface Project {
   tagline: L; // one-line value
   status: ProjectStatus;
   visibility: 'public' | 'private';
+  client?: boolean; // built for a client: own section on /work/, never on the home page
   stack: string[]; // public, non-sensitive tech chips only
   repo?: string; // ONLY ever set for PUBLIC repos
   // The product's own hand-made site sits in public/<slug>/ and is its home page.
@@ -37,6 +38,8 @@ export interface Project {
 // ⚠️ Privacy red-line: no server IPs/domains, no API keys/tokens, no real bundle ids,
 // no license/transaction internals, no internal business metrics.
 // Private repos never get a `repo` link. Copy below is original product-level marketing.
+// Client work goes further: no client name, product name, brand, backend or business
+// details, and demos only from my own pre-contract prototypes.
 
 export const projects: Project[] = [
   // ───────────────────────── Products (each has a home at /<slug>/) ─────────────────────────
@@ -201,44 +204,35 @@ export const projects: Project[] = [
     },
   },
 
+  // ───────────────────────── Client work (each has a page) ─────────────────────────
   {
-    slug: 'courtside',
-    name: { zh: 'CourtSide', en: 'CourtSide' },
-    label: { zh: '网球计分', en: 'tennis scoring' },
+    slug: 'tennis-watch',
+    name: { zh: 'Tennis Watch', en: 'Tennis Watch' },
+    label: { zh: '手表网球计分', en: 'tennis on the wrist' },
     tagline: {
-      zh: '在 Apple Watch 上给网球比赛记分：点一下记一分，局和盘都替你算好',
-      en: 'Keep score of a tennis match on your Apple Watch — one tap per point, and it works out the games and sets for you',
+      zh: '给客户做的 Apple Watch 网球计分 App：打球时抬手点一下就记一分，手机负责登录，手表专心记分',
+      en: 'An Apple Watch tennis-scoring app built for a client: tap your wrist to log a point mid-match — the iPhone handles sign-in, the watch just keeps score',
     },
     status: 'active',
     visibility: 'private',
-    stack: ['Swift', 'SwiftUI', 'watchOS'],
+    client: true,
+    stack: ['Swift', 'SwiftUI', 'watchOS', 'HealthKit'],
+    demo: { type: 'video', src: 'media/tennis-watch.mp4', poster: 'media/tennis-watch.jpg', portrait: true },
     intro: {
       summary: {
-        zh: '一个 Apple Watch 网球计分 App，配一个 iPhone 伴侣 App。打球时在手腕上点一下就记一分，点错了一键撤回；平分、占先、抢七、决胜盘这些规则都由手表算好，每一分、每一局、每一盘和整场结束时的震动各不一样，不用低头也知道打到哪了。记分的同时会开一个网球运动记录，心率和卡路里就显示在记分板上，打完自动存进 Apple 健身。',
-        en: 'An Apple Watch app for keeping score in tennis, with an iPhone companion. One tap on your wrist records a point and one tap undoes a mistake; deuce, advantage, tiebreaks and deciding sets are all worked out on the watch, and points, games, sets and the end of the match each have their own haptic, so you know the state of play without looking. While you score it runs a tennis workout — heart rate and calories sit right on the scoreboard, and the match is saved to Apple Fitness when it ends.',
+        zh: '帮一位客户做的 Apple Watch 网球计分 App，配一个 iPhone 伴侣 App。打球时抬手点一下就记一分，点错了一键撤回；赢下一分、一局、一盘、整场，手腕上的震动各不一样，不看屏幕也知道打到哪了。记分的同时还会开一次网球训练，心率和卡路里就显示在记分牌上，打完存进「健身」。登录只在 iPhone 上做一次，手表自动接上。',
+        en: 'An Apple Watch tennis-scoring app with an iPhone companion, built for a client. Mid-match you tap once to log a point, and one more tap takes it back if you slipped. Winning a point, a game, a set or the match each feels different on your wrist, so you know where you stand without looking. Scoring also runs a tennis workout — heart rate and calories sit right on the scoreboard, and the session lands in Apple Fitness afterwards. You sign in once on the iPhone and the watch picks it up on its own.',
       },
       features: [
-        { zh: '点一下记一分，点错一键撤回', en: 'One tap per point, one tap to undo' },
-        {
-          zh: '四种赛制：单盘、三盘两胜（抢十决胜）、三盘两胜（完整决胜盘）、职业盘',
-          en: 'Four formats: a single set, best of three with a match tiebreak, best of three played out in full, and a pro set',
-        },
-        {
-          zh: '分、局、盘、整场结束的震动各不相同，不看表也知道比分走到哪',
-          en: 'Points, games, sets and the match each feel different on the wrist, so you can follow the score without looking',
-        },
-        {
-          zh: '记分时同步记录网球运动：心率和卡路里在记分板上，打完存进 Apple 健身',
-          en: 'Records a tennis workout as you score: heart rate and calories on the scoreboard, saved to Apple Fitness afterwards',
-        },
-        {
-          zh: '联赛的比赛在 iPhone 上选好交给手表，比分实时同步',
-          en: 'Pick a league match on the iPhone, hand it to the watch, and the score syncs live',
-        },
+        { zh: '抬手点一下记一分，点错了一键撤回', en: 'One tap on the wrist per point, one tap to undo' },
+        { zh: '分、局、盘、整场结束，各有各的震动', en: 'Point, game, set and match each have their own haptic' },
+        { zh: '平分占先、抢七、决胜盘抢十，常见赛制都按规则算', en: 'Deuce and advantage, tiebreaks, match tiebreaks — the common formats, by the rules' },
+        { zh: '边记分边记训练：实时心率、卡路里，打完存进「健身」', en: 'Logs a workout while you score: live heart rate and calories, saved to Apple Fitness' },
+        { zh: 'iPhone 登录一次，手表自动接上，比分同步到后端', en: 'Sign in once on the iPhone; the watch picks it up and scores sync to the backend' },
       ],
       note: {
-        zh: '这是给客户做的项目，还在开发中；这里只介绍它能做什么。',
-        en: 'Built for a client and still in progress — this page only covers what it does.',
+        zh: '页面上的演示是我接这个项目之前自己做的原型，不是客户的正式版。',
+        en: 'The demo on this page is a prototype I built before taking on the project, not the client’s release build.',
       },
     },
   },
@@ -318,8 +312,9 @@ export const projects: Project[] = [
 ];
 
 /** Products: each has a home page at /<slug>/. The rest are listed on /work/ only. */
-export const products = projects.filter((p) => p.intro || p.ownSite);
-export const moreProjects = projects.filter((p) => !p.intro && !p.ownSite);
+export const products = projects.filter((p) => (p.intro || p.ownSite) && !p.client);
+export const clientWork = projects.filter((p) => p.client);
+export const moreProjects = projects.filter((p) => !p.intro && !p.ownSite && !p.client);
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

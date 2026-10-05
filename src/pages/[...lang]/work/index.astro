@@ -3,7 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import ProjectList from '../../../components/ProjectList.astro';
 import { langPaths, type Lang } from '../../../i18n';
 import { t } from '../../../i18n/ui';
-import { moreProjects, products } from '../../../data/projects';
+import { clientWork, moreProjects, products } from '../../../data/projects';
 
 export const getStaticPaths = langPaths;
 
@@ -21,6 +21,13 @@ const { lang } = Astro.props;
       <h2 class="section__title section__head">{t('work.products', lang)}</h2>
       <ProjectList projects={products} lang={lang} />
     </section>
+
+    {clientWork.length > 0 && (
+      <section class="section">
+        <h2 class="section__title section__head">{t('work.client', lang)}</h2>
+        <ProjectList projects={clientWork} lang={lang} />
+      </section>
+    )}
 
     <section class="section">
       <h2 class="section__title section__head">{t('work.more', lang)}</h2>
